@@ -1,4 +1,4 @@
-# TCGPlayer Python Client
+# TCGplayer Python Client
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -7,7 +7,7 @@
 
 ## ⚠️ **CRITICAL RATE LIMITING WARNING**
 
-**TCGPlayer enforces a hard maximum of 10 requests per second.** Exceeding this limit can result in:
+**TCGplayer enforces a hard maximum of 10 requests per second.** Exceeding this limit can result in:
 - **API access being permanently revoked**
 - **Account suspension**
 - **Legal consequences**
@@ -16,11 +16,11 @@
 
 ---
 
-A comprehensive, production-ready Python client library for the TCGPlayer API with async support, intelligent rate limiting, caching, and comprehensive endpoint coverage. Built for developers who need reliable, scalable access to TCGPlayer's trading card data.
+A comprehensive, production-ready Python client library for the TCGplayer API with async support, intelligent rate limiting, caching, and comprehensive endpoint coverage. Built for developers who need reliable, scalable access to TCGplayer's trading card data.
 
 ## 🚀 Features
 
-- **🔌 Full API Coverage**: All 67 documented TCGPlayer API endpoints with comprehensive error handling
+- **🔌 Full API Coverage**: All 67 documented TCGplayer API endpoints with comprehensive error handling
 - **⚡ Async/Await Support**: Built with modern Python async patterns for high-performance applications
 - **🔄 Intelligent Rate Limiting**: Adaptive request throttling that respects API limits and prevents rate limit errors
 - **💾 Smart Caching**: Configurable response caching with TTL and LRU eviction for improved performance
@@ -41,7 +41,7 @@ cd tcgplayer-python
 pip install -e .
 ```
 
-### From PyPI (Coming Soon)
+### From PyPI
 
 ```bash
 pip install tcgplayer-client
@@ -115,7 +115,7 @@ export TCGPLAYER_CACHE_TTL="300"
 
 ## 🔌 API Endpoints
 
-The client provides organized access to all TCGPlayer API endpoints through specialized endpoint classes:
+The client provides organized access to all TCGplayer API endpoints through specialized endpoint classes:
 
 ### 📚 Catalog Endpoints
 - **Categories**: Product categories and hierarchies
@@ -152,7 +152,7 @@ The client provides organized access to all TCGPlayer API endpoints through spec
 
 ### ⚠️ **Critical Rate Limiting Restriction**
 
-**IMPORTANT**: TCGPlayer enforces a **hard maximum of 10 requests per second**. Exceeding this limit can result in:
+**IMPORTANT**: TCGplayer enforces a **hard maximum of 10 requests per second**. Exceeding this limit can result in:
 - API access being temporarily suspended
 - Permanent API access revocation
 - Account restrictions
@@ -284,7 +284,7 @@ setup_logging()
 logger = get_logger(__name__)
 
 # Use structured logging
-logger.info("Starting TCGPlayer client", extra={
+logger.info("Starting TCGplayer client", extra={
     "client_id": "your_client_id",
     "endpoint": "catalog",
     "operation": "get_categories"
@@ -551,7 +551,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 #### Authentication Errors
 - Verify your `client_id` and `client_secret` are correct
-- Check that your TCGPlayer API account is active
+- Check that your TCGplayer API account is active
 - Ensure your IP address is whitelisted if required
 
 #### Rate Limiting
@@ -580,7 +580,7 @@ See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes and improveme
 
 ## 🙏 Acknowledgments
 
-- **TCGPlayer** for providing the comprehensive API
+- **TCGplayer** for providing the comprehensive API
 - **Python Community** for excellent async libraries and tools
 - **Contributors** who help improve this library
 - **Open Source Community** for inspiration and best practices
@@ -603,23 +603,23 @@ See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes and improveme
 
 ### ⚠️ **Critical API Restrictions**
 
-TCGPlayer maintains strict rate limiting policies to ensure fair API access for all users. **Violating these limits can have serious consequences:**
+TCGplayer maintains strict rate limiting policies to ensure fair API access for all users. **Violating these limits can have serious consequences:**
 
 - **Temporary Suspension**: API access suspended for 24-48 hours
 - **Permanent Revocation**: Complete loss of API access
-- **Account Restrictions**: Limited access to TCGPlayer services
+- **Account Restrictions**: Limited access to TCGplayer services
 - **Legal Action**: Potential terms of service violations
 
 ### **Hard Rate Limit: 10 Requests Per Second**
 
-The client **automatically enforces** TCGPlayer's absolute maximum rate limit:
+The client **automatically enforces** TCGplayer's absolute maximum rate limit:
 
 ```python
 # This will be automatically capped to 10 req/s
 client = TCGPlayerClient(max_requests_per_second=20)
 
 # You'll see this warning in logs:
-# WARNING: Requested rate limit 20 req/s exceeds TCGPlayer's maximum of 10 req/s. 
+# WARNING: Requested rate limit 20 req/s exceeds TCGplayer's maximum of 10 req/s. 
 # Rate limit has been capped to 10 req/s to prevent API violations.
 ```
 

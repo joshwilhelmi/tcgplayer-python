@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2024-12-19
 
 ### Added
-- Initial release of TCGPlayer Client library
+- Initial release of TCGplayer Client library
 - Full API coverage for all 67 documented endpoints
 - Async/await support throughout
 - Comprehensive rate limiting and retry logic

@@ -1,4 +1,4 @@
-# TCGPlayer Client Library - Project Status & Next Steps
+# TCGplayer Client Library - Project Status & Next Steps
 
 ## Project Overview
 Transform `tcgplayer_client` into a pip installable Python library that can be:
@@ -232,7 +232,7 @@ Based on code review, core dependencies include:
 
 ## Current Status: **v1.0.0 STABLE RELEASE** 🚀
 
-The TCGPlayer Python client library is now:
+The TCGplayer Python client library is now:
 - ✅ **v1.0.0 Tagged** and released on GitHub
 - ✅ **Production Ready** with proper package structure
 - ✅ **GitHub Actions Fixed** - all imports working correctly

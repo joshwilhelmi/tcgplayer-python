@@ -18,7 +18,7 @@ setup(
     version="1.0.1",
     author="Josh Wilhelmi",
     author_email="josh@gobby.ai",
-    description="Python client library for TCGPlayer API with async support, rate limiting, and comprehensive endpoint coverage",
+    description="Python client library for TCGplayer API with async support, rate limiting, and comprehensive endpoint coverage",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/joshwilhelmi/tcgplayer-python",

@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Currently supported versions of the TCGPlayer Python Client:
+Currently supported versions of the TCGplayer Python Client:
 
 | Version | Supported          | Security Updates |
 | ------- | ------------------ | ---------------- |
@@ -11,14 +11,14 @@ Currently supported versions of the TCGPlayer Python Client:
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in the TCGPlayer Python Client, please follow responsible disclosure practices:
+If you discover a security vulnerability in the TCGplayer Python Client, please follow responsible disclosure practices:
 
 ### 🚨 **DO NOT** create a public GitHub issue for security vulnerabilities
 
 ### ✅ **DO** report via these secure channels:
 
 1. **Email**: josh@gobby.ai
-2. **Subject**: [SECURITY] TCGPlayer Python Client Vulnerability
+2. **Subject**: [SECURITY] TCGplayer Python Client Vulnerability
 3. **Include**:
    - Detailed description of the vulnerability
    - Steps to reproduce
@@ -143,14 +143,14 @@ pip install --upgrade package_name
 
 ## Security Resources
 
-- **TCGPlayer API Security**: https://docs.tcgplayer.com/docs/authentication
+- **TCGplayer API Security**: https://docs.tcgplayer.com/docs/authentication
 - **Python Security Guide**: https://python-security.readthedocs.io/
 - **OWASP Top 10**: https://owasp.org/www-project-top-ten/
 - **GitHub Security Features**: https://docs.github.com/en/code-security
 
 ## License
 
-This security policy is part of the TCGPlayer Python Client project and is subject to the same license terms.
+This security policy is part of the TCGplayer Python Client project and is subject to the same license terms.
 
 ---
 
