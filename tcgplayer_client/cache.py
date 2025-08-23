@@ -10,7 +10,7 @@ import hashlib
 import json
 import time
 from collections import OrderedDict
-from typing import Any, Dict, Optional, Union, Callable
+from typing import Any, Dict, Optional, Union, Callable, List
 from dataclasses import dataclass, field
 
 from .exceptions import ConfigurationError
@@ -430,7 +430,7 @@ class CacheManager:
         self.caches.clear()
         self._default_cache = None
     
-    def get_cache_names(self) -> list[str]:
+    def get_cache_names(self) -> List[str]:
         """Get list of cache names."""
         return list(self.caches.keys())
     
