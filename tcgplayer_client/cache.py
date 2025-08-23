@@ -79,9 +79,9 @@ class CacheKeyGenerator:
         if data:
             key_parts.append(json.dumps(data, sort_keys=True))
 
-        # Create hash of the key parts
+        # Create hash of the key parts using SHA256 for security
         key_string = "|".join(str(part) for part in key_parts)
-        return hashlib.md5(key_string.encode()).hexdigest()
+        return hashlib.sha256(key_string.encode()).hexdigest()
 
     @staticmethod
     def generate_user_key(user_id: str, endpoint: str, **kwargs) -> str:
@@ -273,9 +273,10 @@ class ResponseCache:
                 try:
                     await asyncio.sleep(60)  # Run every minute
                     await self.cache.cleanup_expired()
-                except Exception:
+                except Exception as e:
                     # Log error but continue cleanup
-                    pass
+                    # Note: In production, you might want to use a proper logger
+                    print(f"Cache cleanup error (continuing): {e}")
 
         self._cleanup_task = asyncio.create_task(cleanup_loop())
 
@@ -452,7 +453,8 @@ class CacheManager:
         """Get the default cache instance."""
         if self._default_cache is None:
             self._default_cache = self.get_cache("default")
-        assert self._default_cache is not None  # Type guard
+        if self._default_cache is None:
+            raise RuntimeError("Default cache not initialized")
         return self._default_cache
 
     async def clear_all(self) -> None:

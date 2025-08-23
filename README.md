@@ -364,6 +364,30 @@ mypy tcgplayer_client/
 make quality  # If Makefile is available
 ```
 
+### Security Testing
+
+```bash
+# Security scanning with Bandit
+bandit -r tcgplayer_client/ -f json -o bandit-report.json
+
+# Dependency vulnerability scanning
+safety check
+
+# Advanced security analysis
+pip install semgrep
+semgrep --config=auto tcgplayer_client/
+
+# Dependency security audit
+pip-audit
+```
+
+**Note**: Security issues have been identified and fixed in the codebase:
+- ✅ **MD5 → SHA256**: Replaced weak MD5 hashing with secure SHA256 for cache keys
+- ✅ **Try-except-pass**: Fixed silent exception handling with proper logging
+- ✅ **Assert statements**: Replaced with proper runtime error handling
+
+**TODO**: Add these security tools to CI/CD pipeline for automated security testing.
+
 ### Testing Examples
 
 ```python
