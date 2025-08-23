@@ -51,8 +51,8 @@ jobs:
       uses: trufflesecurity/trufflehog@main
       with:
         path: ./
-        base: main
-        head: HEAD
+        base: ${{ github.event.before || 'HEAD~1' }}
+        head: ${{ github.event.after || 'HEAD' }}
         extra_args: --debug --only-verified
     
     - name: Upload security reports

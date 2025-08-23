@@ -388,6 +388,93 @@ pip-audit
 
 **TODO**: Add these security tools to CI/CD pipeline for automated security testing.
 
+### **Comprehensive Testing Strategy**
+
+The project includes multiple layers of testing to ensure code quality and security:
+
+#### **1. Unit Testing (pytest)**
+```bash
+# Run all tests with coverage
+pytest --cov=tcgplayer_client --cov-report=html --cov-report=term-missing
+
+# Run specific test categories
+pytest tests/test_auth.py          # Authentication tests
+pytest tests/test_client.py        # Main client tests
+pytest tests/test_endpoints/       # API endpoint tests
+pytest tests/test_rate_limiter.py  # Rate limiting tests
+pytest tests/test_cache.py         # Caching tests
+
+# Run tests in parallel
+pytest -n auto --dist=loadfile
+
+# Generate coverage reports
+pytest --cov=tcgplayer_client --cov-report=html --cov-report=xml
+```
+
+#### **2. Security Testing (Automated)**
+```bash
+# Bandit security scanning
+bandit -r tcgplayer_client/ -f json -o bandit-report.json
+bandit -r tcgplayer_client/ -f txt
+
+# Safety dependency scanning
+safety check --json --output safety-report.json
+safety check
+
+# Semgrep static analysis
+semgrep --config=auto --json --output=semgrep-report.json tcgplayer_client/
+
+# Pip audit for dependencies
+pip-audit --desc --format=json --output=pip-audit-report.json
+```
+
+#### **3. Code Quality Testing**
+```bash
+# Black code formatting
+black --check --diff .
+
+# Import sorting
+isort --check-only --diff .
+
+# Flake8 linting
+flake8 tcgplayer_client/ tests/ --max-line-length=88 --extend-ignore=E203,W503
+
+# MyPy type checking
+mypy tcgplayer_client/ --ignore-missing-imports
+
+# Pre-commit hooks (if installed)
+pre-commit run --all-files
+```
+
+#### **4. Performance Testing**
+```bash
+# Run performance benchmarks
+python -m pytest tests/test_performance.py -v
+
+# Memory usage profiling
+python -m memory_profiler tests/test_memory.py
+
+# Async performance testing
+python -m pytest tests/test_async_performance.py -v
+```
+
+#### **5. Integration Testing**
+```bash
+# Test with real TCGplayer API (requires credentials)
+export TCGPLAYER_CLIENT_ID="your_client_id"
+export TCGPLAYER_CLIENT_SECRET="your_client_secret"
+python -m pytest tests/test_integration.py -v
+
+# Test rate limiting compliance
+python -m pytest tests/test_rate_limit_compliance.py -v
+```
+
+#### **6. Test Coverage Goals**
+- **Current Coverage**: 52% (575/1,103 lines)
+- **Target Coverage**: 80%+ for production quality
+- **Critical Paths**: 100% coverage for authentication, rate limiting, and error handling
+- **New Features**: 90%+ coverage requirement before merge
+
 ### Testing Examples
 
 ```python
