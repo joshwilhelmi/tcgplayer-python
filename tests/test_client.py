@@ -51,7 +51,9 @@ class TestTCGPlayerClient:
         assert client.auth is not None
         assert client.auth.client_id == "test_id"
         assert client.auth.client_secret == "test_secret"
-        assert client.rate_limiter.max_requests == 10  # Rate limit capped to TCGPlayer maximum
+        assert (
+            client.rate_limiter.max_requests == 10
+        )  # Rate limit capped to TCGPlayer maximum
         assert client.rate_limiter.time_window == 2.0
         assert client.max_retries == 5
         assert client.base_delay == 2.0

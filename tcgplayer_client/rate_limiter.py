@@ -25,7 +25,7 @@ class RateLimiter:
         Args:
             max_requests: Maximum number of requests allowed in the time window
             time_window: Time window in seconds
-            
+
         Raises:
             ValueError: If max_requests exceeds the absolute maximum of 10
         """
@@ -36,7 +36,7 @@ class RateLimiter:
                 f"Rate limit has been capped to {MAX_REQUESTS_PER_SECOND} req/s to prevent API violations."
             )
             max_requests = MAX_REQUESTS_PER_SECOND
-        
+
         self.max_requests = max_requests
         self.time_window = time_window
         self.requests: Deque[float] = deque()

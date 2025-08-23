@@ -11,6 +11,8 @@ from urllib.parse import urlencode
 import aiohttp
 
 from .auth import TCGPlayerAuth
+from .cache import CacheManager, ResponseCache
+from .config import ClientConfig, load_config
 from .exceptions import (
     APIError,
     AuthenticationError,
@@ -21,18 +23,16 @@ from .exceptions import (
     TCGPlayerError,
     TimeoutError,
 )
+from .logging_config import get_logger, setup_logging
 from .rate_limiter import RateLimiter
 from .session_manager import SessionManager
-from .config import ClientConfig, load_config
-from .logging_config import setup_logging, get_logger
-from .cache import ResponseCache, CacheManager
 
 logger = logging.getLogger(__name__)
 
 
 class TCGPlayerClient:
     """Main client for interacting with the TCGPlayer API."""
-    
+
     # Type annotations for instance attributes
     cache_manager: Optional[CacheManager]
     response_cache: Optional[ResponseCache]
@@ -58,7 +58,7 @@ class TCGPlayerClient:
             max_retries: Maximum retry attempts for failed requests (default: 3)
             base_delay: Base delay for retry backoff in seconds (default: 1.0)
             config: Optional configuration object
-            
+
         Note:
             The maximum rate limit is capped at 10 requests per second to comply with
             TCGPlayer's API restrictions. Exceeding this limit can result in API access
@@ -71,7 +71,7 @@ class TCGPlayerClient:
                 f"Rate limit has been capped to 10 req/s to prevent API violations."
             )
             max_requests_per_second = 10
-        
+
         # Load configuration
         if config is None:
             try:
@@ -79,13 +79,16 @@ class TCGPlayerClient:
             except Exception:
                 # Use defaults if config loading fails
                 config = ClientConfig()
-        
+
         self.config = config
-        
+
         # Initialize authentication (optional for testing)
         self.auth: Optional[TCGPlayerAuth] = (
-            TCGPlayerAuth(client_id or config.client_id, client_secret or config.client_secret)
-            if (client_id or config.client_id) and (client_secret or config.client_secret)
+            TCGPlayerAuth(
+                client_id or config.client_id, client_secret or config.client_secret
+            )
+            if (client_id or config.client_id)
+            and (client_secret or config.client_secret)
             else None
         )
 
@@ -107,25 +110,27 @@ class TCGPlayerClient:
                 f"Capping to 10 req/s to prevent API violations."
             )
             config_rate_limit = 10
-            
+
         self.rate_limiter: RateLimiter = RateLimiter(
             max_requests_per_second or config_rate_limit,
-            rate_limit_window or config.rate_limit_window
+            rate_limit_window or config.rate_limit_window,
         )
 
         # Request retry configuration (prioritize passed parameters)
         self.max_retries: int = max_retries or config.max_retries
         self.base_delay: float = base_delay or config.base_delay
-        
+
         # Caching configuration
         if config.enable_caching:
-            self.cache_manager = CacheManager({
-                "default": {
-                    "max_size": config.cache_max_size,
-                    "default_ttl": config.cache_ttl,
-                    "enable_compression": False
+            self.cache_manager = CacheManager(
+                {
+                    "default": {
+                        "max_size": config.cache_max_size,
+                        "default_ttl": config.cache_ttl,
+                        "enable_compression": False,
+                    }
                 }
-            })
+            )
             self.response_cache = self.cache_manager.get_default_cache()
         else:
             self.cache_manager = None
@@ -248,19 +253,37 @@ class TCGPlayerClient:
                             url, headers=headers, json=data
                         ) as response:
                             return await self._handle_response(
-                                response, endpoint, use_cache, method, params, data, cache_ttl
+                                response,
+                                endpoint,
+                                use_cache,
+                                method,
+                                params,
+                                data,
+                                cache_ttl,
                             )
                     elif method == "PUT":
                         async with session.put(
                             url, headers=headers, json=data
                         ) as response:
                             return await self._handle_response(
-                                response, endpoint, use_cache, method, params, data, cache_ttl
+                                response,
+                                endpoint,
+                                use_cache,
+                                method,
+                                params,
+                                data,
+                                cache_ttl,
                             )
                     else:
                         async with session.get(url, headers=headers) as response:
                             return await self._handle_response(
-                                response, endpoint, use_cache, method, params, data, cache_ttl
+                                response,
+                                endpoint,
+                                use_cache,
+                                method,
+                                params,
+                                data,
+                                cache_ttl,
                             )
 
             except asyncio.TimeoutError:
@@ -274,7 +297,9 @@ class TCGPlayerClient:
                 else:
                     raise TimeoutError(
                         f"API request timed out after {self.max_retries} attempts",
-                        timeout_seconds=self.timeout.total if hasattr(self, 'timeout') else None
+                        timeout_seconds=(
+                            self.timeout.total if hasattr(self, "timeout") else None
+                        ),
                     )
 
             except aiohttp.ClientError as e:
@@ -293,15 +318,18 @@ class TCGPlayerClient:
         raise RetryExhaustedError(
             f"API request failed after {self.max_retries} attempts",
             attempts_made=self.max_retries,
-            last_error=e if 'e' in locals() else None
+            last_error=e if "e" in locals() else None,
         )
 
     async def _handle_response(
-        self, response: aiohttp.ClientResponse, endpoint: str,
-        use_cache: bool = True, method: str = "GET",
+        self,
+        response: aiohttp.ClientResponse,
+        endpoint: str,
+        use_cache: bool = True,
+        method: str = "GET",
         params: Optional[Dict[str, Any]] = None,
         data: Optional[Union[Dict[str, Any], List[Dict[str, Any]]]] = None,
-        cache_ttl: Optional[int] = None
+        cache_ttl: Optional[int] = None,
     ) -> Dict[str, Any]:
         """
         Handle API response and extract data or raise appropriate exceptions.
@@ -326,19 +354,19 @@ class TCGPlayerClient:
             try:
                 result = await response.json()
                 logger.info(f"API request successful: {endpoint}")
-                
+
                 # Cache successful GET responses
                 if use_cache and method == "GET" and self.response_cache:
                     await self.response_cache.cache_response(
                         endpoint, params, method, data, result, 200, cache_ttl
                     )
-                
+
                 return result
             except Exception as e:
                 logger.error(f"Failed to parse JSON response from {endpoint}: {e}")
                 raise InvalidResponseError(
                     f"Invalid JSON response from {endpoint}",
-                    response_data=await response.text()
+                    response_data=await response.text(),
                 )
         elif response.status == 429:  # Too Many Requests
             retry_after = response.headers.get("Retry-After")
@@ -399,19 +427,19 @@ class TCGPlayerClient:
         if self.cache_manager:
             await self.cache_manager.close_all()
         logger.info("TCGPlayer client closed and resources cleaned up")
-    
+
     async def clear_cache(self) -> None:
         """Clear all cached responses."""
         if self.response_cache:
             await self.response_cache.clear()
             logger.info("Response cache cleared")
-    
+
     async def get_cache_stats(self) -> Optional[Dict[str, Any]]:
         """Get cache statistics if caching is enabled."""
         if self.response_cache:
             return await self.response_cache.get_stats()
         return None
-    
+
     async def invalidate_cache(self, endpoint: str) -> int:
         """Invalidate cached responses for a specific endpoint."""
         if self.response_cache:

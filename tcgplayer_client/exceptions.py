@@ -98,7 +98,9 @@ class TimeoutError(TCGPlayerError):
 class RetryExhaustedError(TCGPlayerError):
     """Raised when all retry attempts are exhausted."""
 
-    def __init__(self, message: str, attempts_made: int, last_error: Optional[Exception] = None):
+    def __init__(
+        self, message: str, attempts_made: int, last_error: Optional[Exception] = None
+    ):
         super().__init__(message)
         self.attempts_made = attempts_made
         self.last_error = last_error

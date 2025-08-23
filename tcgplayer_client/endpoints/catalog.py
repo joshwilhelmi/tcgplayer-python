@@ -10,7 +10,11 @@ This module contains all catalog-related operations including:
 from typing import Any, Dict, List, Optional
 
 from ..client import TCGPlayerClient
-from ..validation import validate_id, validate_positive_integer, validate_non_negative_integer
+from ..validation import (
+    validate_id,
+    validate_non_negative_integer,
+    validate_positive_integer,
+)
 
 
 class CatalogEndpoints:
