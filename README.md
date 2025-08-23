@@ -7,7 +7,7 @@
 
 ## ⚠️ **CRITICAL RATE LIMITING WARNING**
 
-**TCGplayer enforces a hard maximum of 10 requests per second.** Exceeding this limit can result in:
+**TCGplayer's API enforces a hard maximum of 10 requests per second.** Exceeding this limit can result in:
 - **API access being permanently revoked**
 - **Account suspension**
 - **Legal consequences**
@@ -152,7 +152,7 @@ The client provides organized access to all TCGplayer API endpoints through spec
 
 ### ⚠️ **Critical Rate Limiting Restriction**
 
-**IMPORTANT**: TCGplayer enforces a **hard maximum of 10 requests per second**. Exceeding this limit can result in:
+**IMPORTANT**: TCGplayer's API enforces a **hard maximum of 10 requests per second**. Exceeding this limit can result in:
 - API access being temporarily suspended
 - Permanent API access revocation
 - Account restrictions
