@@ -156,3 +156,55 @@ Desktop.ini
 logs/
 *.log
 old/
+
+# API Keys and Secrets (Enhanced Security)
+*.key
+*.pem
+secrets/
+config/secrets/
+.env*
+!.env.example
+api_keys.json
+credentials.json
+tcgplayer_credentials.json
+
+# Additional OS files
+.DS_Store
+Thumbs.db
+
+# IDE files (Enhanced)
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs (Enhanced)
+*.log
+logs/
+audit.log
+
+# Cache directories (Enhanced)
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Coverage (Enhanced)
+.coverage
+htmlcov/
+coverage.xml
+*.cover
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Security scan results
+bandit-report.json
+safety-report.json
+semgrep-report.json

@@ -1,0 +1,31 @@
+# Global code owners - require review for all changes
+* @joshwilhelmi
+
+# Critical security files
+.env* @joshwilhelmi
+*.key @joshwilhelmi
+*.pem @joshwilhelmi
+secrets/ @joshwilhelmi
+config/ @joshwilhelmi
+
+# Core library files
+tcgplayer_client/ @joshwilhelmi
+setup.py @joshwilhelmi
+pyproject.toml @joshwilhelmi
+requirements.txt @joshwilhelmi
+
+# CI/CD and workflows
+.github/ @joshwilhelmi
+.pre-commit-config.yaml @joshwilhelmi
+
+# Security and compliance
+SECURITY.md @joshwilhelmi
+CODEOWNERS @joshwilhelmi
+
+# Documentation (can be more collaborative)
+*.md @joshwilhelmi
+docs/ @joshwilhelmi
+
+# Tests (important for quality)
+tests/ @joshwilhelmi
+pytest.ini @joshwilhelmi
