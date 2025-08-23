@@ -53,12 +53,25 @@ class TCGPlayerClient:
         Args:
             client_id: TCGPlayer API client ID
             client_secret: TCGPlayer API client secret
-            max_requests_per_second: Maximum requests per second (default: 10)
+            max_requests_per_second: Maximum requests per second (default: 10, max: 10)
             rate_limit_window: Rate limit window in seconds (default: 1.0)
             max_retries: Maximum retry attempts for failed requests (default: 3)
             base_delay: Base delay for retry backoff in seconds (default: 1.0)
             config: Optional configuration object
+            
+        Note:
+            The maximum rate limit is capped at 10 requests per second to comply with
+            TCGPlayer's API restrictions. Exceeding this limit can result in API access
+            being revoked.
         """
+        # Validate rate limiting parameters
+        if max_requests_per_second > 10:
+            logger.warning(
+                f"Requested rate limit {max_requests_per_second} req/s exceeds TCGPlayer's maximum of 10 req/s. "
+                f"Rate limit has been capped to 10 req/s to prevent API violations."
+            )
+            max_requests_per_second = 10
+        
         # Load configuration
         if config is None:
             try:
@@ -86,9 +99,17 @@ class TCGPlayerClient:
             keepalive_timeout=config.keepalive_timeout,
         )
 
-        # Rate limiting configuration (prioritize passed parameters)
+        # Rate limiting configuration (prioritize passed parameters, but enforce maximum)
+        config_rate_limit = config.max_requests_per_second or 10
+        if config_rate_limit > 10:
+            logger.warning(
+                f"Configuration rate limit {config_rate_limit} req/s exceeds TCGPlayer's maximum. "
+                f"Capping to 10 req/s to prevent API violations."
+            )
+            config_rate_limit = 10
+            
         self.rate_limiter: RateLimiter = RateLimiter(
-            max_requests_per_second or config.max_requests_per_second,
+            max_requests_per_second or config_rate_limit,
             rate_limit_window or config.rate_limit_window
         )
 
@@ -134,7 +155,8 @@ class TCGPlayerClient:
         )()
 
         logger.info(
-            f"TCGPlayer client initialized with rate limit: {max_requests_per_second} req/s"
+            f"TCGPlayer client initialized with rate limit: {max_requests_per_second} req/s "
+            f"(TCGPlayer maximum: 10 req/s)"
         )
         logger.info(
             f"Retry configuration: max {max_retries} attempts, base delay {base_delay}s"

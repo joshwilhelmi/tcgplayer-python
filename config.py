@@ -65,6 +65,14 @@ class ClientConfig:
         if self.max_requests_per_second <= 0:
             raise ConfigurationError("max_requests_per_second must be positive")
         
+        # Enforce TCGPlayer's absolute maximum rate limit
+        if self.max_requests_per_second > 10:
+            logger.warning(
+                f"Configuration rate limit {self.max_requests_per_second} req/s exceeds TCGPlayer's maximum of 10 req/s. "
+                f"Rate limit has been capped to 10 req/s to prevent API violations."
+            )
+            self.max_requests_per_second = 10
+        
         if self.rate_limit_window <= 0:
             raise ConfigurationError("rate_limit_window must be positive")
         
