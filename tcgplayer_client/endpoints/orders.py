@@ -7,7 +7,7 @@ This module contains all order-related operations including:
 - Order feedback and tracking
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 from ..client import TCGPlayerClient
 

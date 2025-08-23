@@ -1,7 +1,8 @@
 """
 TCGPlayer API endpoints organized by category.
 
-This package contains all the API endpoint implementations organized into logical groups:
+This package contains all the API endpoint implementations organized into logical
+groups:
 - catalog: Product and category operations
 - pricing: Pricing and market data
 - stores: Store management and operations

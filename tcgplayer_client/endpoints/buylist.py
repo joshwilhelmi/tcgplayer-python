@@ -7,7 +7,7 @@ This module contains all buylist-related operations including:
 - Buylist categories and groups
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 from ..client import TCGPlayerClient
 

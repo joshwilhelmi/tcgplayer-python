@@ -134,7 +134,8 @@ class CatalogEndpoints:
     async def search_category_products(
         self, category_id: int, search_criteria: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Search for products within a specific category using advanced search criteria."""
+        """Search for products within a specific category using advanced search
+        criteria."""
         return await self.client._make_api_request(
             f"/v1.39.0/catalog/categories/{category_id}/search",
             method="POST",

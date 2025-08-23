@@ -6,7 +6,7 @@ import asyncio
 import logging
 import time
 from collections import deque
-from typing import Deque, Optional
+from typing import Deque
 
 logger = logging.getLogger(__name__)
 
@@ -32,8 +32,10 @@ class RateLimiter:
         # Enforce absolute maximum rate limit
         if max_requests > MAX_REQUESTS_PER_SECOND:
             logger.warning(
-                f"Requested rate limit {max_requests} req/s exceeds TCGPlayer's maximum of {MAX_REQUESTS_PER_SECOND} req/s. "
-                f"Rate limit has been capped to {MAX_REQUESTS_PER_SECOND} req/s to prevent API violations."
+                f"Requested rate limit {max_requests} req/s exceeds TCGPlayer's "
+                f"maximum of {MAX_REQUESTS_PER_SECOND} req/s. "
+                f"Rate limit has been capped to {MAX_REQUESTS_PER_SECOND} req/s "
+                f"to prevent API violations."
             )
             max_requests = MAX_REQUESTS_PER_SECOND
 
@@ -43,8 +45,8 @@ class RateLimiter:
         self.lock = asyncio.Lock()
 
         logger.info(
-            f"Rate limiter configured: {max_requests} requests per {time_window} second(s) "
-            f"(TCGPlayer maximum: {MAX_REQUESTS_PER_SECOND} req/s)"
+            f"Rate limiter configured: {max_requests} requests per {time_window} "
+            f"second(s) (TCGPlayer maximum: {MAX_REQUESTS_PER_SECOND} req/s)"
         )
 
     async def acquire(self) -> None:
@@ -73,7 +75,9 @@ class RateLimiter:
             # Record this request
             self.requests.append(now)
             logger.debug(
-                f"Request allowed. Current rate: {len(self.requests)}/{self.max_requests} per {self.time_window}s"
+                f"Request allowed. Current rate: "
+                f"{len(self.requests)}/{self.max_requests} "
+                f"per {self.time_window}s"
             )
 
     def get_status(self) -> dict:
@@ -107,7 +111,8 @@ class RateLimiter:
                 # If we're in an async context, we can't run this synchronously
                 # Return a placeholder that indicates async access is required
                 return {
-                    "error": "Cannot get status synchronously from async context. Use get_status_async() instead."
+                    "error": "Cannot get status synchronously from async context. "
+                    "Use get_status_async() instead."
                 }
             else:
                 return loop.run_until_complete(_get_status())

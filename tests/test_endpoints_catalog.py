@@ -7,7 +7,6 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 
 from tcgplayer_client.endpoints.catalog import CatalogEndpoints
-from tcgplayer_client.exceptions import ValidationError
 
 
 class TestCatalogEndpoints:

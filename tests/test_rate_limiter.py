@@ -3,12 +3,7 @@ Unit tests for the RateLimiter class.
 """
 
 import asyncio
-import time
-from unittest.mock import AsyncMock
-
 import pytest
-
-from tcgplayer_client.exceptions import RateLimitError
 from tcgplayer_client.rate_limiter import RateLimiter
 
 

@@ -10,9 +10,8 @@ import logging
 import logging.handlers
 import os
 import sys
-from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Optional, Union
+from typing import Dict, Optional, Union
 
 # Default logging configuration
 DEFAULT_LOG_LEVEL = "INFO"

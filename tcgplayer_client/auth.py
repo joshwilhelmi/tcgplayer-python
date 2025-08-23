@@ -8,7 +8,7 @@ from typing import Any, Dict, Optional
 
 import aiohttp
 
-from .exceptions import AuthenticationError, ConfigurationError
+from .exceptions import AuthenticationError
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +24,8 @@ class TCGPlayerAuth:
 
         Args:
             client_id: TCGPlayer API client ID (defaults to TCGPLAYER_CLIENT_ID env var)
-            client_secret: TCGPlayer API client secret (defaults to TCGPLAYER_CLIENT_SECRET env var)
+            client_secret: TCGPlayer API client secret (defaults to
+            TCGPLAYER_CLIENT_SECRET env var)
         """
         self.client_id = client_id or os.getenv("TCGPLAYER_CLIENT_ID")
         self.client_secret = client_secret or os.getenv("TCGPLAYER_CLIENT_SECRET")

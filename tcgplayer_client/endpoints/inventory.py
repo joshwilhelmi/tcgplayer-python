@@ -7,7 +7,7 @@ This module contains all inventory-related operations including:
 - Product relationships
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 from ..client import TCGPlayerClient
 

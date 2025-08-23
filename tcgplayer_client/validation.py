@@ -186,7 +186,8 @@ class ParameterValidator:
             for i, item in enumerate(value):
                 if not isinstance(item, item_type):
                     raise ValidationError(
-                        f"{param_name}[{i}] must be {item_type.__name__}, got {type(item).__name__}"
+                        f"{param_name}[{i}] must be {item_type.__name__}, "
+                        f"got {type(item).__name__}"
                     )
 
         return value

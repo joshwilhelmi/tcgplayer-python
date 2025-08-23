@@ -8,7 +8,7 @@ This module contains all store-related operations including:
 - Shipping and feedback
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 from ..client import TCGPlayerClient
 

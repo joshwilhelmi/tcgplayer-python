@@ -2,19 +2,12 @@
 Unit tests for the main TCGPlayerClient class.
 """
 
-import asyncio
-from unittest.mock import AsyncMock, MagicMock, patch
-
 import pytest
-from aiohttp import ClientError, ClientResponseError
 
 from tcgplayer_client import TCGPlayerClient
 from tcgplayer_client.exceptions import (
-    APIError,
     AuthenticationError,
-    NetworkError,
     RateLimitError,
-    TCGPlayerError,
 )
 
 

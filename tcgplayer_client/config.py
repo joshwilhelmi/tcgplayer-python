@@ -6,12 +6,16 @@ environment variables, configuration files, and runtime configuration.
 """
 
 import json
+import logging
 import os
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Dict, Optional, Union
 
 from .exceptions import ConfigurationError
+
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -68,8 +72,11 @@ class ClientConfig:
         # Enforce TCGPlayer's absolute maximum rate limit
         if self.max_requests_per_second > 10:
             logger.warning(
-                f"Configuration rate limit {self.max_requests_per_second} req/s exceeds TCGPlayer's maximum of 10 req/s. "
-                f"Rate limit has been capped to 10 req/s to prevent API violations."
+                f"Configuration rate limit "
+                f"{self.max_requests_per_second} req/s exceeds "
+                f"TCGPlayer's maximum of 10 req/s. "
+                f"Rate limit has been capped to 10 req/s to prevent API "
+                f"violations."
             )
             self.max_requests_per_second = 10
 

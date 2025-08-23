@@ -2,16 +2,9 @@
 Unit tests for the TCGPlayerAuth class.
 """
 
-import asyncio
-from unittest.mock import AsyncMock, MagicMock, patch
-
 import pytest
-from aiohttp import ClientError
 
 from tcgplayer_client.auth import TCGPlayerAuth
-from tcgplayer_client.exceptions import AuthenticationError
-
-from .conftest import MockAsyncContextManager
 
 
 class TestTCGPlayerAuth:

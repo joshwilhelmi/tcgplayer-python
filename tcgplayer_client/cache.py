@@ -11,9 +11,7 @@ import json
 import time
 from collections import OrderedDict
 from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, List, Optional, Union
-
-from .exceptions import ConfigurationError
+from typing import Any, Dict, List, Optional
 
 
 @dataclass
@@ -328,15 +326,16 @@ class ResponseCache:
         # Start cleanup task if not already started
         if self._cleanup_task is None:
             self._start_cleanup_task()
+
         """
         Get cached response if available.
-        
+
         Args:
             endpoint: API endpoint
             params: Query parameters
             method: HTTP method
             data: Request body data
-            
+
         Returns:
             Cached response or None
         """
@@ -358,7 +357,7 @@ class ResponseCache:
             self._start_cleanup_task()
         """
         Cache a response if it's cacheable.
-        
+
         Args:
             endpoint: API endpoint
             params: Query parameters
@@ -367,7 +366,7 @@ class ResponseCache:
             response: Response to cache
             status_code: HTTP status code
             custom_ttl: Custom TTL override
-            
+
         Returns:
             True if response was cached, False otherwise
         """
