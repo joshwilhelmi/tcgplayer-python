@@ -22,7 +22,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/joshwilhelmi/tcgplayer-python",
-    packages=find_packages(where="."),
+    packages=find_packages(where=".", include=["tcgplayer_client*"]),
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",

@@ -60,8 +60,8 @@ Changelog = "https://github.com/joshwilhelmi/tcgplayer-python/blob/main/CHANGELO
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["*"]
-exclude = ["tests*", "venv*", "*.egg-info*", "dist*"]
+include = ["tcgplayer_client*"]
+exclude = ["tests*", "venv*", "*.egg-info*", "dist*", "old*"]
 
 [tool.setuptools.package-data]
 "*" = ["py.typed"]
