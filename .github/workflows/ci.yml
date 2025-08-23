@@ -33,7 +33,7 @@ jobs:
 
     - name: Run tests
       run: |
-        pytest --cov=tcgplayer_client --cov-report=term-missing
+        python -m pytest --cov=tcgplayer_client --cov-report=term-missing
 
   lint:
     name: Lint and Format Check
