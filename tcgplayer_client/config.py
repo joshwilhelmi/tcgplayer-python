@@ -14,7 +14,6 @@ from typing import Any, Dict, Optional, Union
 
 from .exceptions import ConfigurationError
 
-
 logger = logging.getLogger(__name__)
 
 

@@ -21,7 +21,6 @@ from .exceptions import (
     RetryExhaustedError,
     TimeoutError,
 )
-
 from .rate_limiter import RateLimiter
 from .session_manager import SessionManager
 

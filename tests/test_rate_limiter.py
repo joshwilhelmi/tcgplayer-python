@@ -3,7 +3,9 @@ Unit tests for the RateLimiter class.
 """
 
 import asyncio
+
 import pytest
+
 from tcgplayer_client.rate_limiter import RateLimiter
 
 
