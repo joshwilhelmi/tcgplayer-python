@@ -236,6 +236,12 @@ Based on code review, core dependencies include:
    - **Code Quality**: Automated formatting, linting, and type checking
    - **Test Categories**: Authentication, rate limiting, caching, error handling
    - **Coverage Goals**: Critical paths 100%, new features 90%+
+   - **Comprehensive Test Suite**: Create automated test suite similar to MCP server testing
+     - Test all endpoint methods with real-world Magic card scenarios
+     - Validate authentication flows, rate limiting, and error handling
+     - Test caching behavior and session management
+     - Benchmark performance for common operations
+     - Generate detailed test reports with success/failure analysis
 
 ### Phase 9: Ecosystem Integration (LOW PRIORITY)
 1. **IDE Support** - Developer tooling

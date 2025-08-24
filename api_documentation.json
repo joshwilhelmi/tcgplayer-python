@@ -1,0 +1,332 @@
+[
+    {
+      "title": "Authorize an Application",
+      "method": "POST",
+      "api_path": "https://api.tcgplayer.com/app/authorize/{authCode}",
+      "docs_url": "https://docs.tcgplayer.com/reference/app_authorizeapplication"
+    },
+  
+    {
+      "title": "List All Categories",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/catalog/categories",
+      "docs_url": "https://docs.tcgplayer.com/reference/catalog_getcategories-1"
+    },
+    {
+      "title": "Get Category Details",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/catalog/categories/{categoryIds}",
+      "docs_url": "https://docs.tcgplayer.com/reference/catalog_getcategory-1"
+    },
+    {
+      "title": "Get Category Search Manifest",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/v1.39.0/catalog/categories/{categoryId}/search/manifest",
+      "docs_url": "https://docs.tcgplayer.com/docs/advanced-search"
+    },
+    {
+      "title": "Search Category Products",
+      "method": "POST",
+      "api_path": "https://api.tcgplayer.com/v1.39.0/catalog/categories/{categoryId}/search",
+      "docs_url": "https://docs.tcgplayer.com/docs/advanced-search"
+    },
+    {
+      "title": "List All Category Media",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/catalog/categories/{categoryId}/media",
+      "docs_url": "https://docs.tcgplayer.com/reference/catalog_getcategorymedia"
+    },
+  
+    {
+      "title": "List All Products",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/catalog/products",
+      "docs_url": "https://docs.tcgplayer.com/reference/catalog_getproducts-1"
+    },
+    {
+      "title": "Get Product Details",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/catalog/products/{productIds}",
+      "docs_url": "https://docs.tcgplayer.com/reference/catalog_getproduct-1"
+    },
+    {
+      "title": "Get Product Details By GTIN",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/catalog/products/gtin/{gtin}",
+      "docs_url": "https://docs.tcgplayer.com/reference/catalog_getproductbygtin-1"
+    },
+    {
+      "title": "List Product SKUs",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/catalog/products/{productIds}/skus",
+      "docs_url": "https://docs.tcgplayer.com/reference/catalog_getskusbyproductid"
+    },
+    {
+      "title": "List Related Products",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/catalog/products/{productIds}/related",
+      "docs_url": "https://docs.tcgplayer.com/reference/catalog_getproductsalsopurchasedbyproductid-1"
+    },
+    {
+      "title": "List All Product Media Types",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/catalog/products/{productId}/media",
+      "docs_url": "https://docs.tcgplayer.com/reference/catalog_getproductmedia"
+    },
+    {
+      "title": "Get SKU details",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/catalog/skus/{skuIds}",
+      "docs_url": "https://docs.tcgplayer.com/reference/catalog_getskus"
+    },
+    {
+      "title": "List Conditions",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/catalog/conditions",
+      "docs_url": "https://docs.tcgplayer.com/reference/catalog_getconditions"
+    },
+  
+    {
+      "title": "Get ProductList By Id",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/inventory/productlists/{productListId}",
+      "docs_url": "https://docs.tcgplayer.com/reference/inventory_getproductlistbyid-1"
+    },
+    {
+      "title": "Get ProductList By Key",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/inventory/productlists/key/{productListKey}",
+      "docs_url": "https://docs.tcgplayer.com/reference/inventory_getproductlistbykey-1"
+    },
+    {
+      "title": "List All ProductLists",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/inventory/productLists",
+      "docs_url": "https://docs.tcgplayer.com/reference/inventory_getproductlist-1"
+    },
+    {
+      "title": "Create ProductList",
+      "method": "POST",
+      "api_path": "https://api.tcgplayer.com/inventory/productlists",
+      "docs_url": "https://docs.tcgplayer.com/reference/inventory_createproductlist-1"
+    },
+  
+    {
+      "title": "Get Market Price by SKU",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/pricing/marketprices/{productconditionId}",
+      "docs_url": "https://docs.tcgplayer.com/reference/pricing_getmarketpricebyproductconditionid-1"
+    },
+    {
+      "title": "List Product Prices by Group",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/pricing/group/{groupId}",
+      "docs_url": "https://docs.tcgplayer.com/reference/pricing_getgroupprices"
+    },
+    {
+      "title": "List Product Market Prices",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/pricing/product/{productIds}",
+      "docs_url": "https://docs.tcgplayer.com/reference/pricing_getproductprices-1"
+    },
+    {
+      "title": "List SKU Market Prices",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/pricing/marketprices/skus",
+      "docs_url": "https://docs.tcgplayer.com/reference/pricing_getproductconditionprices-1"
+    },
+
+  
+    {
+      "title": "Search Stores",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstores-1"
+    },
+    {
+      "title": "Get Free Shipping Option",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/shipping/free",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_freeshippingoptions-1"
+    },
+    {
+      "title": "Get Store Address",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/address",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstoreaddress-1"
+    },
+    {
+      "title": "Get Store Feedback",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/feedback",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstorefeedback-1"
+    },
+    {
+      "title": "Set Store Status",
+      "method": "PUT",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/status",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_setstorestatus-1"
+    },
+    {
+      "title": "Get Customer Summary",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/customerSummary",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstorecustomer-1"
+    },
+    {
+      "title": "Search Store Customers",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/customers",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstorecustomers-1"
+    },
+    {
+      "title": "Get Customer Addresses",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/customers/addresses",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstorecustomeraddresses-1"
+    },
+    {
+      "title": "Get Customer Orders",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/customers/orders",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstorecustomerordersummary-1"
+    },
+    {
+      "title": "Get Store Info",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKeys}",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstoresbystorekey-1"
+    },
+    {
+      "title": "Get Product Inventory Quantities",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/inventory/quantities",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getinventoryproductquantity-1"
+    },
+    {
+      "title": "List Product Summary",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/products/summary",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstoreinventory-1"
+    },
+    {
+      "title": "List Product SKUs (Store)",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/products/skus",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstoreproductskus-1"
+    },
+    {
+      "title": "List Related Products (Store)",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/products/related",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getrelatedproducts-1"
+    },
+    {
+      "title": "List Shipping Options",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/shipping/options",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_shippingoptions-1"
+    },
+    {
+      "title": "Get SKU Quantity",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/sku/{skuId}/quantity",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getinventoryskuquantity-1"
+    },
+    {
+      "title": "Increment SKU Inventory Quantity",
+      "method": "POST",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/sku/{skuId}/quantity/increment",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_updatestoreskuquantity-1"
+    },
+    {
+      "title": "Update SKU Inventory",
+      "method": "PUT",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/inventory/sku",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_createstoresku-1"
+    },
+    {
+      "title": "Batch Update Store SKU Prices",
+      "method": "POST",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/prices/batch",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_batchupdatestoreskuprices-1"
+    },
+    {
+      "title": "Update SKU Inventory Price",
+      "method": "PUT",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/sku/{skuId}/price",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_updatestoreskuprice-1"
+    },
+    {
+      "title": "List SKU List Price",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/prices/sku/list",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getinventoryskuprices-1"
+    },
+    {
+      "title": "Get SKU List Price",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/sku/{skuId}/price",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getinventoryskuprice-1"
+    },
+    {
+      "title": "List All Groups (Store)",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/groups",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstoregroups-1"
+    },
+    {
+      "title": "List All Categories (Store)",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/categories",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstorecategories"
+    },
+    {
+      "title": "Search Custom Listings",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/listings/custom/search",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getcustomlisting"
+    },
+    {
+      "title": "Get Order Manifest",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/orders/manifest",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstoreordermanifest-1"
+    },
+    {
+      "title": "Get Order Details",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/orders/{orderId}",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstoreordersbyordernumber-1"
+    },
+    {
+      "title": "Get Order Feedback",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/orders/{orderId}/feedback",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstoreorderfeedback-1"
+    },
+    {
+      "title": "Search Orders",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/orders",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstoreorders-1"
+    },
+    {
+      "title": "Get Order Items",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/orders/{orderId}/items",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstoreorderlineitems-1"
+    },
+    {
+      "title": "Get Order Tracking Numbers",
+      "method": "GET",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/orders/{orderId}/tracking",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_getstoreordertracking-1"
+    },
+    {
+      "title": "Add Order Tracking Number",
+      "method": "POST",
+      "api_path": "https://api.tcgplayer.com/stores/{storeKey}/orders/{orderId}/tracking",
+      "docs_url": "https://docs.tcgplayer.com/reference/stores_createstoreordertracking-1"
+    }
+  ]
