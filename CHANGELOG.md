@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2024-08-23
+
+### Breaking Changes
+- **Removed Deprecated Buylist Functionality**: All buylist-related endpoints and methods have been removed
+  - Buylist functionality was discontinued by TCGPlayer and is no longer supported
+  - This affects the following methods in `PricingEndpoints`:
+    - `get_buylist_prices()` - Removed
+    - `get_sku_buylist_prices()` - Removed  
+    - `get_product_buylist_prices_by_group()` - Removed
+  - Buylist endpoints removed from API documentation
+
+### Changed
+- **API Endpoint Updates**: Updated market prices endpoint to use correct API path
+  - `get_market_prices()` now uses `/pricing/product/{productIds}` instead of `/pricing/marketprices/skus`
+  - Improved API compliance with TCGPlayer's current endpoint structure
+
+### Added
+- **Comprehensive API Documentation**: Added `api_documentation.json` with complete endpoint reference
+  - All 67 documented endpoints with full details
+  - Includes method, path, and documentation URLs
+  - Excludes deprecated buylist endpoints
+
+### Technical
+- **Code Quality**: Maintained 100% test coverage (90 tests passing)
+- **Documentation**: Updated project status and removed buylist references
+- **Compatibility**: Requires Python 3.8+ (no changes to minimum version)
+
 ## [1.0.1] - 2024-12-19
 
 ### Fixed
