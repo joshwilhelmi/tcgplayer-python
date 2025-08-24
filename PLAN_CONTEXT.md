@@ -95,7 +95,7 @@ tcgplayer_client/
 │   ├── inventory.py
 │   ├── orders.py
 │   ├── stores.py
-│   └── buylist.py
+│   └── pricing.py         # Pricing operations (market prices, price guides)
 ├── tests/
 ├── pyproject.toml
 ├── requirements.txt

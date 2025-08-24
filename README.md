@@ -14,13 +14,20 @@
 
 **This client automatically enforces this limit to protect your API access.**
 
+## 🚨 **Version 2.0.0 Breaking Changes**
+
+**This is a major version update with breaking changes:**
+- **Buylist functionality has been removed** - TCGPlayer discontinued buylist services
+- **API endpoint updates** - Market prices endpoint now uses correct API path
+- **See [CHANGELOG.md](CHANGELOG.md) for complete details**
+
 ---
 
 A comprehensive, production-ready Python client library for the TCGplayer API with async support, intelligent rate limiting, caching, and comprehensive endpoint coverage. Built for developers who need reliable, scalable access to TCGplayer's trading card data.
 
 ## 🚀 Features
 
-- **🔌 Full API Coverage**: All 67 documented TCGplayer API endpoints with comprehensive error handling
+- **🔌 Full API Coverage**: All 55+ documented TCGplayer API endpoints with comprehensive error handling (buylist endpoints removed - discontinued by TCGPlayer)
 - **⚡ Async/Await Support**: Built with modern Python async patterns for high-performance applications
 - **🔄 Intelligent Rate Limiting**: Adaptive request throttling that respects API limits and prevents rate limit errors
 - **💾 Smart Caching**: Configurable response caching with TTL and LRU eviction for improved performance
@@ -54,6 +61,22 @@ pip install -e ".[dev]"
 ```
 
 ## 🚀 Quick Start
+
+### Migration from v1.x
+
+If you're upgrading from version 1.x, be aware of these breaking changes:
+
+```python
+# ❌ OLD (v1.x) - Buylist methods (no longer available)
+# await client.endpoints.buylist.get_buylist_prices([12345])
+# await client.endpoints.pricing.get_buylist_prices([12345])
+
+# ✅ NEW (v2.0.0) - Market prices only
+await client.endpoints.pricing.get_market_prices([12345])
+await client.endpoints.pricing.get_sku_market_prices([67890])
+```
+
+**Note**: Buylist functionality was discontinued by TCGPlayer and has been removed from this client.
 
 ### Basic Usage
 
@@ -126,7 +149,7 @@ The client provides organized access to all TCGplayer API endpoints through spec
 ### 💰 Pricing Endpoints
 - **Market Prices**: Current market pricing data
 - **Price Guides**: Historical price trends and guides
-- **Buylist Prices**: Store buylist pricing information
+- **Market Prices**: Current market pricing information
 
 ### 🏪 Store Endpoints
 - **Store Information**: Store details and metadata
@@ -143,10 +166,10 @@ The client provides organized access to all TCGplayer API endpoints through spec
 - **Stock Levels**: Current stock quantities and availability
 - **Inventory Analytics**: Inventory performance metrics
 
-### 💳 Buylist Endpoints
-- **Buylist Operations**: Submit and manage buylist requests
-- **Buylist Pricing**: Current buylist offer prices
-- **Buylist History**: Historical buylist activity
+### 💳 Pricing Endpoints
+- **Market Prices**: Current market pricing data
+- **Price Guides**: Historical price trends and guides
+- **SKU Pricing**: Product variant pricing information
 
 ## ⚙️ Configuration
 
@@ -533,7 +556,7 @@ tcgplayer_client/
     ├── stores.py          # Store operations
     ├── orders.py          # Order operations
     ├── inventory.py       # Inventory operations
-    └── buylist.py         # Buylist operations
+    └── pricing.py         # Pricing operations (market prices, price guides)
 ```
 
 ### Design Patterns
