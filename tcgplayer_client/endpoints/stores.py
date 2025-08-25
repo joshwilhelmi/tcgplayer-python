@@ -9,7 +9,7 @@ This module contains all store-related operations including:
 - Store authorization workflow
 """
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from ..client import TCGPlayerClient
 
@@ -319,7 +319,7 @@ class StoreEndpoints:
         )
 
     async def search_store_orders(
-        self, store_key: str, search_term: str | None = None
+        self, store_key: str, search_term: Optional[str] = None
     ) -> Dict[str, Any]:
         """Search store orders using storeKey."""
         params = {}
