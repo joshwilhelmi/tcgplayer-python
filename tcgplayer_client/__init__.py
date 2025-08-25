@@ -53,7 +53,7 @@ from .validation import (
     validate_positive_integer,
 )
 
-__version__ = "2.0.0"
+__version__ = "2.0.1"
 __author__ = "Josh Wilhelmi"
 __description__ = "Python client library for TCGPlayer API"
 
