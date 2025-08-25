@@ -87,22 +87,22 @@ import-sort-check:
 # Markdown Linting
 markdown:
 	@echo "📝 Running markdownlint..."
-	@if command -v markdownlint >/dev/null 2>&1; then \
-		markdownlint *.md || true; \
+	@if command -v pymarkdownlnt >/dev/null 2>&1; then \
+		pymarkdownlnt scan *.md || true; \
 		echo "✅ Markdown linting complete"; \
 	else \
-		echo "⚠️  markdownlint not available - skipping"; \
-		echo "   Install with: pip install markdownlint-cli"; \
+		echo "⚠️  pymarkdownlnt not available - skipping"; \
+		echo "   Install with: pip install pymarkdownlnt"; \
 	fi
 
 markdown-check:
 	@echo "🔍 Checking markdown formatting..."
-	@if command -v markdownlint >/dev/null 2>&1; then \
-		markdownlint *.md --fix || true; \
+	@if command -v pymarkdownlnt >/dev/null 2>&1; then \
+		pymarkdownlnt scan *.md || true; \
 		echo "✅ Markdown formatting check passed"; \
 	else \
-		echo "⚠️  markdownlint not available - skipping"; \
-		echo "   Install with: pip install markdownlint-cli"; \
+		echo "⚠️  pymarkdownlnt not available - skipping"; \
+		echo "   Install with: pip install pymarkdownlnt"; \
 	fi
 
 # Testing

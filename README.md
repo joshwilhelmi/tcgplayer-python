@@ -14,11 +14,11 @@ isort](<https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&label
 **TCGplayer's API enforces a hard maximum of 10 requests per second.** Exceeding
 this limit can result in:
 
-- **API access being permanently revoked**
-- **Account suspension**
-- **Legal consequences**
+- API access being permanently revoked
+- Account suspension
+- Legal consequences
 
-**This client automatically enforces this limit to protect your API access.**
+This client automatically enforces this limit to protect your API access.
 
 A comprehensive, production-ready Python client library for the TCGplayer API
 with async support, intelligent rate limiting, caching, and comprehensive

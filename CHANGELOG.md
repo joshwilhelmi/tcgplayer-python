@@ -22,25 +22,29 @@ Versioning](<https://semver.org/spec/v2.0.0.html).>
 
 ### Technical Improvements
 
-- **Dependency Test Robustness**: Enhanced dependency tests to work in both local and CI environments
-- **CI Pipeline Stability**: All tests now pass consistently across different GitHub Actions Python versions
-- **Error Handling**: Better error messages and graceful degradation for missing dependencies
+- **Dependency Test Robustness**: Enhanced dependency tests to work in both local
+  and CI environments
+- **CI Pipeline Stability**: All tests now pass consistently across different
+  GitHub Actions Python versions
+- **Error Handling**: Better error messages and graceful degradation for missing
+  dependencies
 
 ## [2.0.2] - 2025-08-25
 
-### Fixed
+### Issues Resolved
 
-- **GitHub Actions Test Failures**: Resolved various CI environment compatibility issues
+- **GitHub Actions Test Failures**: Resolved various CI environment compatibility
+  issues
   - Fixed missing `pkg_resources` module errors
   - Fixed missing build tools (`wheel`, `build`) errors
   - Fixed setuptools version compatibility issues
 
-## [2.0.1] - 2024-08-24
+## [2.0.1] - 2025-08-24
 
-### Fixed
+### API Changes
 
 - **Complete Buylist API Removal**: Fully removed all remaining buylist API
-implementation
+  implementation
   - Removed `BuylistEndpoints` class and all buylist methods
   - Updated client initialization to exclude buylist endpoints
   - Removed buylist imports from endpoints `__init__.py`
@@ -48,23 +52,14 @@ implementation
   - Cleaned up MCP server models and tool metadata
   - All tests now pass without buylist functionality
 
-### Technical Improvements
-
-- **Code Cleanup**: Removed 90+ lines of unused buylist code
-- **Test Updates**: Updated 90 test files to remove buylist expectations
-- **MCP Integration**: Updated MCP server to exclude buylist operations
-- **Documentation**: Removed buylist references from tool metadata and models
-
-## [2.0.1] - 2025-08-24
-
 ### Added
 
 - **Automatic PyPI Publishing**: Complete CI/CD pipeline for automatic package
-distribution
+  distribution
 - **Local Testing Pipeline**: Comprehensive local CI pipeline that mimics GitHub
-Actions
+  Actions
 - **Code Quality Tools**: Integrated Black, isort, Flake8, MyPy, Bandit, and
-Semgrep
+  Semgrep
 - **Security Scanning**: Automated security checks with Bandit and Semgrep
 - **Pre-commit Hooks**: Automated code quality checks before commits
 - **Release Automation**: Scripts for automated release process
@@ -72,18 +67,18 @@ Semgrep
 ### Technical Enhancements
 
 - **CI/CD Pipeline**: GitHub Actions workflows for testing, security, and
-publishing
+  publishing
 - **Documentation**: Comprehensive guides for local testing and PyPI setup
 - **Code Formatting**: Standardized code formatting across the entire codebase
 - **Markdown Quality**: Fixed markdownlint issues and improved documentation
-structure
+  structure
 
-### Issues Resolved
+### Security & Build Improvements
 
 - **Security Scanning**: Resolved Bandit false positives for public API URLs
 - **CodeQL Integration**: Updated to v3 to fix deprecation warnings
 - **Package Building**: Removed redundant setup.py, using pyproject.toml
-exclusively
+  exclusively
 - **Dependency Management**: Created requirements-dev.txt for development tools
 
 ---
