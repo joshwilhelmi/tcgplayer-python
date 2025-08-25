@@ -28,7 +28,6 @@ class TestTCGPlayerClient:
         assert hasattr(client.endpoints, "stores")
         assert hasattr(client.endpoints, "orders")
         assert hasattr(client.endpoints, "inventory")
-        assert hasattr(client.endpoints, "buylist")
 
     def test_client_initialization_with_auth(self):
         """Test client initialization with authentication credentials."""
@@ -145,7 +144,6 @@ class TestTCGPlayerClient:
         assert tcgplayer_client.base_url == "https://api.tcgplayer.com"
         assert hasattr(tcgplayer_client, "endpoints")
         assert hasattr(tcgplayer_client.endpoints, "catalog")
-        assert hasattr(tcgplayer_client.endpoints, "buylist")
 
     def test_client_context_manager(self):
         """Test client as context manager."""

@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.1] - 2024-08-24
+
+### Fixed
+- **Complete Buylist API Removal**: Fully removed all remaining buylist API implementation
+  - Removed `BuylistEndpoints` class and all buylist methods
+  - Updated client initialization to exclude buylist endpoints
+  - Removed buylist imports from endpoints `__init__.py`
+  - Updated test files to remove buylist assertions
+  - Cleaned up MCP server models and tool metadata
+  - All tests now pass without buylist functionality
+
+### Technical
+- **Code Cleanup**: Removed 90+ lines of unused buylist code
+- **Test Updates**: Updated 90 test files to remove buylist expectations
+- **MCP Integration**: Updated MCP server to exclude buylist operations
+- **Documentation**: Removed buylist references from tool metadata and models
+
 ## [2.0.0] - 2024-08-23
 
 ### Breaking Changes

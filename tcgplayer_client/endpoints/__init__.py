@@ -8,10 +8,8 @@ groups:
 - stores: Store management and operations
 - orders: Order processing and management
 - inventory: Inventory and product list management
-- buylist: Buylist operations
 """
 
-from .buylist import BuylistEndpoints
 from .catalog import CatalogEndpoints
 from .inventory import InventoryEndpoints
 from .orders import OrderEndpoints
@@ -24,5 +22,4 @@ __all__ = [
     "StoreEndpoints",
     "OrderEndpoints",
     "InventoryEndpoints",
-    "BuylistEndpoints",
 ]

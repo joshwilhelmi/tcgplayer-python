@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tcgplayer_client"
-version = "2.0.0"
+version = "2.0.1"
 description = "Python client library for TCGplayer API with async support, rate limiting, and comprehensive endpoint coverage"
 readme = "README.md"
 license = {text = "MIT"}

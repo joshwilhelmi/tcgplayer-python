@@ -105,6 +105,59 @@ class TCGPlayerAuth:
         """
         return self.access_token is not None
 
+    async def get_store_bearer_token(self, access_token: str) -> Dict[str, Any]:
+        """
+        Get a bearer token for store access using an access token.
+        
+        POST to: https://api.tcgplayer.com/token/access
+        Headers: X-Tcg-Access-Token: {access_token}
+        
+        Args:
+            access_token: The access token received from store authorization
+            
+        Returns:
+            Dictionary containing the bearer token result
+            
+        Raises:
+            AuthenticationError: If token exchange fails
+        """
+        if not access_token:
+            raise AuthenticationError("Access token is required for store authorization")
+
+        token_url = "https://api.tcgplayer.com/token/access"
+        headers = {"X-Tcg-Access-Token": access_token}
+
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.post(token_url, headers=headers) as response:
+                    if response.status == 200:
+                        result = await response.json()
+                        bearer_token = result.get("access_token")
+                        
+                        if bearer_token:
+                            logger.info("Successfully obtained store bearer token")
+                            return {
+                                "success": True,
+                                "message": "Store bearer token obtained successfully",
+                                "bearer_token": bearer_token,
+                                "token_type": result.get("token_type", "bearer"),
+                                "expires_in": result.get("expires_in")
+                            }
+                        else:
+                            raise AuthenticationError(
+                                "No bearer token received from TCGPlayer API"
+                            )
+                    else:
+                        error_text = await response.text()
+                        raise AuthenticationError(
+                            f"Token exchange failed: {response.status} - {error_text}"
+                        )
+        except aiohttp.ClientError as e:
+            raise AuthenticationError(f"Network error during token exchange: {e}")
+        except Exception as e:
+            logger.error(f"Token exchange error: {e}")
+            raise AuthenticationError(f"Token exchange failed: {e}")
+
     def clear_token(self) -> None:
         """Clear the current access token."""
         self.access_token = None

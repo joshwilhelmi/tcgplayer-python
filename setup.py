@@ -15,7 +15,7 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 
 setup(
     name="tcgplayer_client",
-    version="2.0.0",
+    version="2.0.1",
     author="Josh Wilhelmi",
     author_email="josh@gobby.ai",
     description="Python client library for TCGplayer API with async support, rate limiting, and comprehensive endpoint coverage",
