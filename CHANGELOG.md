@@ -51,7 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Includes method, path, and documentation URLs
   - Excludes deprecated buylist endpoints
 
-### Technical Details
+### Technical Status
 
 - **Code Quality**: Maintained 100% test coverage (90 tests passing)
 - **Documentation**: Updated project status and removed buylist references
@@ -81,7 +81,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2024-12-19
 
-### Added
+### Initial Features
 
 - Initial release of TCGplayer Client library
 - Full API coverage for all 67 documented endpoints

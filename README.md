@@ -60,8 +60,6 @@ pip install tcgplayer-client
 
 ```
 
-
-
 ## 🚀 Quick Start
 
 ### Migration from v1.x
