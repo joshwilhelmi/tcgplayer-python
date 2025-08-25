@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Cleaned up MCP server models and tool metadata
   - All tests now pass without buylist functionality
 
-### Technical
+### Technical Improvements
 
 - **Code Cleanup**: Removed 90+ lines of unused buylist code
 - **Test Updates**: Updated 90 test files to remove buylist expectations
@@ -51,7 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Includes method, path, and documentation URLs
   - Excludes deprecated buylist endpoints
 
-### Technical
+### Technical Details
 
 - **Code Quality**: Maintained 100% test coverage (90 tests passing)
 - **Documentation**: Updated project status and removed buylist references
@@ -59,7 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.1] - 2024-12-19
 
-### Fixed
+### Bug Fixes
 
 - **Code Quality**: Resolved all flake8 linting issues
   - Fixed line length violations (E501) across all modules
@@ -102,7 +102,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Inventory Endpoints**: Inventory management
 - **Buylist Endpoints**: Buylist operations
 
-### Technical
+### Technical Specifications
 
 - Built with Python 3.8+ support
 - Uses aiohttp for async HTTP requests
