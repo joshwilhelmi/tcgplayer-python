@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **MCP Integration**: Updated MCP server to exclude buylist operations
 - **Documentation**: Removed buylist references from tool metadata and models
 
-## [2.0.1] - 2025-08-25
+## [2.0.1] - 2025-08-24
 
 ### Added
 
@@ -53,7 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [2.0.0] - 2025-08-25
+## [2.0.0] - 2025-08-23
 
 ### Breaking Changes
 
@@ -84,7 +84,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Documentation**: Updated project status and removed buylist references
 - **Compatibility**: Requires Python 3.8+ (no changes to minimum version)
 
-## [1.0.1] - 2025-01-15
+## [1.0.1] - 2025-08-23
 
 ### Bug Fixes
 
@@ -106,7 +106,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added missing logger imports where needed
 - Maintained 100% test coverage (90 tests passing)
 
-## [1.0.0] - 2024-11-15
+## [1.0.0] - 2025-08-23
 
 ### Initial Features
 
