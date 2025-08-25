@@ -6,6 +6,7 @@ Currently supported versions of the TCGplayer Python Client:
 
 | Version | Supported          | Security Updates |
 | ------- | ------------------ | ---------------- |
+| 2.0.3   | :white_check_mark: | :white_check_mark: |
 | 2.0.2   | :white_check_mark: | :white_check_mark: |
 | 2.0.x   | :white_check_mark: | :white_check_mark: |
 | 1.0.x   | :x:                | :x:              |
