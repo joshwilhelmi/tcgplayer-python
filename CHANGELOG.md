@@ -37,14 +37,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Pre-commit Hooks**: Automated code quality checks before commits
 - **Release Automation**: Scripts for automated release process
 
-### Technical Improvements
+### Technical Enhancements
 
 - **CI/CD Pipeline**: GitHub Actions workflows for testing, security, and publishing
 - **Documentation**: Comprehensive guides for local testing and PyPI setup
 - **Code Formatting**: Standardized code formatting across the entire codebase
 - **Markdown Quality**: Fixed markdownlint issues and improved documentation structure
 
-### Fixed
+### Issues Resolved
 
 - **Security Scanning**: Resolved Bandit false positives for public API URLs
 - **CodeQL Integration**: Updated to v3 to fix deprecation warnings
@@ -71,12 +71,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `get_market_prices()` now uses `/pricing/product/{productIds}` instead of `/pricing/marketprices/skus`
   - Improved API compliance with TCGPlayer's current endpoint structure
 
-### Added
+### New Features
 
 - **Comprehensive API Documentation**: Added `api_documentation.json` with complete endpoint reference
-  - All 67 documented endpoints with full details
-  - Includes method, path, and documentation URLs
-  - Excludes deprecated buylist endpoints
+- All 67 documented endpoints with full details
+- Includes method, path, and documentation URLs
+- Excludes deprecated buylist endpoints
 
 ### Technical Status
 

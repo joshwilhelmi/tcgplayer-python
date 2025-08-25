@@ -15,8 +15,6 @@
 
 **This client automatically enforces this limit to protect your API access.**
 
-
-
 A comprehensive, production-ready Python client library for the TCGplayer API with async support, intelligent rate limiting, caching, and comprehensive endpoint coverage. Built for developers who need reliable, scalable access to TCGplayer's trading card data.
 
 ## 🚀 Features
