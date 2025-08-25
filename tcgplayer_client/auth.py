@@ -17,7 +17,10 @@ class TCGPlayerAuth:
     """Handles authentication with the TCGPlayer API."""
 
     def __init__(
-        self, client_id: Optional[str] = None, client_secret: Optional[str] = None
+        self, 
+        client_id: Optional[str] = None, 
+        client_secret: Optional[str] = None,
+        base_url: str = "https://api.tcgplayer.com"
     ) -> None:
         """
         Initialize the authentication handler.
@@ -26,9 +29,11 @@ class TCGPlayerAuth:
             client_id: TCGPlayer API client ID (defaults to TCGPLAYER_CLIENT_ID env var)
             client_secret: TCGPlayer API client secret (defaults to
             TCGPLAYER_CLIENT_SECRET env var)
+            base_url: Base URL for TCGPlayer API (defaults to production API)
         """
         self.client_id = client_id or os.getenv("TCGPLAYER_CLIENT_ID")
         self.client_secret = client_secret or os.getenv("TCGPLAYER_CLIENT_SECRET")
+        self.base_url = base_url
         self.access_token: Optional[str] = None
 
         # For testing purposes, allow empty credentials but log a warning
@@ -51,7 +56,7 @@ class TCGPlayerAuth:
         if not self.client_id or not self.client_secret:
             raise AuthenticationError("No credentials available for authentication")
 
-        auth_url = "https://api.tcgplayer.com/token"
+        auth_url = f"{self.base_url}/token"
         auth_data = {
             "grant_type": "client_credentials",
             "client_id": self.client_id,
@@ -126,7 +131,7 @@ class TCGPlayerAuth:
                 "Access token is required for store authorization"
             )
 
-        token_url = "https://api.tcgplayer.com/token/access"
+        token_url = f"{self.base_url}/token/access"
         headers = {"X-Tcg-Access-Token": access_token}
 
         try:

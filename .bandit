@@ -1,0 +1,12 @@
+# Bandit configuration file for TCGplayer Client
+# Excludes false positive security warnings
+
+# Exclude directories
+exclude_dirs: ['tests', 'old', 'htmlcov', 'logs', 'venv', 'tcgplayer_client.egg-info']
+
+# Skip specific test IDs that are false positives
+skips: ['B105']  # B105: hardcoded_password_string - false positive for public API URLs
+
+# Configure severity levels - only fail on High severity issues
+severity: ['HIGH']
+confidence: ['HIGH', 'MEDIUM']

@@ -30,8 +30,8 @@ jobs:
     
     - name: Run Bandit (security linter)
       run: |
-        bandit -r tcgplayer_client/ -f json -o bandit-report.json || true
-        bandit -r tcgplayer_client/ -f txt
+        bandit -c .bandit -r tcgplayer_client/ -f json -o bandit-report.json || true
+        bandit -c .bandit -r tcgplayer_client/ -f txt
     
     - name: Run Safety (dependency vulnerability checker)
       run: |
