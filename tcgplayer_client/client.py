@@ -83,9 +83,9 @@ class TCGPlayerClient:
         # Initialize authentication (optional for testing)
         self.auth: Optional[TCGPlayerAuth] = (
             TCGPlayerAuth(
-                client_id or config.client_id, 
+                client_id or config.client_id,
                 client_secret or config.client_secret,
-                base_url=config.base_url
+                base_url=config.base_url,
             )
             if (client_id or config.client_id)
             and (client_secret or config.client_secret)

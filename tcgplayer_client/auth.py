@@ -17,10 +17,10 @@ class TCGPlayerAuth:
     """Handles authentication with the TCGPlayer API."""
 
     def __init__(
-        self, 
-        client_id: Optional[str] = None, 
+        self,
+        client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
-        base_url: str = "https://api.tcgplayer.com"
+        base_url: str = "https://api.tcgplayer.com",
     ) -> None:
         """
         Initialize the authentication handler.
