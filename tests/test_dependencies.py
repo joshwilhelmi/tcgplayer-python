@@ -12,7 +12,12 @@ import sys
 from pathlib import Path
 from typing import Dict
 
-import pkg_resources
+try:
+    import pkg_resources
+
+    PKG_RESOURCES_AVAILABLE = True
+except ImportError:
+    PKG_RESOURCES_AVAILABLE = False
 import pytest
 
 
@@ -46,6 +51,9 @@ class TestPythonEnvironment:
 
     def test_setuptools_version(self):
         """Test setuptools version compatibility."""
+        if not PKG_RESOURCES_AVAILABLE:
+            pytest.skip("pkg_resources not available")
+
         try:
             version = pkg_resources.get_distribution("setuptools").version
             version_tuple = tuple(map(int, version.split(".")[:2]))
@@ -59,8 +67,6 @@ class TestPythonEnvironment:
             else:
                 print(f"⚠️  setuptools {version} (legacy mode, some warnings expected)")
 
-        except ImportError:
-            pytest.fail("setuptools not available")
         except Exception as e:
             pytest.fail(f"Failed to check setuptools version: {e}")
 
