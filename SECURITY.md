@@ -6,7 +6,8 @@ Currently supported versions of the TCGplayer Python Client:
 
 | Version | Supported          | Security Updates |
 | ------- | ------------------ | ---------------- |
-| 1.0.x   | :white_check_mark: | :white_check_mark: |
+| 2.0.x   | :white_check_mark: | :white_check_mark: |
+| 1.0.x   | :x:                | :x:              |
 | < 1.0   | :x:                | :x:              |
 
 ## Reporting a Vulnerability
@@ -39,10 +40,11 @@ This project implements multiple layers of security:
 ### 🔒 **Code Security**
 
 - ✅ Automated security scanning with Bandit
-- ✅ Dependency vulnerability checks with Safety & pip-audit
+- ✅ Dependency vulnerability checks with pip-audit
 - ✅ Static analysis with Semgrep
-- ✅ Secret detection with TruffleHog
 - ✅ CodeQL analysis for vulnerability detection
+- ✅ Comprehensive dependency testing
+- ✅ Build system validation
 
 ### 🛡️ **CI/CD Security**
 
@@ -130,12 +132,15 @@ client = TCGPlayerClient()  # Uses environment variables
 # Check for vulnerabilities
 
 pip-audit
-safety check
+make security
 
 # Update dependencies
 
 pip install --upgrade package_name
 
+# Run dependency tests
+
+make test-deps
 ```
 
 ### 📦 **Trusted Sources**
@@ -177,5 +182,5 @@ This security policy is part of the TCGplayer Python Client project and is subje
 ---
 
 **Last Updated**: August 2025  
-**Version**: 1.0  
+**Version**: 2.0.2  
 **Maintainer**: Josh Wilhelmi (josh@gobby.ai)
