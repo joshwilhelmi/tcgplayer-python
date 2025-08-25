@@ -15,15 +15,7 @@
 
 **This client automatically enforces this limit to protect your API access.**
 
-## 🚨 **Version 2.0.1 Breaking Changes**
 
-**This is a major version update with breaking changes:**
-
-- **Buylist functionality has been removed** - TCGPlayer discontinued buylist services
-- **API endpoint updates** - Market prices endpoint now uses correct API path
-- **See [CHANGELOG.md](CHANGELOG.md) for complete details**
-
----
 
 A comprehensive, production-ready Python client library for the TCGplayer API with async support, intelligent rate limiting, caching, and comprehensive endpoint coverage. Built for developers who need reliable, scalable access to TCGplayer's trading card data.
 
