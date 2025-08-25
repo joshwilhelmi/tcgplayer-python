@@ -19,7 +19,7 @@ This guide explains how to set up automatic PyPI publishing for the TCGplayer Cl
 - Go to your GitHub repository: `https://github.com/joshwilhelmi/tcgplayer-python`
 - Click "Settings" → "Secrets and variables" → "Actions"
 - Click "New repository secret"
-- Name: `PYPI_API_TOKEN`
+- Name: `PYPI_TOKEN`
 - Value: Your PyPI API token (e.g., `pypi-...`)
 
 ## 🔄 How It Works
@@ -111,7 +111,7 @@ git push origin v2.0.2
 ```
 HTTPError: 403 Client Error: Invalid or non-existent authentication information
 ```
-**Solution**: Check that `PYPI_API_TOKEN` is correctly set in GitHub Secrets
+**Solution**: Check that `PYPI_TOKEN` is correctly set in GitHub Secrets
 
 #### **Package Already Exists**
 ```
@@ -130,7 +130,7 @@ ERROR: Failed building wheel for tcgplayer_client
 
 ### **Debugging Steps**
 1. **Check GitHub Actions**: Go to Actions tab in repository
-2. **Check Secrets**: Verify `PYPI_API_TOKEN` is set
+2. **Check Secrets**: Verify `PYPI_TOKEN` is set
 3. **Check Tag Format**: Ensure tag starts with `v` (e.g., `v2.0.2`)
 4. **Check Local Build**: Run `make build` locally first
 
