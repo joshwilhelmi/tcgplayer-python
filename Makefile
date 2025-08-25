@@ -35,10 +35,12 @@ help:
 	@echo "  ci               Run full CI pipeline (format + lint + type-check + test + security)"
 	@echo "  pre-commit       Run pre-commit checks"
 	@echo ""
-	@echo "Build & Distribution:"
+		@echo "Build & Distribution:"
 	@echo "  build            Build package"
 	@echo "  clean            Clean build artifacts"
-	@echo "  publish          Build and publish to PyPI (if configured)"
+	@echo "  release          Prepare release (build package)"
+	@echo "  release-check    Validate release readiness"
+	@echo "  release-auto     Show automated release info"
 
 # Installation
 install:
@@ -153,6 +155,29 @@ clean:
 	find . -type d -name __pycache__ -exec rm -rf {} +
 	find . -type f -name "*.pyc" -delete
 	@echo "✅ Cleanup complete"
+
+# Release Management
+release: clean build
+	@echo "🚀 Preparing release..."
+	@echo "✅ Package built and ready for distribution"
+	@echo "📋 Next steps:"
+	@echo "   1. git tag v<version>"
+	@echo "   2. git push origin v<version>"
+	@echo "   3. GitHub Actions will automatically publish to PyPI"
+
+release-check: clean build
+	@echo "🔍 Release validation..."
+	@echo "📦 Package built successfully"
+	@echo "🧪 Run 'make ci' to ensure all tests pass before releasing"
+
+release-auto:
+	@echo "🚀 Automated release process..."
+	@echo "📋 This will:"
+	@echo "   1. Run full CI pipeline"
+	@echo "   2. Build package"
+	@echo "   3. Create and push git tag"
+	@echo "   4. Trigger automatic PyPI publishing"
+	@echo "   Run: python scripts/release.py"
 
 # Quick fix for common issues
 fix: format import-sort
