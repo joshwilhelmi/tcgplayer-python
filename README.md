@@ -175,8 +175,6 @@ The client provides organized access to all TCGplayer API endpoints through spec
 - **Stock Levels**: Current stock quantities and availability
 - **Inventory Analytics**: Inventory performance metrics
 
-
-
 ## ⚙️ Configuration
 
 ### ⚠️ **Critical Rate Limiting Restriction**
@@ -858,5 +856,3 @@ See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes and improveme
 **Made with ❤️ by [Josh Wilhelmi](mailto:josh@gobby.ai)**
 
 *If you find this library helpful, please consider giving it a ⭐ on GitHub!*
-
-
