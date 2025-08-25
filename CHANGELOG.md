@@ -26,7 +26,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **MCP Integration**: Updated MCP server to exclude buylist operations
 - **Documentation**: Removed buylist references from tool metadata and models
 
-## [2.0.0] - 2024-08-23
+## [2.0.1] - 2025-08-25
+
+### Added
+
+- **Automatic PyPI Publishing**: Complete CI/CD pipeline for automatic package distribution
+- **Local Testing Pipeline**: Comprehensive local CI pipeline that mimics GitHub Actions
+- **Code Quality Tools**: Integrated Black, isort, Flake8, MyPy, Bandit, and Semgrep
+- **Security Scanning**: Automated security checks with Bandit and Semgrep
+- **Pre-commit Hooks**: Automated code quality checks before commits
+- **Release Automation**: Scripts for automated release process
+
+### Technical Improvements
+
+- **CI/CD Pipeline**: GitHub Actions workflows for testing, security, and publishing
+- **Documentation**: Comprehensive guides for local testing and PyPI setup
+- **Code Formatting**: Standardized code formatting across the entire codebase
+- **Markdown Quality**: Fixed markdownlint issues and improved documentation structure
+
+### Fixed
+
+- **Security Scanning**: Resolved Bandit false positives for public API URLs
+- **CodeQL Integration**: Updated to v3 to fix deprecation warnings
+- **Package Building**: Removed redundant setup.py, using pyproject.toml exclusively
+- **Dependency Management**: Created requirements-dev.txt for development tools
+
+---
+
+## [2.0.0] - 2025-08-25
 
 ### Breaking Changes
 
@@ -57,7 +84,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Documentation**: Updated project status and removed buylist references
 - **Compatibility**: Requires Python 3.8+ (no changes to minimum version)
 
-## [1.0.1] - 2024-12-19
+## [1.0.1] - 2025-01-15
 
 ### Bug Fixes
 
@@ -79,7 +106,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added missing logger imports where needed
 - Maintained 100% test coverage (90 tests passing)
 
-## [1.0.0] - 2024-12-19
+## [1.0.0] - 2024-11-15
 
 ### Initial Features
 
