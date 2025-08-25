@@ -2,8 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a
+Changelog](<https://keepachangelog.com/en/1.0.0/),>
+and this project adheres to [Semantic
+Versioning](<https://semver.org/spec/v2.0.0.html).>
 
 ## [Unreleased]
 
@@ -11,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- **Complete Buylist API Removal**: Fully removed all remaining buylist API implementation
+- **Complete Buylist API Removal**: Fully removed all remaining buylist API
+implementation
   - Removed `BuylistEndpoints` class and all buylist methods
   - Updated client initialization to exclude buylist endpoints
   - Removed buylist imports from endpoints `__init__.py`
@@ -30,25 +33,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Automatic PyPI Publishing**: Complete CI/CD pipeline for automatic package distribution
-- **Local Testing Pipeline**: Comprehensive local CI pipeline that mimics GitHub Actions
-- **Code Quality Tools**: Integrated Black, isort, Flake8, MyPy, Bandit, and Semgrep
+- **Automatic PyPI Publishing**: Complete CI/CD pipeline for automatic package
+distribution
+- **Local Testing Pipeline**: Comprehensive local CI pipeline that mimics GitHub
+Actions
+- **Code Quality Tools**: Integrated Black, isort, Flake8, MyPy, Bandit, and
+Semgrep
 - **Security Scanning**: Automated security checks with Bandit and Semgrep
 - **Pre-commit Hooks**: Automated code quality checks before commits
 - **Release Automation**: Scripts for automated release process
 
 ### Technical Enhancements
 
-- **CI/CD Pipeline**: GitHub Actions workflows for testing, security, and publishing
+- **CI/CD Pipeline**: GitHub Actions workflows for testing, security, and
+publishing
 - **Documentation**: Comprehensive guides for local testing and PyPI setup
 - **Code Formatting**: Standardized code formatting across the entire codebase
-- **Markdown Quality**: Fixed markdownlint issues and improved documentation structure
+- **Markdown Quality**: Fixed markdownlint issues and improved documentation
+structure
 
 ### Issues Resolved
 
 - **Security Scanning**: Resolved Bandit false positives for public API URLs
 - **CodeQL Integration**: Updated to v3 to fix deprecation warnings
-- **Package Building**: Removed redundant setup.py, using pyproject.toml exclusively
+- **Package Building**: Removed redundant setup.py, using pyproject.toml
+exclusively
 - **Dependency Management**: Created requirements-dev.txt for development tools
 
 ---
@@ -57,8 +66,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Breaking Changes
 
-- **Removed Deprecated Buylist Functionality**: All buylist-related endpoints and methods have been removed
-  - Buylist functionality was discontinued by TCGPlayer and is no longer supported
+- **Removed Deprecated Buylist Functionality**: All buylist-related endpoints
+and methods have been removed
+- Buylist functionality was discontinued by TCGPlayer and is no longer supported
   - This affects the following methods in `PricingEndpoints`:
     - `get_buylist_prices()` - Removed
     - `get_sku_buylist_prices()` - Removed  
@@ -67,13 +77,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **API Endpoint Updates**: Updated market prices endpoint to use correct API path
-  - `get_market_prices()` now uses `/pricing/product/{productIds}` instead of `/pricing/marketprices/skus`
+- **API Endpoint Updates**: Updated market prices endpoint to use correct API
+path
+- `get_market_prices()` now uses `/pricing/product/{productIds}` instead of
+`/pricing/marketprices/skus`
   - Improved API compliance with TCGPlayer's current endpoint structure
 
 ### New Features
 
-- **Comprehensive API Documentation**: Added `api_documentation.json` with complete endpoint reference
+- **Comprehensive API Documentation**: Added `api_documentation.json` with
+complete endpoint reference
 - All 67 documented endpoints with full details
 - Includes method, path, and documentation URLs
 - Excludes deprecated buylist endpoints
@@ -94,8 +107,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixed undefined variable references (F821)
   - Cleaned up trailing whitespace (W291, W293)
   - Fixed spacing issues (E302, E303)
-- **Import Cleanup**: Streamlined imports in test files, removing unused mock objects and exception classes
-- **Code Formatting**: Improved code readability with proper line breaks and consistent formatting
+- **Import Cleanup**: Streamlined imports in test files, removing unused mock
+objects and exception classes
+- **Code Formatting**: Improved code readability with proper line breaks and
+consistent formatting
 - **Documentation**: Fixed docstring line length issues for better readability
 
 ### Technical Details

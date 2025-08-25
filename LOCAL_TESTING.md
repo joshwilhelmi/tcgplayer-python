@@ -1,6 +1,8 @@
 # Local Testing Pipeline
 
-This document describes how to use the local testing pipeline that mimics exactly what GitHub Actions does, allowing you to catch issues before they reach the CI/CD pipeline.
+This document describes how to use the local testing pipeline that mimics
+exactly what GitHub Actions does, allowing you to catch issues before they reach
+the CI/CD pipeline.
 
 ## 🚀 Quick Start
 
@@ -188,7 +190,8 @@ pip install black flake8 isort mypy pytest bandit
 
 ### Dependency Conflicts
 
-Some tools may have version conflicts. The pipeline is designed to handle missing tools gracefully:
+Some tools may have version conflicts. The pipeline is designed to handle
+missing tools gracefully:
 
 - **Safety**: Optional dependency vulnerability checker
 - **Semgrep**: Advanced static analysis (installed by default)
@@ -270,14 +273,16 @@ pip install -r requirements-dev.txt
 
 ## 📚 Additional Resources
 
-- [Black Documentation](https://black.readthedocs.io/)
-- [isort Documentation](https://pycqa.github.io/isort/)
-- [Flake8 Documentation](https://flake8.pycqa.org/)
-- [MyPy Documentation](https://mypy.readthedocs.io/)
-- [Bandit Documentation](https://bandit.readthedocs.io/)
-- [Semgrep Documentation](https://semgrep.dev/docs/)
-- [pytest Documentation](https://docs.pytest.org/)
+- [Black Documentation](<https://black.readthedocs.io/)>
+- [isort Documentation](<https://pycqa.github.io/isort/)>
+- [Flake8 Documentation](<https://flake8.pycqa.org/)>
+- [MyPy Documentation](<https://mypy.readthedocs.io/)>
+- [Bandit Documentation](<https://bandit.readthedocs.io/)>
+- [Semgrep Documentation](<https://semgrep.dev/docs/)>
+- [pytest Documentation](<https://docs.pytest.org/)>
 
 ---
 
-**Remember**: The goal is to catch issues locally before they reach GitHub Actions. Run `make ci` before every commit to ensure your code is ready for the CI/CD pipeline!
+**Remember**: The goal is to catch issues locally before they reach GitHub
+Actions. Run `make ci` before every commit to ensure your code is ready for the
+CI/CD pipeline!

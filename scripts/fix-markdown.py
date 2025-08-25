@@ -3,113 +3,15 @@
 Markdown Lint Fixer
 
 Automatically fixes common markdownlint issues:
-- MD022: Add blank lines around headings
-- MD032: Add blank lines around lists
-- MD031: Add blank lines around code blocks
-- MD040: Add language to code blocks
+- MD013: Line length (break long lines)
+- MD026: Remove trailing punctuation from headings
+- MD034: Wrap bare URLs in angle brackets
 """
 
 import re
 import sys
 from pathlib import Path
-from typing import List, Tuple
-
-
-def fix_heading_spacing(content: str) -> str:
-    """Fix MD022: Add blank lines around headings."""
-    lines = content.split("\n")
-    fixed_lines = []
-
-    for i, line in enumerate(lines):
-        fixed_lines.append(line)
-
-        # If this is a heading, ensure blank lines around it
-        if re.match(r"^#{1,6}\s+", line):
-            # Add blank line above if not at start and previous line isn't blank
-            if i > 0 and lines[i - 1].strip() != "":
-                fixed_lines.insert(-1, "")
-
-            # Add blank line below if not at end and next line isn't blank
-            if i < len(lines) - 1 and lines[i + 1].strip() != "":
-                fixed_lines.append("")
-
-    return "\n".join(fixed_lines)
-
-
-def fix_list_spacing(content: str) -> str:
-    """Fix MD032: Add blank lines around lists."""
-    lines = content.split("\n")
-    fixed_lines = []
-
-    for i, line in enumerate(lines):
-        fixed_lines.append(line)
-
-        # If this is a list item, ensure blank lines around it
-        if re.match(r"^[\s]*[-*+]\s+", line) or re.match(r"^[\s]*\d+\.\s+", line):
-            # Add blank line above if not at start and previous line isn't blank
-            if (
-                i > 0
-                and lines[i - 1].strip() != ""
-                and not re.match(r"^[\s]*[-*+]\s+", lines[i - 1])
-                and not re.match(r"^[\s]*\d+\.\s+", lines[i - 1])
-            ):
-                fixed_lines.insert(-1, "")
-
-            # Add blank line below if not at end and next line isn't blank and isn't a list item
-            if (
-                i < len(lines) - 1
-                and lines[i + 1].strip() != ""
-                and not re.match(r"^[\s]*[-*+]\s+", lines[i + 1])
-                and not re.match(r"^[\s]*\d+\.\s+", lines[i + 1])
-            ):
-                fixed_lines.append("")
-
-    return "\n".join(fixed_lines)
-
-
-def fix_code_block_spacing(content: str) -> str:
-    """Fix MD031: Add blank lines around code blocks."""
-    lines = content.split("\n")
-    fixed_lines = []
-
-    for i, line in enumerate(lines):
-        fixed_lines.append(line)
-
-        # If this is a code block fence, ensure blank lines around it
-        if line.strip().startswith("```"):
-            # Add blank line above if not at start and previous line isn't blank
-            if i > 0 and lines[i - 1].strip() != "":
-                fixed_lines.insert(-1, "")
-
-            # Add blank line below if not at end and next line isn't blank
-            if i < len(lines) - 1 and lines[i + 1].strip() != "":
-                fixed_lines.append("")
-
-    return "\n".join(fixed_lines)
-
-
-def fix_code_block_language(content: str) -> str:
-    """Fix MD040: Add language to code blocks."""
-    lines = content.split("\n")
-    fixed_lines = []
-
-    for i, line in enumerate(lines):
-        if line.strip() == "```" and i < len(lines) - 1:
-            # Check if next line is not a language specifier
-            next_line = lines[i + 1].strip()
-            if (
-                next_line
-                and not re.match(r"^[a-zA-Z0-9+#]+$", next_line)
-                and not next_line.startswith("```")
-            ):
-                # Add a generic language specifier
-                fixed_lines.append("```text")
-            else:
-                fixed_lines.append(line)
-        else:
-            fixed_lines.append(line)
-
-    return "\n".join(fixed_lines)
+from typing import List
 
 
 def fix_line_length(content: str, max_length: int = 80) -> str:
@@ -142,6 +44,36 @@ def fix_line_length(content: str, max_length: int = 80) -> str:
     return "\n".join(fixed_lines)
 
 
+def fix_heading_punctuation(content: str) -> str:
+    """Fix MD026: Remove trailing punctuation from headings."""
+    lines = content.split("\n")
+    fixed_lines = []
+
+    for line in lines:
+        # Check if this is a heading
+        if re.match(r"^#{1,6}\s+", line):
+            # Remove trailing punctuation (:, ., !, ?)
+            line = re.sub(r"[:.!?]+$", "", line)
+        fixed_lines.append(line)
+
+    return "\n".join(fixed_lines)
+
+
+def fix_bare_urls(content: str) -> str:
+    """Fix MD034: Wrap bare URLs in angle brackets."""
+    # Pattern to match bare URLs (http/https)
+    url_pattern = r'https?://[^\s<>"{}|\\^`\[\]]+'
+
+    def wrap_url(match):
+        url = match.group(0)
+        # Don't wrap if already wrapped or if it's in a code block
+        if url.startswith("<") and url.endswith(">"):
+            return url
+        return f"<{url}>"
+
+    return re.sub(url_pattern, wrap_url, content)
+
+
 def fix_markdown_file(file_path: Path) -> None:
     """Fix all markdown issues in a file."""
     print(f"Fixing {file_path}...")
@@ -151,11 +83,9 @@ def fix_markdown_file(file_path: Path) -> None:
         original_content = content
 
         # Apply fixes
-        content = fix_heading_spacing(content)
-        content = fix_list_spacing(content)
-        content = fix_code_block_spacing(content)
-        content = fix_code_block_language(content)
-        # content = fix_line_length(content)  # Commented out as it can be aggressive
+        content = fix_heading_punctuation(content)
+        content = fix_bare_urls(content)
+        content = fix_line_length(content)
 
         if content != original_content:
             file_path.write_text(content, encoding="utf-8")
@@ -188,7 +118,7 @@ def main():
 
     print()
     print("🎉 Markdown fixing complete!")
-    print("Run 'markdownlint *.md' to check remaining issues.")
+    print("Run 'make markdown' to check remaining issues.")
 
 
 if __name__ == "__main__":

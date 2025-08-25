@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=77.0", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,7 +7,7 @@ name = "tcgplayer_client"
 version = "2.0.2"
 description = "Python client library for TCGplayer API with async support, rate limiting, and comprehensive endpoint coverage"
 readme = "README.md"
-license-files = ["LICENSE"]
+license = {text = "MIT"}
 authors = [
     {name = "Josh Wilhelmi", email = "josh@gobby.ai"}
 ]

@@ -1,17 +1,18 @@
 # PyPI Publishing Setup
 
-This guide explains how to set up automatic PyPI publishing for the TCGplayer Client package.
+This guide explains how to set up automatic PyPI publishing for the TCGplayer
+Client package.
 
 ## 🚀 Quick Start
 
 ### 1. **Create PyPI Account**
 
-- Go to [pypi.org](https://pypi.org) and create an account
+- Go to [pypi.org](<https://pypi.org)> and create an account
 - Verify your email address
 
 ### 2. **Generate API Token**
 
-- Go to [PyPI Account Settings](https://pypi.org/manage/account/)
+- Go to [PyPI Account Settings](<https://pypi.org/manage/account/)>
 - Click "Add API token"
 - Give it a name (e.g., "tcgplayer-client-automation")
 - Select "Entire account (all projects)"
@@ -19,7 +20,8 @@ This guide explains how to set up automatic PyPI publishing for the TCGplayer Cl
 
 ### 3. **Configure GitHub Secrets**
 
-- Go to your GitHub repository: `https://github.com/joshwilhelmi/tcgplayer-python`
+- Go to your GitHub repository:
+`<https://github.com/joshwilhelmi/tcgplayer-python>`
 - Click "Settings" → "Secrets and variables" → "Actions"
 - Click "New repository secret"
 - Name: `PYPI_TOKEN`
@@ -62,7 +64,7 @@ git add . && git commit -m "Prepare for release v2.0.2"
 # 2. Run automated release script
 python scripts/release.py
 
-# 3. The script will:
+# 3. The script will
 #    - Run full CI pipeline
 #    - Build package
 #    - Create and push git tag
@@ -148,7 +150,8 @@ ERROR: Failed building wheel for tcgplayer_client
 
 #### **GitHub Actions Not Triggered**
 
-**Solution**: Ensure you're pushing a tag that matches the pattern `v*` (e.g., `v2.0.2`)
+**Solution**: Ensure you're pushing a tag that matches the pattern `v*` (e.g.,
+`v2.0.2`)
 
 ### **Debugging Steps**
 
@@ -161,19 +164,19 @@ ERROR: Failed building wheel for tcgplayer_client
 
 ### **GitHub Actions**
 
-- URL: `https://github.com/joshwilhelmi/tcgplayer-python/actions`
+- URL: `<https://github.com/joshwilhelmi/tcgplayer-python/actions>`
 - Shows publish workflow status
 - Logs for debugging
 
 ### **PyPI**
 
-- URL: `https://pypi.org/project/tcgplayer-client/`
+- URL: `<https://pypi.org/project/tcgplayer-client/>`
 - Shows published versions
 - Download statistics
 
 ### **GitHub Releases**
 
-- URL: `https://github.com/joshwilhelmi/tcgplayer-python/releases`
+- URL: `<https://github.com/joshwilhelmi/tcgplayer-python/releases>`
 - Shows release notes
 - Download links
 
@@ -225,4 +228,5 @@ ERROR: Failed building wheel for tcgplayer_client
 
 ---
 
-**Need Help?** Check the GitHub Actions logs or run `make help` for available commands.
+**Need Help?** Check the GitHub Actions logs or run `make help` for available
+commands.

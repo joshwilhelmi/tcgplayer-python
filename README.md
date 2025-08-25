@@ -1,13 +1,18 @@
 # TCGplayer Client - Python API Client
 
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![Python
+3.8+](<https://img.shields.io/badge/python-3.8+-blue.svg)>](<https://www.python.org/downloads/)>
+[![License:
+MIT](<https://img.shields.io/badge/License-MIT-yellow.svg)>](<https://opensource.org/licenses/MIT)>
+[![Code style:
+black](<https://img.shields.io/badge/code%20style-black-000000.svg)>](<https://github.com/psf/black)>
+[![Imports:
+isort](<https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)>](<https://pycqa.github.io/isort/)>
 
 ## ⚠️ **CRITICAL RATE LIMITING WARNING**
 
-**TCGplayer's API enforces a hard maximum of 10 requests per second.** Exceeding this limit can result in:
+**TCGplayer's API enforces a hard maximum of 10 requests per second.** Exceeding
+this limit can result in:
 
 - **API access being permanently revoked**
 - **Account suspension**
@@ -15,20 +20,34 @@
 
 **This client automatically enforces this limit to protect your API access.**
 
-A comprehensive, production-ready Python client library for the TCGplayer API with async support, intelligent rate limiting, caching, and comprehensive endpoint coverage. Built for developers who need reliable, scalable access to TCGplayer's trading card data.
+A comprehensive, production-ready Python client library for the TCGplayer API
+with async support, intelligent rate limiting, caching, and comprehensive
+endpoint coverage. Built for developers who need reliable, scalable access to
+TCGplayer's trading card data.
 
 ## 🚀 Features
 
-- **🔌 Full API Coverage**: All 55+ documented TCGplayer API endpoints with comprehensive error handling (buylist endpoints removed - discontinued by TCGPlayer)
-- **⚡ Async/Await Support**: Built with modern Python async patterns for high-performance applications
-- **🔄 Intelligent Rate Limiting**: Adaptive request throttling that respects API limits and prevents rate limit errors
-- **💾 Smart Caching**: Configurable response caching with TTL and LRU eviction for improved performance
-- **🔐 Robust Authentication**: OAuth2 token management with automatic refresh and session persistence
-- **🛡️ Enterprise-Grade Error Handling**: Custom exception hierarchy with detailed error context and retry logic
-- **📊 Comprehensive Logging**: Structured logging with configurable levels and multiple output formats
-- **⚙️ Flexible Configuration**: Environment variables, config files, and runtime configuration management
-- **🧪 Full Test Coverage**: Comprehensive test suite with pytest and async testing support
-- **📝 Type Hints**: Full type annotation support for better development experience and IDE integration
+- **🔌 Full API Coverage**: All 55+ documented TCGplayer API endpoints with
+comprehensive error handling (buylist endpoints removed - discontinued by
+TCGPlayer)
+- **⚡ Async/Await Support**: Built with modern Python async patterns for
+high-performance applications
+- **🔄 Intelligent Rate Limiting**: Adaptive request throttling that respects API
+limits and prevents rate limit errors
+- **💾 Smart Caching**: Configurable response caching with TTL and LRU eviction
+for improved performance
+- **🔐 Robust Authentication**: OAuth2 token management with automatic refresh
+and session persistence
+- **🛡️ Enterprise-Grade Error Handling**: Custom exception hierarchy with
+detailed error context and retry logic
+- **📊 Comprehensive Logging**: Structured logging with configurable levels and
+multiple output formats
+- **⚙️ Flexible Configuration**: Environment variables, config files, and
+runtime configuration management
+- **🧪 Full Test Coverage**: Comprehensive test suite with pytest and async
+testing support
+- **📝 Type Hints**: Full type annotation support for better development
+experience and IDE integration
 
 ## 📦 Installation
 
@@ -36,7 +55,7 @@ A comprehensive, production-ready Python client library for the TCGplayer API wi
 
 ```bash
 
-git clone https://github.com/joshwilhelmi/tcgplayer-python.git
+git clone <https://github.com/joshwilhelmi/tcgplayer-python.git>
 cd tcgplayer-python
 pip install -e .
 
@@ -73,7 +92,8 @@ await client.endpoints.pricing.get_sku_market_prices([67890])
 
 ```
 
-**Note**: Buylist functionality was discontinued by TCGPlayer and has been removed from this client.
+**Note**: Buylist functionality was discontinued by TCGPlayer and has been
+removed from this client.
 
 ### Basic Usage
 
@@ -142,7 +162,8 @@ export TCGPLAYER_CACHE_TTL="300"
 
 ## 🔌 API Endpoints
 
-The client provides organized access to all TCGplayer API endpoints through specialized endpoint classes:
+The client provides organized access to all TCGplayer API endpoints through
+specialized endpoint classes:
 
 ### 📚 Catalog Endpoints
 
@@ -179,13 +200,15 @@ The client provides organized access to all TCGplayer API endpoints through spec
 
 ### ⚠️ **Critical Rate Limiting Restriction**
 
-**IMPORTANT**: TCGplayer's API enforces a **hard maximum of 10 requests per second**. Exceeding this limit can result in:
+**IMPORTANT**: TCGplayer's API enforces a **hard maximum of 10 requests per
+second**. Exceeding this limit can result in:
 
 - API access being temporarily suspended
 - Permanent API access revocation
 - Account restrictions
 
-The client **automatically enforces this limit** regardless of your configuration to prevent API violations.
+The client **automatically enforces this limit** regardless of your
+configuration to prevent API violations.
 
 ### Client Configuration
 
@@ -195,7 +218,7 @@ from tcgplayer_client import ClientConfig
 
 config = ClientConfig(
     # API Configuration
-    base_url="https://api.tcgplayer.com",
+    base_url="<https://api.tcgplayer.com>",
     api_version="v1.0",
     
     # Rate Limiting (MAXIMUM: 10 requests per second)
@@ -258,7 +281,8 @@ client = TCGPlayerClient(
 
 ## 🛡️ Error Handling
 
-The library provides a comprehensive exception hierarchy for different error scenarios:
+The library provides a comprehensive exception hierarchy for different error
+scenarios:
 
 ```python
 
@@ -366,7 +390,7 @@ logger.info("Custom logger configured", extra={"component": "tcgplayer_client"})
 
 # Clone repository
 
-git clone https://github.com/joshwilhelmi/tcgplayer-python.git
+git clone <https://github.com/joshwilhelmi/tcgplayer-python.git>
 cd tcgplayer-python
 
 # Create virtual environment
@@ -386,7 +410,8 @@ pre-commit install
 
 ### Local Testing Pipeline
 
-The project includes a comprehensive local testing pipeline that mimics GitHub Actions:
+The project includes a comprehensive local testing pipeline that mimics GitHub
+Actions:
 
 ```bash
 
@@ -480,15 +505,18 @@ pip-audit
 
 **Note**: Security issues have been identified and fixed in the codebase:
 
-- ✅ **MD5 → SHA256**: Replaced weak MD5 hashing with secure SHA256 for cache keys
+- ✅ **MD5 → SHA256**: Replaced weak MD5 hashing with secure SHA256 for cache
+keys
 - ✅ **Try-except-pass**: Fixed silent exception handling with proper logging
 - ✅ **Assert statements**: Replaced with proper runtime error handling
 
-**✅ COMPLETED**: Security tools are now integrated into the CI/CD pipeline for automated security testing.
+**✅ COMPLETED**: Security tools are now integrated into the CI/CD pipeline for
+automated security testing.
 
 ### **Comprehensive Testing Strategy**
 
-The project includes multiple layers of testing to ensure code quality and security:
+The project includes multiple layers of testing to ensure code quality and
+security:
 
 #### **1. Unit Testing (pytest)**
 
@@ -604,7 +632,8 @@ python -m pytest tests/test_rate_limit_compliance.py -v
 
 - **Current Coverage**: 95%+ (90+ tests passing)
 - **Target Coverage**: 95%+ for production quality
-- **Critical Paths**: 100% coverage for authentication, rate limiting, and error handling
+- **Critical Paths**: 100% coverage for authentication, rate limiting, and error
+handling
 - **New Features**: 95%+ coverage requirement before merge
 
 ### Testing Examples
@@ -696,10 +725,10 @@ async def process_products_bulk(client, product_ids):
             product = await client.endpoints.catalog.get_product(product_id)
             
             # Get current pricing
-            pricing = await client.endpoints.pricing.get_product_prices(product_id)
+pricing = await client.endpoints.pricing.get_product_prices(product_id)
             
             # Get store inventory
-            inventory = await client.endpoints.stores.get_store_inventory(product_id)
+inventory = await client.endpoints.stores.get_store_inventory(product_id)
             
             results.append({
                 'product': product,
@@ -730,7 +759,7 @@ async def monitor_store_inventory(client, store_id, product_ids):
                 )
                 
                 if inventory and inventory.get('quantity', 0) > 0:
-                    logger.info(f"Product {product_id} available at store {store_id}")
+logger.info(f"Product {product_id} available at store {store_id}")
                     
             # Wait before next check
             await asyncio.sleep(300)  # 5 minutes
@@ -749,13 +778,13 @@ async def price_alert_system(client, product_id, target_price):
     """Monitor product prices and alert when target price is reached."""
     while True:
         try:
-            prices = await client.endpoints.pricing.get_product_prices(product_id)
+prices = await client.endpoints.pricing.get_product_prices(product_id)
             
             if prices and len(prices) > 0:
                 current_price = prices[0].get('price', float('inf'))
                 
                 if current_price <= target_price:
-                    logger.info(f"Price alert! Product {product_id} is now ${current_price}")
+logger.info(f"Price alert! Product {product_id} is now ${current_price}")
                     # Send notification (email, webhook, etc.)
                     break
             
@@ -769,7 +798,8 @@ async def price_alert_system(client, product_id, target_price):
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+We welcome contributions! Please see our [Contributing
+Guidelines](CONTRIBUTING.md) for details.
 
 ### Development Workflow
 
@@ -789,15 +819,18 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
+for details.
 
 ## 🆘 Support
 
 ### Getting Help
 
 - **📖 Documentation**: This README and inline code documentation
-- **🐛 Issues**: [GitHub Issues](https://github.com/joshwilhelmi/tcgplayer-python/issues)
-- **💬 Discussions**: [GitHub Discussions](https://github.com/joshwilhelmi/tcgplayer-python/discussions)
+- **🐛 Issues**: [GitHub
+Issues](<https://github.com/joshwilhelmi/tcgplayer-python/issues)>
+- **💬 Discussions**: [GitHub
+Discussions](<https://github.com/joshwilhelmi/tcgplayer-python/discussions)>
 - **📧 Email**: [josh@gobby.ai](mailto:josh@gobby.ai)
 
 ### Common Issues
@@ -833,7 +866,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Version History
 
-See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes and improvements.
+See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes and
+improvements.
 
 ## 🙏 Acknowledgments
 

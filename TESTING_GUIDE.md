@@ -2,14 +2,17 @@
 
 ## 🧪 **Testing Overview**
 
-This guide covers all testing aspects of the TCGplayer Client library, from unit tests to security scanning. The project maintains high testing standards to ensure code quality, security, and reliability.
+This guide covers all testing aspects of the TCGplayer Client library, from unit
+tests to security scanning. The project maintains high testing standards to
+ensure code quality, security, and reliability.
 
 ## 📊 **Current Test Status**
 
 - **Test Coverage**: 52% (575/1,103 lines)
 - **Target Coverage**: 80%+ for production quality
 - **Test Count**: 90 tests, all passing
-- **Test Categories**: Authentication, API endpoints, caching, rate limiting, error handling
+- **Test Categories**: Authentication, API endpoints, caching, rate limiting,
+error handling
 
 ## 🚀 **Quick Start Testing**
 
@@ -366,7 +369,8 @@ pytest --cov=tcgplayer_client --cov-report=xml
 
 # Generate both
 
-pytest --cov=tcgplayer_client --cov-report=html --cov-report=xml --cov-report=term-missing
+pytest --cov=tcgplayer_client --cov-report=html --cov-report=xml
+--cov-report=term-missing
 
 ```
 
@@ -435,7 +439,7 @@ from unittest.mock import MagicMock
 def mock_client():
     """Create a mock client for testing."""
     client = MagicMock(spec=TCGPlayerClient)
-    client.base_url = "https://api.tcgplayer.com"
+    client.base_url = "<https://api.tcgplayer.com>"
     return client
 
 @pytest.fixture
@@ -474,7 +478,8 @@ async def test_async_operation():
 - [ ] All tests pass: `pytest`
 - [ ] Coverage maintained or improved
 - [ ] Security scan clean: `bandit -r tcgplayer_client/`
-- [ ] Code quality checks pass: `black --check . && isort --check-only . && flake8 . && mypy .`
+- [ ] Code quality checks pass: `black --check . && isort --check-only . &&
+flake8 . && mypy .`
 
 ### **Before Merging**
 
@@ -538,13 +543,15 @@ pytest
 
 ## 📚 **Additional Resources**
 
-- **pytest Documentation**: https://docs.pytest.org/
-- **Coverage.py**: https://coverage.readthedocs.io/
-- **Bandit Security**: https://bandit.readthedocs.io/
-- **Safety**: https://pyup.io/safety/
-- **Semgrep**: https://semgrep.dev/
-- **Pre-commit**: https://pre-commit.com/
+- **pytest Documentation**: <https://docs.pytest.org/>
+- **Coverage.py**: <https://coverage.readthedocs.io/>
+- **Bandit Security**: <https://bandit.readthedocs.io/>
+- **Safety**: <https://pyup.io/safety/>
+- **Semgrep**: <https://semgrep.dev/>
+- **Pre-commit**: <https://pre-commit.com/>
 
 ---
 
-**Note**: This testing guide ensures the TCGplayer Client maintains high quality and security standards. All contributors should follow these testing practices to maintain code quality and prevent regressions.
+**Note**: This testing guide ensures the TCGplayer Client maintains high quality
+and security standards. All contributors should follow these testing practices
+to maintain code quality and prevent regressions.

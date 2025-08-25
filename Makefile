@@ -84,6 +84,27 @@ import-sort-check:
 	isort --check-only --diff .
 	@echo "✅ isort import sorting check passed"
 
+# Markdown Linting
+markdown:
+	@echo "📝 Running markdownlint..."
+	@if command -v markdownlint >/dev/null 2>&1; then \
+		markdownlint *.md || true; \
+		echo "✅ Markdown linting complete"; \
+	else \
+		echo "⚠️  markdownlint not available - skipping"; \
+		echo "   Install with: pip install markdownlint-cli"; \
+	fi
+
+markdown-check:
+	@echo "🔍 Checking markdown formatting..."
+	@if command -v markdownlint >/dev/null 2>&1; then \
+		markdownlint *.md --fix || true; \
+		echo "✅ Markdown formatting check passed"; \
+	else \
+		echo "⚠️  markdownlint not available - skipping"; \
+		echo "   Install with: pip install markdownlint-cli"; \
+	fi
+
 # Testing
 test:
 	@echo "🧪 Running test suite..."
@@ -96,6 +117,10 @@ test-cov:
 test-fast:
 	@echo "🧪 Running test suite (fast mode)..."
 	python -m pytest tests/ -v --tb=short --no-cov
+
+test-deps:
+	@echo "🔍 Testing Python dependencies and build system..."
+	python scripts/test-dependencies.py
 
 # Security Scanning
 security: bandit semgrep pip-audit
@@ -132,13 +157,13 @@ pip-audit:
 	fi
 
 # Full CI Pipeline
-ci: format-check import-sort-check lint type-check test security
+ci: format-check import-sort-check markdown-check lint type-check test-deps test security
 	@echo ""
 	@echo "🎉 All CI checks passed! Ready to commit and push."
 	@echo ""
 
 # Pre-commit checks
-pre-commit: format import-sort lint type-check test
+pre-commit: format import-sort markdown lint type-check test
 	@echo ""
 	@echo "🎉 Pre-commit checks complete! Ready to commit."
 	@echo ""
