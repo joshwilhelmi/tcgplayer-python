@@ -1,5 +1,4 @@
 # TCGplayer Client - Python API Client
-# TCGplayer Client - Python API Client
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -9,6 +8,7 @@
 ## ⚠️ **CRITICAL RATE LIMITING WARNING**
 
 **TCGplayer's API enforces a hard maximum of 10 requests per second.** Exceeding this limit can result in:
+
 - **API access being permanently revoked**
 - **Account suspension**
 - **Legal consequences**
@@ -18,6 +18,7 @@
 ## 🚨 **Version 2.0.0 Breaking Changes**
 
 **This is a major version update with breaking changes:**
+
 - **Buylist functionality has been removed** - TCGPlayer discontinued buylist services
 - **API endpoint updates** - Market prices endpoint now uses correct API path
 - **See [CHANGELOG.md](CHANGELOG.md) for complete details**
@@ -44,22 +45,22 @@ A comprehensive, production-ready Python client library for the TCGplayer API wi
 ### From Source (Development)
 
 ```bash
+
 git clone https://github.com/joshwilhelmi/tcgplayer-python.git
 cd tcgplayer-python
 pip install -e .
+
 ```
 
 ### From PyPI
 
 ```bash
+
 pip install tcgplayer-client
+
 ```
 
-### Development Dependencies
 
-```bash
-pip install -e ".[dev]"
-```
 
 ## 🚀 Quick Start
 
@@ -68,13 +69,20 @@ pip install -e ".[dev]"
 If you're upgrading from version 1.x, be aware of these breaking changes:
 
 ```python
+
 # ❌ OLD (v1.x) - Buylist methods (no longer available)
+
+
 # await client.endpoints.buylist.get_buylist_prices([12345])
+
+
 # await client.endpoints.pricing.get_buylist_prices([12345])
 
 # ✅ NEW (v2.0.0) - Market prices only
+
 await client.endpoints.pricing.get_market_prices([12345])
 await client.endpoints.pricing.get_sku_market_prices([67890])
+
 ```
 
 **Note**: Buylist functionality was discontinued by TCGPlayer and has been removed from this client.
@@ -82,6 +90,7 @@ await client.endpoints.pricing.get_sku_market_prices([67890])
 ### Basic Usage
 
 ```python
+
 import asyncio
 from tcgplayer_client import TCGPlayerClient
 
@@ -105,14 +114,17 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 ```
 
 ### Advanced Configuration
 
 ```python
+
 from tcgplayer_client import TCGPlayerClient, ClientConfig
 
 # Custom configuration
+
 config = ClientConfig(
     max_requests_per_second=20,
     enable_caching=True,
@@ -125,16 +137,19 @@ client = TCGPlayerClient(
     client_secret="your_client_secret",
     config=config
 )
+
 ```
 
 ### Environment Variables
 
 ```bash
+
 export TCGPLAYER_CLIENT_ID="your_client_id"
 export TCGPLAYER_CLIENT_SECRET="your_client_secret"
 export TCGPLAYER_LOG_LEVEL="INFO"
 export TCGPLAYER_ENABLE_CACHING="true"
 export TCGPLAYER_CACHE_TTL="300"
+
 ```
 
 ## 🔌 API Endpoints
@@ -142,32 +157,38 @@ export TCGPLAYER_CACHE_TTL="300"
 The client provides organized access to all TCGplayer API endpoints through specialized endpoint classes:
 
 ### 📚 Catalog Endpoints
+
 - **Categories**: Product categories and hierarchies
 - **Groups**: Product groups and classifications  
 - **Products**: Detailed product information
 - **Search**: Advanced product search and filtering
 
 ### 💰 Pricing Endpoints
+
 - **Market Prices**: Current market pricing data
 - **Price Guides**: Historical price trends and guides
 - **Market Prices**: Current market pricing information
 
 ### 🏪 Store Endpoints
+
 - **Store Information**: Store details and metadata
 - **Store Inventory**: Available inventory and stock levels
 - **Store Locations**: Geographic store information
 
 ### 📦 Order Endpoints
+
 - **Order Management**: Create, update, and track orders
 - **Order History**: Historical order data and analytics
 - **Order Status**: Real-time order status updates
 
 ### 📋 Inventory Endpoints
+
 - **Inventory Management**: Add, update, and remove inventory
 - **Stock Levels**: Current stock quantities and availability
 - **Inventory Analytics**: Inventory performance metrics
 
 ### 💳 Pricing Endpoints
+
 - **Market Prices**: Current market pricing data
 - **Price Guides**: Historical price trends and guides
 - **SKU Pricing**: Product variant pricing information
@@ -177,6 +198,7 @@ The client provides organized access to all TCGplayer API endpoints through spec
 ### ⚠️ **Critical Rate Limiting Restriction**
 
 **IMPORTANT**: TCGplayer's API enforces a **hard maximum of 10 requests per second**. Exceeding this limit can result in:
+
 - API access being temporarily suspended
 - Permanent API access revocation
 - Account restrictions
@@ -186,6 +208,7 @@ The client **automatically enforces this limit** regardless of your configuratio
 ### Client Configuration
 
 ```python
+
 from tcgplayer_client import ClientConfig
 
 config = ClientConfig(
@@ -215,11 +238,13 @@ config = ClientConfig(
     enable_console_logging=True,
     enable_file_logging=True
 )
+
 ```
 
 ### Rate Limiting
 
 ```python
+
 client = TCGPlayerClient(
     max_requests_per_second=20,    # ⚠️ Will be automatically capped to 10
     rate_limit_window=1.0,         # 1 second window
@@ -228,12 +253,16 @@ client = TCGPlayerClient(
 )
 
 # The client will log a warning and cap the rate limit to 10 req/s
+
+
 # This prevents accidental API violations
+
 ```
 
 ### Caching Configuration
 
 ```python
+
 client = TCGPlayerClient(
     config=ClientConfig(
         enable_caching=True,
@@ -242,6 +271,7 @@ client = TCGPlayerClient(
         cache_cleanup_interval=300  # Cleanup every 5 minutes
     )
 )
+
 ```
 
 ## 🛡️ Error Handling
@@ -249,6 +279,7 @@ client = TCGPlayerClient(
 The library provides a comprehensive exception hierarchy for different error scenarios:
 
 ```python
+
 from tcgplayer_client import (
     TCGPlayerError,
     AuthenticationError,
@@ -277,11 +308,13 @@ except TimeoutError:
     print("Request timed out")
 except RetryExhaustedError:
     print("Max retries exceeded")
+
 ```
 
 ### Error Context and Retry Information
 
 ```python
+
 try:
     result = await client.endpoints.pricing.get_product_prices(product_id=12345)
 except APIError as e:
@@ -292,6 +325,7 @@ except APIError as e:
     print(f"  Message: {e.message}")
     print(f"  Request ID: {e.request_id}")
     print(f"  Timestamp: {e.timestamp}")
+
 ```
 
 ## 📊 Logging
@@ -299,28 +333,35 @@ except APIError as e:
 ### Basic Logging Setup
 
 ```python
+
 from tcgplayer_client.logging_config import setup_logging, get_logger
 
 # Setup logging with default configuration
+
 setup_logging()
 
 # Get logger for your module
+
 logger = get_logger(__name__)
 
 # Use structured logging
+
 logger.info("Starting TCGplayer client", extra={
     "client_id": "your_client_id",
     "endpoint": "catalog",
     "operation": "get_categories"
 })
+
 ```
 
 ### Advanced Logging Configuration
 
 ```python
+
 from tcgplayer_client.logging_config import TCGPlayerLogger
 
 # Custom logger configuration
+
 logger = TCGPlayerLogger(
     name="my_app",
     level="DEBUG",
@@ -332,6 +373,7 @@ logger = TCGPlayerLogger(
 )
 
 logger.info("Custom logger configured", extra={"component": "tcgplayer_client"})
+
 ```
 
 ## 🔧 Development
@@ -339,73 +381,98 @@ logger.info("Custom logger configured", extra={"component": "tcgplayer_client"})
 ### Setup Development Environment
 
 ```bash
+
 # Clone repository
+
 git clone https://github.com/joshwilhelmi/tcgplayer-python.git
 cd tcgplayer-python
 
 # Create virtual environment
+
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install in development mode
+
 pip install -e ".[dev]"
 
 # Install pre-commit hooks (optional)
+
 pre-commit install
+
 ```
 
 ### Running Tests
 
 ```bash
+
 # Run all tests
+
 pytest
 
 # Run with coverage
+
 pytest --cov=tcgplayer_client --cov-report=html
 
 # Run specific test file
+
 pytest tests/test_client.py
 
 # Run tests with verbose output
+
 pytest -v
 
 # Run tests in parallel
+
 pytest -n auto
+
 ```
 
 ### Code Quality
 
 ```bash
+
 # Code formatting
+
 black .
 isort .
 
 # Linting
+
 flake8 tcgplayer_client/
 mypy tcgplayer_client/
 
 # Run all quality checks
+
 make quality  # If Makefile is available
+
 ```
 
 ### Security Testing
 
 ```bash
+
 # Security scanning with Bandit
+
 bandit -r tcgplayer_client/ -f json -o bandit-report.json
 
 # Dependency vulnerability scanning
+
 safety check
 
 # Advanced security analysis
+
 pip install semgrep
 semgrep --config=auto tcgplayer_client/
 
 # Dependency security audit
+
 pip-audit
+
 ```
 
 **Note**: Security issues have been identified and fixed in the codebase:
+
 - ✅ **MD5 → SHA256**: Replaced weak MD5 hashing with secure SHA256 for cache keys
 - ✅ **Try-except-pass**: Fixed silent exception handling with proper logging
 - ✅ **Assert statements**: Replaced with proper runtime error handling
@@ -417,11 +484,15 @@ pip-audit
 The project includes multiple layers of testing to ensure code quality and security:
 
 #### **1. Unit Testing (pytest)**
+
 ```bash
+
 # Run all tests with coverage
+
 pytest --cov=tcgplayer_client --cov-report=html --cov-report=term-missing
 
 # Run specific test categories
+
 pytest tests/test_auth.py          # Authentication tests
 pytest tests/test_client.py        # Main client tests
 pytest tests/test_endpoints/       # API endpoint tests
@@ -429,71 +500,101 @@ pytest tests/test_rate_limiter.py  # Rate limiting tests
 pytest tests/test_cache.py         # Caching tests
 
 # Run tests in parallel
+
 pytest -n auto --dist=loadfile
 
 # Generate coverage reports
+
 pytest --cov=tcgplayer_client --cov-report=html --cov-report=xml
+
 ```
 
 #### **2. Security Testing (Automated)**
+
 ```bash
+
 # Bandit security scanning
+
 bandit -r tcgplayer_client/ -f json -o bandit-report.json
 bandit -r tcgplayer_client/ -f txt
 
 # Safety dependency scanning
+
 safety check --json --output safety-report.json
 safety check
 
 # Semgrep static analysis
+
 semgrep --config=auto --json --output=semgrep-report.json tcgplayer_client/
 
 # Pip audit for dependencies
+
 pip-audit --desc --format=json --output=pip-audit-report.json
+
 ```
 
 #### **3. Code Quality Testing**
+
 ```bash
+
 # Black code formatting
+
 black --check --diff .
 
 # Import sorting
+
 isort --check-only --diff .
 
 # Flake8 linting
+
 flake8 tcgplayer_client/ tests/ --max-line-length=88 --extend-ignore=E203,W503
 
 # MyPy type checking
+
 mypy tcgplayer_client/ --ignore-missing-imports
 
 # Pre-commit hooks (if installed)
+
 pre-commit run --all-files
+
 ```
 
 #### **4. Performance Testing**
+
 ```bash
+
 # Run performance benchmarks
+
 python -m pytest tests/test_performance.py -v
 
 # Memory usage profiling
+
 python -m memory_profiler tests/test_memory.py
 
 # Async performance testing
+
 python -m pytest tests/test_async_performance.py -v
+
 ```
 
 #### **5. Integration Testing**
+
 ```bash
+
 # Test with real TCGplayer API (requires credentials)
+
 export TCGPLAYER_CLIENT_ID="your_client_id"
 export TCGPLAYER_CLIENT_SECRET="your_client_secret"
 python -m pytest tests/test_integration.py -v
 
 # Test rate limiting compliance
+
 python -m pytest tests/test_rate_limit_compliance.py -v
+
 ```
 
 #### **6. Test Coverage Goals**
+
 - **Current Coverage**: 52% (575/1,103 lines)
 - **Target Coverage**: 80%+ for production quality
 - **Critical Paths**: 100% coverage for authentication, rate limiting, and error handling
@@ -502,6 +603,7 @@ python -m pytest tests/test_rate_limit_compliance.py -v
 ### Testing Examples
 
 ```python
+
 import pytest
 from tcgplayer_client import TCGPlayerClient
 
@@ -519,15 +621,18 @@ async def test_catalog_endpoints():
         search_term="Black Lotus"
     )
     assert isinstance(products, list)
+
 ```
 
 ## 📋 Requirements
 
 ### Core Dependencies
+
 - **Python**: 3.8 or higher
 - **aiohttp**: 3.8.0 or higher (async HTTP client)
 
 ### Development Dependencies
+
 - **pytest**: Testing framework
 - **pytest-asyncio**: Async testing support
 - **pytest-cov**: Coverage reporting
@@ -540,7 +645,7 @@ async def test_catalog_endpoints():
 
 ### Core Components
 
-```
+```text
 tcgplayer_client/
 ├── client.py              # Main client class
 ├── auth.py                # Authentication management
@@ -573,6 +678,7 @@ tcgplayer_client/
 ### Bulk Product Processing
 
 ```python
+
 async def process_products_bulk(client, product_ids):
     """Process multiple products efficiently with rate limiting."""
     results = []
@@ -599,11 +705,13 @@ async def process_products_bulk(client, product_ids):
             continue
     
     return results
+
 ```
 
 ### Store Inventory Monitoring
 
 ```python
+
 async def monitor_store_inventory(client, store_id, product_ids):
     """Monitor store inventory levels for specific products."""
     while True:
@@ -623,11 +731,13 @@ async def monitor_store_inventory(client, store_id, product_ids):
         except Exception as e:
             logger.error(f"Inventory monitoring error: {e}")
             await asyncio.sleep(60)  # Wait 1 minute on error
+
 ```
 
 ### Price Alert System
 
 ```python
+
 async def price_alert_system(client, product_id, target_price):
     """Monitor product prices and alert when target price is reached."""
     while True:
@@ -647,6 +757,7 @@ async def price_alert_system(client, product_id, target_price):
         except Exception as e:
             logger.error(f"Price monitoring error: {e}")
             await asyncio.sleep(300)  # Wait 5 minutes on error
+
 ```
 
 ## 🤝 Contributing
@@ -685,16 +796,19 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### Common Issues
 
 #### Authentication Errors
+
 - Verify your `client_id` and `client_secret` are correct
 - Check that your TCGplayer API account is active
 - Ensure your IP address is whitelisted if required
 
-#### Rate Limiting
+#### Rate Limiting Issues
+
 - Reduce your request frequency
 - Implement exponential backoff in your application
 - Use the built-in rate limiting features
 
 #### Network Issues
+
 - Check your internet connection
 - Verify firewall settings
 - Use the retry mechanisms built into the client
@@ -702,6 +816,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📈 Roadmap
 
 ### Upcoming Features
+
 - [ ] **WebSocket Support**: Real-time data streaming
 - [ ] **GraphQL Interface**: Alternative to REST API
 - [ ] **Data Export**: CSV/JSON export functionality
@@ -750,26 +865,39 @@ TCGplayer maintains strict rate limiting policies to ensure fair API access for 
 The client **automatically enforces** TCGplayer's absolute maximum rate limit:
 
 ```python
+
 # This will be automatically capped to 10 req/s
+
 client = TCGPlayerClient(max_requests_per_second=20)
 
 # You'll see this warning in logs:
+
+
 # WARNING: Requested rate limit 20 req/s exceeds TCGplayer's maximum of 10 req/s. 
+
+
 # Rate limit has been capped to 10 req/s to prevent API violations.
+
 ```
 
 ### Rate Limiting Best Practices
 
 #### 1. **Conservative Rate Limits**
+
 ```python
+
 # Recommended: Use 8-9 requests per second to stay safely under the limit
+
 client = TCGPlayerClient(max_requests_per_second=8)
 
 # This provides a safety buffer and prevents accidental violations
+
 ```
 
 #### 2. **Implement Exponential Backoff**
+
 ```python
+
 import asyncio
 
 async def safe_api_call(client, endpoint_func, *args, **kwargs):
@@ -787,10 +915,13 @@ async def safe_api_call(client, endpoint_func, *args, **kwargs):
             wait_time = base_delay * (2 ** attempt)
             logger.warning(f"Rate limited, waiting {wait_time}s before retry")
             await asyncio.sleep(wait_time)
+
 ```
 
 #### 3. **Batch Operations**
+
 ```python
+
 async def process_products_safely(client, product_ids):
     """Process products with safe rate limiting."""
     results = []
@@ -810,20 +941,26 @@ async def process_products_safely(client, product_ids):
             continue
     
     return results
+
 ```
 
 #### 4. **Monitor Rate Limiter Status**
+
 ```python
+
 # Check current rate limiter status
+
 status = await client.rate_limiter.get_status_async()
 print(f"Current requests: {status['current_requests']}/{status['max_requests_per_window']}")
 print(f"Remaining requests: {status['remaining_requests']}")
 print(f"Reset in: {status['rate_limit_reset_in_seconds']} seconds")
 
 # Use this to implement adaptive rate limiting
+
 if status['remaining_requests'] < 2:
     logger.info("Approaching rate limit, slowing down requests")
     await asyncio.sleep(0.5)
+
 ```
 
 ### Automatic Protection Features
@@ -839,14 +976,21 @@ The client includes several built-in protections:
 ### Monitoring and Alerts
 
 ```python
+
 import logging
 
 # Set up logging to monitor rate limiting
+
 logging.basicConfig(level=logging.INFO)
 
 # The client will log warnings when approaching limits:
+
+
 # INFO: Rate limit reached. Waiting 0.85 seconds...
+
+
 # WARNING: Approaching rate limit threshold
+
 ```
 
 ### Emergency Rate Limiting
@@ -854,14 +998,19 @@ logging.basicConfig(level=logging.INFO)
 If you need to immediately reduce your API usage:
 
 ```python
+
 # Temporarily reduce rate limit
+
 client.rate_limiter.max_requests = 5  # Reduce to 5 req/s
 
 # Or pause all requests temporarily
+
 await asyncio.sleep(60)  # Wait 1 minute
 
 # Check if you're still rate limited
+
 status = await client.rate_limiter.get_status_async()
 if status['current_requests'] > 0:
     logger.warning("Still have pending requests, wait longer")
+
 ```

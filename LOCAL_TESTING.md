@@ -7,25 +7,35 @@ This document describes how to use the local testing pipeline that mimics exactl
 ### 1. Install Development Dependencies
 
 ```bash
+
 # Activate your virtual environment
+
 source venv/bin/activate
 
 # Install development dependencies
+
 pip install -r requirements-dev.txt
+
 ```
 
 ### 2. Run Quick Quality Check
 
 ```bash
+
 # Fast feedback on code quality
+
 python scripts/quick-check.py
+
 ```
 
 ### 3. Run Full CI Pipeline
 
 ```bash
+
 # Run all checks (formatting, linting, type checking, tests, security)
+
 make ci
+
 ```
 
 ## 🛠️ Available Commands
@@ -33,7 +43,9 @@ make ci
 ### Using Makefile (Recommended)
 
 ```bash
+
 # Code Quality
+
 make format              # Auto-format code with Black
 make format-check        # Check formatting without changes
 make import-sort         # Auto-sort imports with isort
@@ -42,32 +54,41 @@ make lint                # Run Flake8 linting
 make type-check          # Run MyPy type checking
 
 # Testing
+
 make test                # Run all tests
 make test-cov            # Run tests with coverage report
 make test-fast           # Run tests without coverage (faster)
 
 # Security Scanning
+
 make security            # Run all security tools
 make bandit              # Run Bandit security scanning
 make semgrep             # Run Semgrep static analysis
 
 # Full Pipeline
+
 make ci                  # Run complete CI pipeline
 make pre-commit          # Run pre-commit checks
 make fix                 # Auto-fix formatting issues
+
 ```
 
 ### Using Python Scripts
 
 ```bash
+
 # Quick quality check
+
 python scripts/quick-check.py
 
 # Full local CI pipeline
+
 python scripts/local-ci.py
 
 # Bash script alternative
+
 ./scripts/local-ci.sh
+
 ```
 
 ## 🔍 What Each Tool Does
@@ -96,18 +117,27 @@ python scripts/local-ci.py
 ### Before Every Commit
 
 1. **Quick Check** (fast feedback):
+
    ```bash
+
    python scripts/quick-check.py
+
    ```
 
 2. **Full Validation** (before pushing):
+
    ```bash
+
    make ci
+
    ```
 
 3. **Auto-fix Issues** (if needed):
+
    ```bash
+
    make fix
+
    ```
 
 ## 🚨 Common Issues and Solutions
@@ -115,21 +145,29 @@ python scripts/local-ci.py
 ### Black Formatting Issues
 
 ```bash
+
 # Auto-fix formatting
+
 make format
 
 # Check what would be changed
+
 make format-check
+
 ```
 
 ### Import Sorting Issues
 
 ```bash
+
 # Auto-fix import sorting
+
 make import-sort
 
 # Check what would be changed
+
 make import-sort-check
+
 ```
 
 ### Missing Tools
@@ -137,11 +175,15 @@ make import-sort-check
 If you get errors about missing tools:
 
 ```bash
+
 # Install all development dependencies
+
 pip install -r requirements-dev.txt
 
 # Or install specific tools
+
 pip install black flake8 isort mypy pytest bandit
+
 ```
 
 ### Dependency Conflicts
@@ -186,32 +228,44 @@ Some tools may have version conflicts. The pipeline is designed to handle missin
 ### Virtual Environment Issues
 
 ```bash
+
 # Ensure virtual environment is activated
+
 source venv/bin/activate
 
 # Check Python version
+
 python --version
 
 # Verify pip is working
+
 pip list
+
 ```
 
 ### Permission Issues
 
 ```bash
+
 # Make scripts executable
+
 chmod +x scripts/*.sh
 chmod +x scripts/*.py
+
 ```
 
 ### Tool Not Found Errors
 
 ```bash
+
 # Install missing tools
+
 pip install <tool-name>
 
 # Or install all development dependencies
+
 pip install -r requirements-dev.txt
+
 ```
 
 ## 📚 Additional Resources

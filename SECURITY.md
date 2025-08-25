@@ -37,6 +37,7 @@ If you discover a security vulnerability in the TCGplayer Python Client, please 
 This project implements multiple layers of security:
 
 ### 🔒 **Code Security**
+
 - ✅ Automated security scanning with Bandit
 - ✅ Dependency vulnerability checks with Safety & pip-audit
 - ✅ Static analysis with Semgrep
@@ -44,12 +45,14 @@ This project implements multiple layers of security:
 - ✅ CodeQL analysis for vulnerability detection
 
 ### 🛡️ **CI/CD Security**
+
 - ✅ Pre-commit hooks for early detection
 - ✅ Automated security workflows
 - ✅ Dependency review for PRs
 - ✅ Weekly security scans
 
 ### 📁 **Repository Security**
+
 - ✅ Branch protection rules
 - ✅ Required code reviews
 - ✅ CODEOWNERS for sensitive files
@@ -58,6 +61,7 @@ This project implements multiple layers of security:
 ## Environment Variables & Secrets
 
 ### ⚠️ **NEVER commit these to the repository:**
+
 - `.env` files
 - `*.key` files
 - `*.pem` files
@@ -66,6 +70,7 @@ This project implements multiple layers of security:
 - Any secrets or sensitive data
 
 ### ✅ **DO use for local development:**
+
 - `.env.example` as a template
 - Environment variables for configuration
 - Secure credential storage
@@ -74,32 +79,43 @@ This project implements multiple layers of security:
 ## Development Security Guidelines
 
 ### 1. **API Credentials**
+
 ```bash
+
 # Use environment variables
+
 export TCGPLAYER_CLIENT_ID="your_client_id"
 export TCGPLAYER_CLIENT_SECRET="your_client_secret"
 
 # Never hardcode in source
+
+
 # ❌ BAD
+
 client = TCGPlayerClient(client_id="abc123", client_secret="xyz789")
 
 # ✅ GOOD
+
 client = TCGPlayerClient()  # Uses environment variables
+
 ```
 
 ### 2. **Dependency Management**
+
 - Keep dependencies updated
 - Review security advisories
 - Use virtual environments
 - Pin versions in production
 
 ### 3. **Code Quality**
+
 - Run pre-commit hooks
 - Follow secure coding practices
 - Handle errors gracefully
 - Validate all inputs
 
 ### 4. **Testing Security**
+
 - Test with invalid inputs
 - Test authentication failures
 - Test rate limiting
@@ -108,16 +124,22 @@ client = TCGPlayerClient()  # Uses environment variables
 ## Dependencies Security
 
 ### 🔍 **Regular Audits**
+
 ```bash
+
 # Check for vulnerabilities
+
 pip-audit
 safety check
 
 # Update dependencies
+
 pip install --upgrade package_name
+
 ```
 
 ### 📦 **Trusted Sources**
+
 - Only use packages from PyPI
 - Verify package maintainers
 - Review package source code for critical dependencies

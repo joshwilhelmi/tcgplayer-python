@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.0.1] - 2024-08-24
 
 ### Fixed
+
 - **Complete Buylist API Removal**: Fully removed all remaining buylist API implementation
   - Removed `BuylistEndpoints` class and all buylist methods
   - Updated client initialization to exclude buylist endpoints
@@ -19,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - All tests now pass without buylist functionality
 
 ### Technical
+
 - **Code Cleanup**: Removed 90+ lines of unused buylist code
 - **Test Updates**: Updated 90 test files to remove buylist expectations
 - **MCP Integration**: Updated MCP server to exclude buylist operations
@@ -27,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.0.0] - 2024-08-23
 
 ### Breaking Changes
+
 - **Removed Deprecated Buylist Functionality**: All buylist-related endpoints and methods have been removed
   - Buylist functionality was discontinued by TCGPlayer and is no longer supported
   - This affects the following methods in `PricingEndpoints`:
@@ -36,17 +39,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Buylist endpoints removed from API documentation
 
 ### Changed
+
 - **API Endpoint Updates**: Updated market prices endpoint to use correct API path
   - `get_market_prices()` now uses `/pricing/product/{productIds}` instead of `/pricing/marketprices/skus`
   - Improved API compliance with TCGPlayer's current endpoint structure
 
 ### Added
+
 - **Comprehensive API Documentation**: Added `api_documentation.json` with complete endpoint reference
   - All 67 documented endpoints with full details
   - Includes method, path, and documentation URLs
   - Excludes deprecated buylist endpoints
 
 ### Technical
+
 - **Code Quality**: Maintained 100% test coverage (90 tests passing)
 - **Documentation**: Updated project status and removed buylist references
 - **Compatibility**: Requires Python 3.8+ (no changes to minimum version)
@@ -54,6 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.1] - 2024-12-19
 
 ### Fixed
+
 - **Code Quality**: Resolved all flake8 linting issues
   - Fixed line length violations (E501) across all modules
   - Removed unused imports (F401) from core modules and test files
@@ -65,6 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Documentation**: Fixed docstring line length issues for better readability
 
 ### Technical Details
+
 - All modules now comply with 88-character line length limit
 - Removed 20+ unused imports across the codebase
 - Fixed exception handling in retry logic
@@ -74,6 +82,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2024-12-19
 
 ### Added
+
 - Initial release of TCGplayer Client library
 - Full API coverage for all 67 documented endpoints
 - Async/await support throughout
@@ -85,6 +94,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Extensive test coverage
 
 ### Features
+
 - **Catalog Endpoints**: Product categories, groups, and details
 - **Pricing Endpoints**: Market prices and price guides  
 - **Store Endpoints**: Store information and inventory
@@ -93,6 +103,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Buylist Endpoints**: Buylist operations
 
 ### Technical
+
 - Built with Python 3.8+ support
 - Uses aiohttp for async HTTP requests
 - Configurable rate limiting (default: 10 req/s)
