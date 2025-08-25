@@ -108,21 +108,23 @@ class TCGPlayerAuth:
     async def get_store_bearer_token(self, access_token: str) -> Dict[str, Any]:
         """
         Get a bearer token for store access using an access token.
-        
+
         POST to: https://api.tcgplayer.com/token/access
         Headers: X-Tcg-Access-Token: {access_token}
-        
+
         Args:
             access_token: The access token received from store authorization
-            
+
         Returns:
             Dictionary containing the bearer token result
-            
+
         Raises:
             AuthenticationError: If token exchange fails
         """
         if not access_token:
-            raise AuthenticationError("Access token is required for store authorization")
+            raise AuthenticationError(
+                "Access token is required for store authorization"
+            )
 
         token_url = "https://api.tcgplayer.com/token/access"
         headers = {"X-Tcg-Access-Token": access_token}
@@ -133,7 +135,7 @@ class TCGPlayerAuth:
                     if response.status == 200:
                         result = await response.json()
                         bearer_token = result.get("access_token")
-                        
+
                         if bearer_token:
                             logger.info("Successfully obtained store bearer token")
                             return {
@@ -141,7 +143,7 @@ class TCGPlayerAuth:
                                 "message": "Store bearer token obtained successfully",
                                 "bearer_token": bearer_token,
                                 "token_type": result.get("token_type", "bearer"),
-                                "expires_in": result.get("expires_in")
+                                "expires_in": result.get("expires_in"),
                             }
                         else:
                             raise AuthenticationError(
