@@ -15,7 +15,7 @@
 
 **This client automatically enforces this limit to protect your API access.**
 
-## 🚨 **Version 2.0.0 Breaking Changes**
+## 🚨 **Version 2.0.1 Breaking Changes**
 
 **This is a major version update with breaking changes:**
 
@@ -76,7 +76,7 @@ If you're upgrading from version 1.x, be aware of these breaking changes:
 
 # await client.endpoints.pricing.get_buylist_prices([12345])
 
-# ✅ NEW (v2.0.0) - Market prices only
+# ✅ NEW (v2.0.1) - Market prices only
 
 await client.endpoints.pricing.get_market_prices([12345])
 await client.endpoints.pricing.get_sku_market_prices([67890])
