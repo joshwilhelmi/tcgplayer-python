@@ -1,0 +1,144 @@
+---
+alwaysApply: true
+---
+# Cursor Rules for Automatic Memory Capture
+
+## Memory Management Guidelines
+
+**The knowledge graph is your memory.** Always check your memory first, then add new information as you learn it.
+
+### Memory Retrieval (Always Do This First)
+- **Start every significant interaction** by searching your memory for relevant context
+- Use `search_episodes` to find previous conversations about similar topics
+- Use `search_entities` to find relevant people, projects, or concepts
+- Query for related facts and relationships before providing recommendations
+
+### Automatic Memory Capture Rules
+
+#### 1. Capture Requirements and Preferences Immediately
+- When a user expresses a requirement or preference, use `add_episode` to store it right away
+- **Example triggers:**
+  - "I prefer using TypeScript over JavaScript"
+  - "This project needs to support mobile devices"
+  - "I always want error handling in API calls"
+- **Best practice:** Split very long requirements into shorter, logical chunks
+- Be explicit if something is an update to existing knowledge
+
+#### 2. Document Code Standards and Procedures
+- When you discover how a user wants things done, record it as a procedure
+- **Example triggers:**
+  - "Here's how I organize my React components"
+  - "I always structure my API routes like this"
+  - "My testing strategy is..."
+- Store these as episodes with clear procedure labels
+
+#### 3. Record Factual Relationships
+- When you learn about connections between entities, store these as facts
+- **Example triggers:**
+  - "This component is part of the authentication system"
+  - "Sarah is the product manager for this feature"
+  - "This API connects to the user service"
+
+#### 4. Capture Code Context and Sessions
+- **Automatically save chat sessions** that involve:
+  - Problem-solving discussions
+  - Code reviews and feedback
+  - Architecture decisions
+  - Bug fixes and their solutions
+- **Save code changes** that represent:
+  - New patterns or approaches
+  - Solutions to specific problems
+  - User preferences for implementation
+
+### Memory Storage Format
+
+When saving episodes, use this structure:
+
+```json
+{
+  "name": "Descriptive Title",
+  "episode_body": "Detailed content including code, context, and decisions",
+  "source": "cursor_chat" | "code_session" | "requirement" | "preference",
+  "source_description": "Brief description of where this came from"
+}
+```
+
+### Categories for Better Organization
+
+**Be specific with categories:**
+- `coding_preference`: User's preferred ways of writing code
+- `project_requirement`: Must-have features or constraints
+- `architecture_decision`: High-level design choices
+- `procedure`: Step-by-step processes the user follows
+- `bug_solution`: Fixes for specific problems
+- `code_pattern`: Reusable code structures or approaches
+
+### Automated Triggers
+
+**Always add to memory when:**
+- User corrects you or provides feedback
+- User explains their workflow or process
+- User sets up a new tool or configuration
+- User solves a complex problem
+- User expresses frustration with current approaches
+- User explains domain-specific knowledge
+- User provides context about team/project/company
+
+**Never ask permission** to save to memory - just do it automatically as part of helping.
+
+### Memory Application Rules
+
+#### Respect Discovered Preferences
+- Align your work with any preferences you've found
+- If unsure, query memory for similar past decisions
+
+#### Follow Procedures Exactly
+- If you find a procedure for your current task, follow it step by step
+- Reference the stored procedure and confirm it's still current
+
+#### Apply Relevant Facts
+- Use factual information to inform your decisions and recommendations
+- Connect new work to existing project context
+
+### Example Memory Capture Scenarios
+
+**Scenario 1: User sets up a new component**
+```
+User: "I like to structure my React components with types at the top, then the component, then default export"
+
+Action: Immediately use add_episode:
+- name: "React Component Structure Preference"
+- episode_body: "User prefers React components structured as: 1) Type definitions at top, 2) Component implementation, 3) Default export at bottom"
+- source: "coding_preference"
+```
+
+**Scenario 2: Code review conversation**
+```
+Long chat about refactoring a complex function...
+
+Action: At conversation end, use add_episode:
+- name: "Authentication Function Refactor Discussion"
+- episode_body: [Full conversation text including code samples and decisions]
+- source: "cursor_chat"
+- source_description: "Discussion about refactoring auth validation with error handling improvements"
+```
+
+**Scenario 3: Bug fix**
+```
+User: "Fixed the race condition by adding a mutex here..."
+
+Action: use add_episode:
+- name: "Race Condition Fix in Payment Processing"
+- episode_body: "Identified and fixed race condition in payment processing by adding mutex lock. Code: [include relevant code]. Problem was multiple threads accessing shared state."
+- source: "bug_solution"
+```
+
+## Memory-First Workflow
+
+1. **Search first**: Before any significant action, search memory for relevant context
+2. **Act with context**: Use retrieved information to inform your responses
+3. **Capture immediately**: Save new information as you learn it
+4. **Validate against memory**: Check if new information contradicts stored preferences
+5. **Update when needed**: If information changes, add episodes noting the updates
+
+Remember: Your memory is what makes you truly helpful across sessions. Use it actively and keep it current.
