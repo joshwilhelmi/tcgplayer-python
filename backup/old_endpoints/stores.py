@@ -26,6 +26,15 @@ class StoreEndpoints:
         """
         self.client = client
 
+    async def authorize_application(self, authorization_code: str) -> Dict[str, Any]:
+        """
+        Authorize an application with a store using authorization code.
+
+        POST to: https://api.tcgplayer.com/app/authorize/{authCode}
+        """
+        return await self.client._make_api_request(
+            f"/app/authorize/{authorization_code}", method="POST"
+        )
 
     async def get_store_self(self) -> Dict[str, Any]:
         """

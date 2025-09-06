@@ -140,6 +140,7 @@ class TCGPlayerClient:
 
         # Initialize endpoint classes
         from .endpoints import (
+            AppEndpoints,
             CatalogEndpoints,
             InventoryEndpoints,
             OrderEndpoints,
@@ -151,6 +152,7 @@ class TCGPlayerClient:
             "Endpoints",
             (),
             {
+                "app": AppEndpoints(self),
                 "catalog": CatalogEndpoints(self),
                 "pricing": PricingEndpoints(self),
                 "stores": StoreEndpoints(self),
