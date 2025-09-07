@@ -113,9 +113,19 @@ class TCGplayerClient:
             )
             config_rate_limit = 10
 
+        # Fix: Only use constructor parameter if it's not the default value
+        final_max_requests_per_second = (
+            max_requests_per_second if max_requests_per_second != 10
+            else config_rate_limit
+        )
+        final_rate_limit_window = (
+            rate_limit_window if rate_limit_window != 1.0
+            else config.rate_limit_window
+        )
+
         self.rate_limiter: RateLimiter = RateLimiter(
-            max_requests_per_second or config_rate_limit,
-            rate_limit_window or config.rate_limit_window,
+            final_max_requests_per_second,
+            final_rate_limit_window,
         )
 
         # Request retry configuration (prioritize passed parameters)
@@ -161,7 +171,7 @@ class TCGplayerClient:
 
         logger.info(
             f"TCGplayer client initialized with rate limit: "
-            f"{max_requests_per_second} req/s (TCGplayer maximum: 10 req/s)"
+            f"{final_max_requests_per_second} req/s (TCGplayer maximum: 10 req/s)"
         )
         logger.info(
             f"Retry configuration: max {max_retries} attempts, base delay {base_delay}s"
