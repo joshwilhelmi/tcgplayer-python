@@ -2,8 +2,10 @@
 Tests for App endpoints.
 """
 
-import pytest
 from unittest.mock import AsyncMock, Mock
+
+import pytest
+
 from tcgplayer_client.endpoints.app import AppEndpoints
 from tcgplayer_client.exceptions import APIError
 
@@ -25,7 +27,7 @@ class TestAppEndpoints:
         expected_response = {
             "success": True,
             "application_key": "app_key_67890",
-            "expires_in": 3600
+            "expires_in": 3600,
         }
         self.mock_client._make_api_request.return_value = expected_response
 
@@ -35,8 +37,7 @@ class TestAppEndpoints:
         # Assert
         assert result == expected_response
         self.mock_client._make_api_request.assert_called_once_with(
-            f"/app/authorize/{auth_code}", 
-            method="POST"
+            f"/app/authorize/{auth_code}", method="POST"
         )
 
     @pytest.mark.asyncio
@@ -53,8 +54,7 @@ class TestAppEndpoints:
         # Assert
         assert result == expected_response
         self.mock_client._make_api_request.assert_called_once_with(
-            "/app/authorize/test_auth_code_12345",  # Should be trimmed
-            method="POST"
+            "/app/authorize/test_auth_code_12345", method="POST"  # Should be trimmed
         )
 
     @pytest.mark.asyncio
@@ -78,14 +78,13 @@ class TestAppEndpoints:
         # Arrange
         auth_code = "invalid_auth_code"
         self.mock_client._make_api_request.side_effect = APIError(
-            "Invalid authorization code submitted", 
-            status_code=400
+            "Invalid authorization code submitted", status_code=400
         )
 
         # Act & Assert
         with pytest.raises(APIError) as exc_info:
             await self.app_endpoints.authorize_application(auth_code)
-        
+
         assert exc_info.value.status_code == 400
         assert "Invalid authorization code" in str(exc_info.value)
 
@@ -95,14 +94,13 @@ class TestAppEndpoints:
         # Arrange
         auth_code = "nonexistent_auth_code"
         self.mock_client._make_api_request.side_effect = APIError(
-            "Submitted authorization code not found",
-            status_code=404
+            "Submitted authorization code not found", status_code=404
         )
 
         # Act & Assert
         with pytest.raises(APIError) as exc_info:
             await self.app_endpoints.authorize_application(auth_code)
-        
+
         assert exc_info.value.status_code == 404
         assert "not found" in str(exc_info.value)
 
@@ -110,7 +108,7 @@ class TestAppEndpoints:
         """Test AppEndpoints initialization."""
         # Test that client is properly stored
         assert self.app_endpoints.client == self.mock_client
-        
+
         # Test that authorize_application method exists
-        assert hasattr(self.app_endpoints, 'authorize_application')
+        assert hasattr(self.app_endpoints, "authorize_application")
         assert callable(self.app_endpoints.authorize_application)

@@ -1,3 +1,3 @@
 """
-Test package for TCGPlayer Client Library.
+Test package for TCGplayer Client Library.
 """

@@ -1,14 +1,14 @@
 """
-TCGPlayer Client Library
+TCGplayer Client Library
 
-A Python client library for the TCGPlayer API with support for:
+A Python client library for the TCGplayer API with support for:
 - Authentication and rate limiting
 - All 67 documented API endpoints
 - Async/await support
 - Comprehensive error handling
 """
 
-from .auth import TCGPlayerAuth
+from .auth import TCGplayerAuth
 from .cache import (
     CacheEntry,
     CacheKeyGenerator,
@@ -16,7 +16,7 @@ from .cache import (
     LRUCache,
     ResponseCache,
 )
-from .client import TCGPlayerClient
+from .client import TCGplayerClient
 from .config import (
     ClientConfig,
     ConfigurationManager,
@@ -34,13 +34,13 @@ from .exceptions import (
     NetworkError,
     RateLimitError,
     RetryExhaustedError,
-    TCGPlayerError,
+    TCGplayerError,
     TimeoutError,
     ValidationError,
 )
 from .logging_config import (
     StructuredFormatter,
-    TCGPlayerLogger,
+    TCGplayerLogger,
     get_logger,
     setup_logging,
 )
@@ -55,18 +55,18 @@ from .validation import (
 
 __version__ = "2.0.3"
 __author__ = "Josh Wilhelmi"
-__description__ = "Python client library for TCGPlayer API"
+__description__ = "Python client library for TCGplayer API"
 
 __all__ = [
-    "TCGPlayerClient",
-    "TCGPlayerAuth",
+    "TCGplayerClient",
+    "TCGplayerAuth",
     "RateLimiter",
     "ParameterValidator",
     "validate_id",
     "validate_positive_integer",
     "validate_non_negative_integer",
     "validate_positive_float",
-    "TCGPlayerLogger",
+    "TCGplayerLogger",
     "setup_logging",
     "get_logger",
     "StructuredFormatter",
@@ -82,7 +82,7 @@ __all__ = [
     "LRUCache",
     "CacheEntry",
     "CacheKeyGenerator",
-    "TCGPlayerError",
+    "TCGplayerError",
     "AuthenticationError",
     "RateLimitError",
     "APIError",

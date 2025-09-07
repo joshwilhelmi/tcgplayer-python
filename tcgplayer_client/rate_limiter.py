@@ -1,5 +1,5 @@
 """
-Rate limiter implementation for TCGPlayer API requests.
+Rate limiter implementation for TCGplayer API requests.
 """
 
 import asyncio
@@ -10,13 +10,13 @@ from typing import Deque
 
 logger = logging.getLogger(__name__)
 
-# TCGPlayer API absolute maximum rate limit
+# TCGplayer API absolute maximum rate limit
 # Exceeding this can result in API access being revoked
 MAX_REQUESTS_PER_SECOND = 10
 
 
 class RateLimiter:
-    """Rate limiter to respect TCGPlayer's API rate limits."""
+    """Rate limiter to respect TCGplayer's API rate limits."""
 
     def __init__(self, max_requests: int = 10, time_window: float = 1.0) -> None:
         """
@@ -32,7 +32,7 @@ class RateLimiter:
         # Enforce absolute maximum rate limit
         if max_requests > MAX_REQUESTS_PER_SECOND:
             logger.warning(
-                f"Requested rate limit {max_requests} req/s exceeds TCGPlayer's "
+                f"Requested rate limit {max_requests} req/s exceeds TCGplayer's "
                 f"maximum of {MAX_REQUESTS_PER_SECOND} req/s. "
                 f"Rate limit has been capped to {MAX_REQUESTS_PER_SECOND} req/s "
                 f"to prevent API violations."
@@ -46,7 +46,7 @@ class RateLimiter:
 
         logger.info(
             f"Rate limiter configured: {max_requests} requests per {time_window} "
-            f"second(s) (TCGPlayer maximum: {MAX_REQUESTS_PER_SECOND} req/s)"
+            f"second(s) (TCGplayer maximum: {MAX_REQUESTS_PER_SECOND} req/s)"
         )
 
     async def acquire(self) -> None:

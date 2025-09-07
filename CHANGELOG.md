@@ -89,7 +89,7 @@ Versioning](<https://semver.org/spec/v2.0.0.html).>
 
 - **Removed Deprecated Buylist Functionality**: All buylist-related endpoints
 and methods have been removed
-- Buylist functionality was discontinued by TCGPlayer and is no longer supported
+- Buylist functionality was discontinued by TCGplayer and is no longer supported
   - This affects the following methods in `PricingEndpoints`:
     - `get_buylist_prices()` - Removed
     - `get_sku_buylist_prices()` - Removed  
@@ -102,7 +102,7 @@ and methods have been removed
 path
 - `get_market_prices()` now uses `/pricing/product/{productIds}` instead of
 `/pricing/marketprices/skus`
-  - Improved API compliance with TCGPlayer's current endpoint structure
+  - Improved API compliance with TCGplayer's current endpoint structure
 
 ### New Features
 

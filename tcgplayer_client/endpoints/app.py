@@ -1,5 +1,5 @@
 """
-App endpoints for TCGPlayer API.
+App endpoints for TCGplayer API.
 
 This module contains application-level operations including:
 - Application authorization and key management
@@ -7,18 +7,18 @@ This module contains application-level operations including:
 
 from typing import Any, Dict
 
-from ..client import TCGPlayerClient
+from ..client import TCGplayerClient
 
 
 class AppEndpoints:
     """Application-level API endpoints."""
 
-    def __init__(self, client: "TCGPlayerClient"):
+    def __init__(self, client: "TCGplayerClient"):
         """
         Initialize app endpoints.
 
         Args:
-            client: TCGPlayer client instance
+            client: TCGplayer client instance
         """
         self.client = client
 
@@ -38,7 +38,7 @@ class AppEndpoints:
         Raises:
             ValueError: If auth_code is empty or None
             APIError: If the API request fails (400: Invalid code, 404: Code not found)
-            
+
         Example:
             >>> app_endpoints = AppEndpoints(client)
             >>> result = await app_endpoints.authorize_application("abc123xyz")
@@ -48,6 +48,5 @@ class AppEndpoints:
             raise ValueError("auth_code cannot be empty or None")
 
         return await self.client._make_api_request(
-            f"/app/authorize/{auth_code.strip()}", 
-            method="POST"
+            f"/app/authorize/{auth_code.strip()}", method="POST"
         )

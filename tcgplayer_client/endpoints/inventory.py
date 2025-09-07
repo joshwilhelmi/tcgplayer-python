@@ -1,128 +1,82 @@
 """
-Inventory endpoints for TCGPlayer API.
+Inventory endpoints for TCGplayer API.
 
-This module contains all inventory-related operations including:
-- Product lists and management
-- Inventory quantity and pricing
-- Product relationships
+This module contains product list management operations:
+- Get product list by ID or key
+- List all product lists
+- Create new product lists
 """
 
-from typing import Any, Dict, List
+from typing import Any, Dict, Optional
 
-from ..client import TCGPlayerClient
+from ..client import TCGplayerClient
 
 
 class InventoryEndpoints:
-    """Inventory-related API endpoints."""
+    """Product list management API endpoints."""
 
-    def __init__(self, client: TCGPlayerClient):
+    def __init__(self, client: TCGplayerClient):
         """
         Initialize inventory endpoints.
 
         Args:
-            client: TCGPlayer client instance
+            client: TCGplayer client instance
         """
         self.client = client
 
-    async def get_productlist_by_id(self, productlist_id: int) -> Dict[str, Any]:
-        """Get product list by ID."""
+    async def get_productlist_by_id(self, product_list_id: int) -> Dict[str, Any]:
+        """
+        Get detailed information about a specific product list by ID.
+
+        Args:
+            product_list_id: Integer ID of the product list to retrieve
+
+        Returns:
+            Dict containing product list details with items, ID, key, and creation date
+        """
         return await self.client._make_api_request(
-            f"/inventory/productlists/{productlist_id}"
+            f"/inventory/productlists/{product_list_id}"
         )
 
-    async def get_productlist_by_key(self, productlist_key: str) -> Dict[str, Any]:
-        """Get product list by key."""
+    async def get_productlist_by_key(self, product_list_key: str) -> Dict[str, Any]:
+        """
+        Get detailed information about a specific product list by key.
+
+        Args:
+            product_list_key: Unique identifier for the product list
+
+        Returns:
+            Dict containing product list details with items, ID, key, and creation date
+        """
         return await self.client._make_api_request(
-            f"/inventory/productlists/key/{productlist_key}"
+            f"/inventory/productlists/{product_list_key}"
         )
 
     async def list_all_productlists(self) -> Dict[str, Any]:
-        """List all product lists."""
-        return await self.client._make_api_request("/inventory/productlists")
+        """
+        List all accessible product lists for the authenticated user.
+
+        Returns:
+            Dict containing array of product lists with ID, key, and creation date
+        """
+        return await self.client._make_api_request("/inventory/productLists")
 
     async def create_productlist(
-        self, productlist_data: Dict[str, Any]
+        self, product_list_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Create a new product list."""
-        return await self.client._make_api_request(
-            "/inventory/productlists", method="POST", data=productlist_data
-        )
+        """
+        Create a new product list similar to how the Quicklist application
+        creates lists.
 
-    async def get_store_product_summary(
-        self, store_id: int, product_id: int
-    ) -> Dict[str, Any]:
-        """Get store product summary."""
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/products/{product_id}"
-        )
+        Args:
+            product_list_data: Optional product list configuration data
 
-    async def get_store_product_skus(
-        self, store_id: int, product_id: int
-    ) -> Dict[str, Any]:
-        """Get store product SKUs."""
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/products/{product_id}/skus"
-        )
+        Returns:
+            Dict containing the newly created product list key
 
-    async def get_store_related_products(
-        self, store_id: int, product_id: int
-    ) -> Dict[str, Any]:
-        """Get store related products."""
+        Note:
+            Requires specific permissions - not accessible by all users
+        """
         return await self.client._make_api_request(
-            f"/stores/{store_id}/products/{product_id}/related"
-        )
-
-    async def get_store_sku_quantity(
-        self, store_id: int, sku_id: int
-    ) -> Dict[str, Any]:
-        """Get store SKU quantity."""
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/inventory/{sku_id}"
-        )
-
-    async def increment_sku_inventory_quantity(
-        self, store_id: int, sku_id: int, quantity: int
-    ) -> Dict[str, Any]:
-        """Increment SKU inventory quantity."""
-        data = {"quantity": quantity}
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/inventory/{sku_id}/increment", method="POST", data=data
-        )
-
-    async def update_sku_inventory(
-        self, store_id: int, sku_id: int, quantity: int
-    ) -> Dict[str, Any]:
-        """Update SKU inventory quantity."""
-        data = {"quantity": quantity}
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/inventory/{sku_id}", method="PUT", data=data
-        )
-
-    async def batch_update_store_sku_prices(
-        self, store_id: int, price_updates: List[Dict[str, Any]]
-    ) -> Dict[str, Any]:
-        """Batch update store SKU prices."""
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/prices/skus", method="POST", data=price_updates
-        )
-
-    async def update_sku_inventory_price(
-        self, store_id: int, sku_id: int, price: float
-    ) -> Dict[str, Any]:
-        """Update SKU inventory price."""
-        data = {"price": price}
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/inventory/{sku_id}/price", method="PUT", data=data
-        )
-
-    async def list_sku_list_price(self, store_id: int, sku_id: int) -> Dict[str, Any]:
-        """List SKU list price."""
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/inventory/{sku_id}/list"
-        )
-
-    async def get_sku_list_price(self, store_id: int, sku_id: int) -> Dict[str, Any]:
-        """Get SKU list price."""
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/inventory/{sku_id}/list"
+            "/inventory/productLists", method="POST", data=product_list_data
         )

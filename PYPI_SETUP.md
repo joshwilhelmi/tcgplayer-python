@@ -61,14 +61,14 @@ twine upload dist/*
 # 1. Ensure all changes are committed
 git add . && git commit -m "Prepare for release v2.0.2"
 
-# 2. Run automated release script
-python scripts/release.py
+# 2. Run manual release process
+make build
 
-# 3. The script will
-#    - Run full CI pipeline
-#    - Build package
-#    - Create and push git tag
-#    - Trigger automatic PyPI publishing
+# 3. Create and push git tag
+git tag v2.0.2
+git push origin v2.0.2
+
+# 4. This triggers automatic PyPI publishing via GitHub Actions
 ```
 
 ### **Option 2: Manual Release**
@@ -113,12 +113,12 @@ git push origin v2.0.2
 - Build configuration
 - Already configured and ready!
 
-### **Release Script** (`scripts/release.py`)
+### **Makefile Commands**
 
-- Automated release process
-- Pre-release validation
-- Git tag management
-- User confirmation
+- `make ci` - Full CI pipeline validation
+- `make build` - Package building
+- `make publish` - Manual PyPI publishing (if needed)
+- Release automation via GitHub Actions on git tags
 
 ## 🚨 Troubleshooting
 

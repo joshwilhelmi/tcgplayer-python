@@ -1,5 +1,5 @@
 """
-Caching layer for TCGPlayer Client.
+Caching layer for TCGplayer Client.
 
 This module provides response caching with TTL management,
 LRU eviction, and configurable cache policies.

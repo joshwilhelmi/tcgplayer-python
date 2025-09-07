@@ -1,5 +1,5 @@
 """
-Enhanced logging configuration for TCGPlayer Client.
+Enhanced logging configuration for TCGplayer Client.
 
 This module provides structured logging with configurable log levels,
 formatters, and handlers for better debugging and monitoring.
@@ -85,8 +85,8 @@ class StructuredFormatter(logging.Formatter):
         return json.dumps(log_data, default=str)
 
 
-class TCGPlayerLogger:
-    """Enhanced logger for TCGPlayer Client with structured logging support."""
+class TCGplayerLogger:
+    """Enhanced logger for TCGplayer Client with structured logging support."""
 
     def __init__(
         self, name: str = "tcgplayer_client", level: Optional[Union[str, int]] = None
@@ -246,9 +246,9 @@ def setup_logging(
     level: Optional[Union[str, int]] = None,
     log_file: Optional[Union[str, Path]] = None,
     json_format: bool = False,
-) -> TCGPlayerLogger:
+) -> TCGplayerLogger:
     """
-    Set up logging for TCGPlayer Client.
+    Set up logging for TCGplayer Client.
 
     Args:
         name: Logger name
@@ -263,7 +263,7 @@ def setup_logging(
     if level is None:
         level = os.getenv("TCGPLAYER_LOG_LEVEL", DEFAULT_LOG_LEVEL)
 
-    logger = TCGPlayerLogger(name, level)
+    logger = TCGplayerLogger(name, level)
 
     # Add file handler if specified
     if log_file:

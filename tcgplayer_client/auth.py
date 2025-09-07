@@ -1,5 +1,5 @@
 """
-Authentication handling for TCGPlayer API.
+Authentication handling for TCGplayer API.
 """
 
 import logging
@@ -13,8 +13,8 @@ from .exceptions import AuthenticationError
 logger = logging.getLogger(__name__)
 
 
-class TCGPlayerAuth:
-    """Handles authentication with the TCGPlayer API."""
+class TCGplayerAuth:
+    """Handles authentication with the TCGplayer API."""
 
     def __init__(
         self,
@@ -26,10 +26,10 @@ class TCGPlayerAuth:
         Initialize the authentication handler.
 
         Args:
-            client_id: TCGPlayer API client ID (defaults to TCGPLAYER_CLIENT_ID env var)
-            client_secret: TCGPlayer API client secret (defaults to
+            client_id: TCGplayer API client ID (defaults to TCGPLAYER_CLIENT_ID env var)
+            client_secret: TCGplayer API client secret (defaults to
             TCGPLAYER_CLIENT_SECRET env var)
-            base_url: Base URL for TCGPlayer API (defaults to production API)
+            base_url: Base URL for TCGplayer API (defaults to production API)
         """
         self.client_id = client_id or os.getenv("TCGPLAYER_CLIENT_ID")
         self.client_secret = client_secret or os.getenv("TCGPLAYER_CLIENT_SECRET")
@@ -45,7 +45,7 @@ class TCGPlayerAuth:
 
     async def authenticate(self) -> Dict[str, Any]:
         """
-        Authenticate with TCGPlayer API using client credentials.
+        Authenticate with TCGplayer API using client credentials.
 
         Returns:
             Dictionary containing authentication result
@@ -71,7 +71,7 @@ class TCGPlayerAuth:
                         self.access_token = result.get("access_token")
 
                         if self.access_token:
-                            logger.info("Successfully authenticated with TCGPlayer API")
+                            logger.info("Successfully authenticated with TCGplayer API")
                             return {
                                 "success": True,
                                 "message": "Authentication successful",
@@ -79,7 +79,7 @@ class TCGPlayerAuth:
                             }
                         else:
                             raise AuthenticationError(
-                                "No access token received from TCGPlayer API"
+                                "No access token received from TCGplayer API"
                             )
                     else:
                         error_text = await response.text()
@@ -152,7 +152,7 @@ class TCGPlayerAuth:
                             }
                         else:
                             raise AuthenticationError(
-                                "No bearer token received from TCGPlayer API"
+                                "No bearer token received from TCGplayer API"
                             )
                     else:
                         error_text = await response.text()

@@ -97,11 +97,11 @@ export TCGPLAYER_CLIENT_SECRET="your_client_secret"
 
 # ❌ BAD
 
-client = TCGPlayerClient(client_id="abc123", client_secret="xyz789")
+client = TCGplayerClient(client_id="abc123", client_secret="xyz789")
 
 # ✅ GOOD
 
-client = TCGPlayerClient()  # Uses environment variables
+client = TCGplayerClient()  # Uses environment variables
 
 ```
 

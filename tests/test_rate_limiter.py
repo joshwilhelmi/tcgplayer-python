@@ -24,7 +24,7 @@ class TestRateLimiter:
         """Test rate limiter initialization with custom parameters."""
         limiter = RateLimiter(max_requests=20, time_window=2.0)
 
-        assert limiter.max_requests == 10  # Rate limit capped to TCGPlayer maximum
+        assert limiter.max_requests == 10  # Rate limit capped to TCGplayer maximum
         assert limiter.time_window == 2.0
         assert len(limiter.requests) == 0
 

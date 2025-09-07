@@ -1,6 +1,6 @@
 {
   "api_info": {
-    "name": "TCGPlayer API",
+    "name": "TCGplayer API",
     "version": "v1.39.0",
     "base_url": "https://api.tcgplayer.com",
     "documentation_url": "https://docs.tcgplayer.com/reference",
@@ -2875,7 +2875,7 @@
     }
   },
   "notes": {
-    "data_collection_method": "Systematically scraped from TCGPlayer API documentation using WebFetch tool",
+    "data_collection_method": "Systematically scraped from TCGplayer API documentation using WebFetch tool",
     "detailed_endpoints_available": 80,
     "coverage_improvement": "Improved from 64% (51/80) to 100% (80/80) detailed specifications - COMPLETE!",
     "priority_1_critical_endpoints": "COMPLETED: 13/13 critical endpoints (6 catalog/pricing + 7 store endpoints)",
@@ -2884,7 +2884,7 @@
     "priority_4_inventory_endpoints": "COMPLETED: 4/4 inventory endpoints - all Priority 4 inventory endpoints extracted",
     "priority_5_stores_complete": "COMPLETED: ALL 47/47 stores endpoints extracted - Full store management API coverage",
     "remaining_endpoints": "0 endpoints remaining - 100% COVERAGE ACHIEVED!",
-    "authentication_required": "Most endpoints require TCGPlayer API credentials (Client ID and Client Secret)",
+    "authentication_required": "Most endpoints require TCGplayer API credentials (Client ID and Client Secret)",
     "rate_limiting": "API implements rate limiting - typically 10 requests per second",
     "response_format": "All endpoints return JSON responses with consistent error handling structure"
   }

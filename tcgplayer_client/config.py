@@ -1,5 +1,5 @@
 """
-Configuration management for TCGPlayer Client.
+Configuration management for TCGplayer Client.
 
 This module provides flexible configuration management with support for
 environment variables, configuration files, and runtime configuration.
@@ -12,6 +12,12 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Dict, Optional, Union
 
+try:
+    from dotenv import load_dotenv
+    _DOTENV_AVAILABLE = True
+except ImportError:
+    _DOTENV_AVAILABLE = False
+
 from .exceptions import ConfigurationError
 
 logger = logging.getLogger(__name__)
@@ -19,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ClientConfig:
-    """Configuration for TCGPlayer Client."""
+    """Configuration for TCGplayer Client."""
 
     # API Configuration
     base_url: str = "https://api.tcgplayer.com"
@@ -68,12 +74,12 @@ class ClientConfig:
         if self.max_requests_per_second <= 0:
             raise ConfigurationError("max_requests_per_second must be positive")
 
-        # Enforce TCGPlayer's absolute maximum rate limit
+        # Enforce TCGplayer's absolute maximum rate limit
         if self.max_requests_per_second > 10:
             logger.warning(
                 f"Configuration rate limit "
                 f"{self.max_requests_per_second} req/s exceeds "
-                f"TCGPlayer's maximum of 10 req/s. "
+                f"TCGplayer's maximum of 10 req/s. "
                 f"Rate limit has been capped to 10 req/s to prevent API "
                 f"violations."
             )
@@ -286,6 +292,16 @@ def load_config(
     Returns:
         Loaded configuration
     """
+    # Load .env file if available and dotenv is installed
+    if _DOTENV_AVAILABLE:
+        # Look for .env file in current directory
+        env_path = Path.cwd() / ".env"
+        if env_path.exists():
+            load_dotenv(env_path)
+            logger.debug(f"Loaded environment variables from {env_path}")
+        else:
+            # Try to load from default locations
+            load_dotenv()  # Loads from .env in current dir or parent dirs
     config_manager = ConfigurationManager(config_file)
 
     # Load from file first

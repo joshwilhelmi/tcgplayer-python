@@ -1,5 +1,5 @@
 """
-Input validation for TCGPlayer API parameters.
+Input validation for TCGplayer API parameters.
 
 This module provides validation functions for API parameters including
 bounds checking, type validation, and format validation.

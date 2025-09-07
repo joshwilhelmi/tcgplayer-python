@@ -42,46 +42,52 @@ help:
 	@echo "  release-check    Validate release readiness"
 	@echo "  release-auto     Show automated release info"
 
+# Use UV instead of pip/python
+PYTHON := uv run python
+PYTEST := uv run pytest
+BLACK := uv run black
+FLAKE8 := uv run flake8
+MYPY := uv run mypy
+
 # Installation
 install:
-	pip install -r requirements.txt
+	uv sync --all-extras
 
 install-dev:
-	pip install -r requirements.txt
-	pip install -r requirements-dev.txt
+	uv sync --all-extras
 
 # Code Formatting
 format:
 	@echo "🔧 Running Black formatting..."
-	black .
+	$(BLACK) .
 	@echo "✅ Black formatting complete"
 
 format-check:
 	@echo "🔍 Checking Black formatting..."
-	black --check --diff .
+	$(BLACK) --check --diff .
 	@echo "✅ Black formatting check passed"
 
 # Linting
 lint:
 	@echo "🔍 Running Flake8 linting..."
-	flake8 tcgplayer_client/ tests/ --max-line-length=88 --extend-ignore=E203,W503
+	$(FLAKE8) tcgplayer_client/ tests/
 	@echo "✅ Flake8 linting passed"
 
 # Type Checking
 type-check:
 	@echo "🔍 Running MyPy type checking..."
-	mypy tcgplayer_client/ --ignore-missing-imports --no-strict-optional
+	$(MYPY) tcgplayer_client/ --ignore-missing-imports --no-strict-optional
 	@echo "✅ MyPy type checking passed"
 
 # Import Sorting
 import-sort:
 	@echo "🔧 Running isort import sorting..."
-	isort .
+	uv run isort .
 	@echo "✅ isort import sorting complete"
 
 import-sort-check:
 	@echo "🔍 Checking isort import sorting..."
-	isort --check-only --diff .
+	uv run isort --check-only --diff .
 	@echo "✅ isort import sorting check passed"
 
 # Markdown Linting
@@ -108,19 +114,20 @@ markdown-check:
 # Testing
 test:
 	@echo "🧪 Running test suite..."
-	python -m pytest tests/ -v --tb=short
+	$(PYTEST) tests/ -v --tb=short
 
 test-cov:
 	@echo "🧪 Running test suite with coverage..."
-	python -m pytest tests/ -v --cov=tcgplayer_client --cov-report=html --cov-report=term-missing
+	$(PYTEST) tests/ -v --cov=tcgplayer_client --cov-report=html --cov-report=term-missing
 
 test-fast:
 	@echo "🧪 Running test suite (fast mode)..."
-	python -m pytest tests/ -v --tb=short --no-cov
+	$(PYTEST) tests/ -v --tb=short --no-cov
 
 test-deps:
 	@echo "🔍 Testing Python dependencies and build system..."
-	python scripts/test-dependencies.py
+	@echo "Dependencies are managed via UV and tested through regular test suite"
+	$(PYTEST) tests/test_dependencies.py -v
 
 # Security Scanning
 security: bandit semgrep pip-audit
@@ -202,7 +209,7 @@ release-auto:
 	@echo "   2. Build package"
 	@echo "   3. Create and push git tag"
 	@echo "   4. Trigger automatic PyPI publishing"
-	@echo "   Run: python scripts/release.py"
+	@echo "   Use: make build && git tag && git push --tags (manual release process)"
 
 # Quick fix for common issues
 fix: format import-sort

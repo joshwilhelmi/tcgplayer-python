@@ -10,32 +10,32 @@ from tcgplayer_client.exceptions import (
     ConfigurationError,
     NetworkError,
     RateLimitError,
-    TCGPlayerError,
+    TCGplayerError,
     ValidationError,
 )
 
 
-class TestTCGPlayerError:
-    """Test cases for the base TCGPlayerError class."""
+class TestTCGplayerError:
+    """Test cases for the base TCGplayerError class."""
 
     def test_base_exception_inheritance(self):
-        """Test that TCGPlayerError inherits from Exception."""
-        error = TCGPlayerError("Test error")
+        """Test that TCGplayerError inherits from Exception."""
+        error = TCGplayerError("Test error")
         assert isinstance(error, Exception)
 
     def test_error_message(self):
         """Test that error message is set correctly."""
         message = "Test error message"
-        error = TCGPlayerError(message)
+        error = TCGplayerError(message)
         assert str(error) == message
 
     def test_error_repr(self):
         """Test error string representation."""
         message = "Test error"
-        error = TCGPlayerError(message)
+        error = TCGplayerError(message)
         repr_str = repr(error)
 
-        assert "TCGPlayerError" in repr_str
+        assert "TCGplayerError" in repr_str
         assert message in repr_str
 
 
@@ -43,9 +43,9 @@ class TestAuthenticationError:
     """Test cases for AuthenticationError class."""
 
     def test_inheritance(self):
-        """Test that AuthenticationError inherits from TCGPlayerError."""
+        """Test that AuthenticationError inherits from TCGplayerError."""
         error = AuthenticationError("Auth failed")
-        assert isinstance(error, TCGPlayerError)
+        assert isinstance(error, TCGplayerError)
 
     def test_error_message(self):
         """Test that authentication error message is set correctly."""
@@ -63,9 +63,9 @@ class TestRateLimitError:
     """Test cases for RateLimitError class."""
 
     def test_inheritance(self):
-        """Test that RateLimitError inherits from TCGPlayerError."""
+        """Test that RateLimitError inherits from TCGplayerError."""
         error = RateLimitError("Rate limit exceeded")
-        assert isinstance(error, TCGPlayerError)
+        assert isinstance(error, TCGplayerError)
 
     def test_error_message(self):
         """Test that rate limit error message is set correctly."""
@@ -83,9 +83,9 @@ class TestAPIError:
     """Test cases for APIError class."""
 
     def test_inheritance(self):
-        """Test that APIError inherits from TCGPlayerError."""
+        """Test that APIError inherits from TCGplayerError."""
         error = APIError("API request failed")
-        assert isinstance(error, TCGPlayerError)
+        assert isinstance(error, TCGplayerError)
 
     def test_error_message(self):
         """Test that API error message is set correctly."""
@@ -111,9 +111,9 @@ class TestNetworkError:
     """Test cases for NetworkError class."""
 
     def test_inheritance(self):
-        """Test that NetworkError inherits from TCGPlayerError."""
+        """Test that NetworkError inherits from TCGplayerError."""
         error = NetworkError("Network connection failed")
-        assert isinstance(error, TCGPlayerError)
+        assert isinstance(error, TCGplayerError)
 
     def test_error_message(self):
         """Test that network error message is set correctly."""
@@ -131,9 +131,9 @@ class TestValidationError:
     """Test cases for ValidationError class."""
 
     def test_inheritance(self):
-        """Test that ValidationError inherits from TCGPlayerError."""
+        """Test that ValidationError inherits from TCGplayerError."""
         error = ValidationError("Invalid input")
-        assert isinstance(error, TCGPlayerError)
+        assert isinstance(error, TCGplayerError)
 
     def test_error_message(self):
         """Test that validation error message is set correctly."""
@@ -151,9 +151,9 @@ class TestConfigurationError:
     """Test cases for ConfigurationError class."""
 
     def test_inheritance(self):
-        """Test that ConfigurationError inherits from TCGPlayerError."""
+        """Test that ConfigurationError inherits from TCGplayerError."""
         error = ConfigurationError("Missing configuration")
-        assert isinstance(error, TCGPlayerError)
+        assert isinstance(error, TCGplayerError)
 
     def test_error_message(self):
         """Test that configuration error message is set correctly."""
@@ -182,7 +182,7 @@ class TestExceptionHierarchy:
         ]
 
         for exc in exceptions:
-            assert isinstance(exc, TCGPlayerError)
+            assert isinstance(exc, TCGplayerError)
 
     def test_exception_uniqueness(self):
         """Test that different exception types are not equal."""

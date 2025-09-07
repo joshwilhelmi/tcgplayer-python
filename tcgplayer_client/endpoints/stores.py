@@ -1,346 +1,795 @@
 """
-Store endpoints for TCGPlayer API.
+Store endpoints for TCGplayer API.
 
 This module contains all store-related operations including:
 - Store management and settings
 - Customer management
 - Product inventory and pricing
-- Shipping and feedback
-- Store authorization workflow
+- Order management and tracking
+- Buylist operations
+- Batch operations and pricing
 """
 
 from typing import Any, Dict, List, Optional
 
-from ..client import TCGPlayerClient
+from ..client import TCGplayerClient
 
 
 class StoreEndpoints:
     """Store-related API endpoints."""
 
-    def __init__(self, client: TCGPlayerClient):
+    def __init__(self, client: TCGplayerClient):
         """
         Initialize store endpoints.
 
         Args:
-            client: TCGPlayer client instance
+            client: TCGplayer client instance
         """
         self.client = client
 
+    # GROUP 1: BASIC STORE OPERATIONS
 
-    async def get_store_self(self) -> Dict[str, Any]:
+    async def search_stores(self, name: Optional[str] = None) -> Dict[str, Any]:
         """
-        Get the identity of the TCGPlayer store using the current bearer token.
+        Returns a collection of storeKey values based on the search parameters.
 
-        GET: https://api.tcgplayer.com/stores/self
-        Headers: Authorization: Bearer {BEARER_TOKEN}
+        Args:
+            name: Filters stores by name (e.g., 'Gamer')
+
+        Returns:
+            Dict containing search results with storeKey values
+        """
+        params = {}
+        if name is not None:
+            params["name"] = name
+
+        return await self.client._make_api_request("/stores", params=params)
+
+    async def get_store_info(self) -> Dict[str, Any]:
+        """
+        Return general information about the current Store associated with the
+        current bearer token.
+
+        Returns:
+            Dict containing store information
         """
         return await self.client._make_api_request("/stores/self")
 
-    async def get_free_shipping_option(self, store_id: int) -> Dict[str, Any]:
-        """Get free shipping option for a store."""
-        return await self.client._make_api_request(f"/stores/{store_id}/shipping/free")
+    async def get_store_address(self, store_key: str) -> Dict[str, Any]:
+        """
+        Return address information about the Store specified by the storeKey.
 
-    async def get_store_address(self, store_id: int) -> Dict[str, Any]:
-        """Get store address information."""
-        return await self.client._make_api_request(f"/stores/{store_id}/address")
+        Args:
+            store_key: Unique identifier for the store
 
-    async def get_store_feedback(self, store_id: int) -> Dict[str, Any]:
-        """Get store feedback information."""
-        return await self.client._make_api_request(f"/stores/{store_id}/feedback")
+        Returns:
+            Dict containing store address information
+        """
+        return await self.client._make_api_request(f"/stores/{store_key}/address")
 
-    async def set_store_status(self, store_id: int, status: str) -> Dict[str, Any]:
-        """Set store status (open/closed)."""
-        data = {"status": status}
+    async def set_store_status(self, store_key: str, status: str) -> Dict[str, Any]:
+        """
+        Set the status of a store.
+
+        Args:
+            store_key: Unique identifier for the store
+            status: Status to set for the store
+
+        Returns:
+            Dict containing operation result
+        """
         return await self.client._make_api_request(
-            f"/stores/{store_id}/status", method="PUT", data=data
+            f"/stores/{store_key}/status/{status}", method="PUT"
         )
 
-    async def get_customer_summary(
-        self, store_id: int, customer_id: int
+    # GROUP 2: INVENTORY MANAGEMENT
+
+    async def get_product_inventory_quantities(
+        self, store_key: str, product_id: int
     ) -> Dict[str, Any]:
-        """Get customer summary for a store."""
+        """
+        Gets inventory quantities for a specific product at a store.
+
+        Args:
+            store_key: Unique identifier for the store
+            product_id: Specific product identifier to retrieve inventory for
+
+        Returns:
+            Dict containing product inventory quantities
+        """
         return await self.client._make_api_request(
-            f"/stores/{store_id}/customers/{customer_id}"
+            f"/stores/{store_key}/inventory/products/{product_id}/quantity"
         )
 
-    async def search_store_customers(
-        self, store_id: int, search_term: str
-    ) -> Dict[str, Any]:
-        """Search for customers in a store."""
-        params = {"term": search_term}
+    async def list_product_summary(self, store_key: str) -> Dict[str, Any]:
+        """
+        Returns all products currently for sale in a specific store.
+
+        Args:
+            store_key: Store identifier
+
+        Returns:
+            Dict containing product summary information
+        """
         return await self.client._make_api_request(
-            f"/stores/{store_id}/customers/search", params=params
+            f"/stores/{store_key}/inventory/products"
         )
 
-    async def get_customer_addresses(
-        self, store_id: int, customer_id: int
-    ) -> Dict[str, Any]:
-        """Get customer addresses for a store."""
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/customers/{customer_id}/addresses"
-        )
+    async def get_sku_quantity(self, store_key: str, sku_id: int) -> Dict[str, Any]:
+        """
+        Returns quantity of a specific SKU in store inventory.
 
-    async def get_customer_orders(
-        self, store_id: int, customer_id: int
-    ) -> Dict[str, Any]:
-        """Get customer orders for a store."""
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/customers/{customer_id}/orders"
-        )
+        Args:
+            store_key: Store identifier
+            sku_id: Specific SKU identifier
 
-    async def get_store_product_summary(
-        self, store_id: int, product_id: int
-    ) -> Dict[str, Any]:
-        """Get store product summary."""
+        Returns:
+            Dict containing SKU quantity information
+        """
         return await self.client._make_api_request(
-            f"/stores/{store_id}/products/{product_id}"
-        )
-
-    async def get_store_product_skus(
-        self, store_id: int, product_id: int
-    ) -> Dict[str, Any]:
-        """Get store product SKUs."""
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/products/{product_id}/skus"
-        )
-
-    async def get_store_product_related_products(
-        self, store_id: int, product_id: int
-    ) -> Dict[str, Any]:
-        """Get store related products for a specific product."""
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/products/{product_id}/related"
-        )
-
-    async def get_store_shipping_options_by_id(self, store_id: int) -> Dict[str, Any]:
-        """Get store shipping options by store ID."""
-        return await self.client._make_api_request(f"/stores/{store_id}/shipping")
-
-    async def get_store_sku_quantity_by_id(
-        self, store_id: int, sku_id: int
-    ) -> Dict[str, Any]:
-        """Get store SKU quantity by store ID."""
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/inventory/{sku_id}"
-        )
-
-    async def increment_sku_inventory_quantity(
-        self, store_id: int, sku_id: int, quantity: int
-    ) -> Dict[str, Any]:
-        """Increment SKU inventory quantity."""
-        data = {"quantity": quantity}
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/inventory/{sku_id}/increment", method="POST", data=data
+            f"/stores/{store_key}/inventory/skus/{sku_id}/quantity"
         )
 
     async def update_sku_inventory(
-        self, store_id: int, sku_id: int, quantity: int
+        self, store_key: str, sku_id: int, price: float, quantity: int, channel_id: int
     ) -> Dict[str, Any]:
-        """Update SKU inventory quantity."""
-        data = {"quantity": quantity}
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/inventory/{sku_id}", method="PUT", data=data
-        )
+        """
+        Adds or updates a SKU in the store's inventory.
 
-    async def batch_update_store_sku_prices_by_id(
-        self, store_id: int, price_updates: List[Dict[str, Any]]
-    ) -> Dict[str, Any]:
-        """Batch update store SKU prices by store ID."""
+        Args:
+            store_key: Store identifier
+            sku_id: Specific SKU identifier
+            price: Price for the SKU
+            quantity: Quantity for the SKU
+            channel_id: Channel identifier
+
+        Returns:
+            Dict containing operation result
+        """
+        data = {"price": price, "quantity": quantity, "channelId": channel_id}
         return await self.client._make_api_request(
-            f"/stores/{store_id}/prices/skus", method="POST", data=price_updates
+            f"/stores/{store_key}/inventory/skus/{sku_id}", method="PUT", data=data
         )
 
     async def update_sku_inventory_price(
-        self, store_id: int, sku_id: int, price: float
+        self, store_key: str, sku_id: int, price: float, channel_id: int
     ) -> Dict[str, Any]:
-        """Update SKU inventory price."""
-        data = {"price": price}
+        """
+        Updates pricing for a single SKU in the authenticated store.
+
+        Args:
+            store_key: Store identifier
+            sku_id: SKU identifier
+            price: New price for the SKU
+            channel_id: Channel identifier
+
+        Returns:
+            Dict containing operation result
+        """
+        data = {"price": price, "channelId": channel_id}
         return await self.client._make_api_request(
-            f"/stores/{store_id}/inventory/{sku_id}/price", method="PUT", data=data
+            f"/stores/{store_key}/inventory/skus/{sku_id}/price",
+            method="PUT",
+            data=data,
         )
 
-    async def list_sku_list_price(self, store_id: int, sku_id: int) -> Dict[str, Any]:
-        """List SKU list price."""
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/inventory/{sku_id}/list"
-        )
-
-    async def get_sku_list_price(self, store_id: int, sku_id: int) -> Dict[str, Any]:
-        """Get SKU list price."""
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/inventory/{sku_id}/list"
-        )
-
-    async def get_store_groups_by_id(self, store_id: int) -> Dict[str, Any]:
-        """Get store groups by store ID."""
-        return await self.client._make_api_request(f"/stores/{store_id}/groups")
-
-    async def get_store_categories(self, store_id: int) -> Dict[str, Any]:
-        """Get store categories."""
-        return await self.client._make_api_request(f"/stores/{store_id}/categories")
-
-    async def search_custom_listings(
-        self, store_id: int, search_term: str
+    async def increment_sku_inventory_quantity(
+        self, store_key: str, sku_id: int, quantity: int, channel_id: int
     ) -> Dict[str, Any]:
-        """Search custom listings in a store."""
-        params = {"term": search_term}
-        return await self.client._make_api_request(
-            f"/stores/{store_id}/listings/search", params=params
-        )
+        """
+        Increment SKU inventory quantity.
 
-    # Store endpoints using storeKey (for authorized store access)
-    async def get_store_inventory_quantities(self, store_key: str) -> Dict[str, Any]:
-        """Get product inventory quantities for a store using storeKey."""
-        return await self.client._make_api_request(
-            f"/stores/{store_key}/inventory/quantities"
-        )
+        Args:
+            store_key: Store identifier
+            sku_id: SKU identifier
+            quantity: Quantity to increment
+            channel_id: Channel identifier
 
-    async def get_store_products_summary(self, store_key: str) -> Dict[str, Any]:
-        """Get store products summary using storeKey."""
+        Returns:
+            Dict containing operation result
+        """
+        data = {"quantity": quantity, "channelId": channel_id}
         return await self.client._make_api_request(
-            f"/stores/{store_key}/products/summary"
-        )
-
-    async def get_store_products_skus(self, store_key: str) -> Dict[str, Any]:
-        """Get store product SKUs using storeKey."""
-        return await self.client._make_api_request(f"/stores/{store_key}/products/skus")
-
-    async def get_store_related_products(self, store_key: str) -> Dict[str, Any]:
-        """Get store related products using storeKey."""
-        return await self.client._make_api_request(
-            f"/stores/{store_key}/products/related"
-        )
-
-    async def get_store_shipping_options(self, store_key: str) -> Dict[str, Any]:
-        """Get store shipping options using storeKey."""
-        return await self.client._make_api_request(
-            f"/stores/{store_key}/shipping/options"
-        )
-
-    async def get_store_sku_quantity(
-        self, store_key: str, sku_id: int
-    ) -> Dict[str, Any]:
-        """Get store SKU quantity using storeKey."""
-        return await self.client._make_api_request(
-            f"/stores/{store_key}/sku/{sku_id}/quantity"
-        )
-
-    async def increment_store_sku_quantity(
-        self, store_key: str, sku_id: int, quantity: int
-    ) -> Dict[str, Any]:
-        """Increment store SKU quantity using storeKey."""
-        data = {"quantity": quantity}
-        return await self.client._make_api_request(
-            f"/stores/{store_key}/sku/{sku_id}/quantity/increment",
+            f"/stores/{store_key}/inventory/skus/{sku_id}/quantity",
             method="POST",
             data=data,
         )
 
-    async def update_store_sku_inventory(
-        self, store_key: str, sku_id: int, quantity: int
-    ) -> Dict[str, Any]:
-        """Update store SKU inventory using storeKey."""
-        data = {"quantity": quantity}
-        return await self.client._make_api_request(
-            f"/stores/{store_key}/inventory/sku", method="PUT", data=data
-        )
-
     async def batch_update_store_sku_prices(
-        self, store_key: str, price_updates: List[Dict[str, Any]]
+        self, store_key: str, sku_updates: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Batch update store SKU prices using storeKey."""
+        """
+        Batch update store SKU prices.
+
+        Args:
+            store_key: Store identifier
+            sku_updates: List of SKU price updates
+
+        Returns:
+            Dict containing batch operation result
+        """
         return await self.client._make_api_request(
-            f"/stores/{store_key}/prices/batch", method="POST", data=price_updates
+            f"/stores/{store_key}/inventory/skus/batch", method="POST", data=sku_updates
         )
 
-    async def update_store_sku_price(
-        self, store_key: str, sku_id: int, price: float
-    ) -> Dict[str, Any]:
-        """Update store SKU price using storeKey."""
-        data = {"price": price}
+    async def list_sku_list_price(self, store_key: str) -> Dict[str, Any]:
+        """
+        List SKU list prices for a store.
+
+        Args:
+            store_key: Store identifier
+
+        Returns:
+            Dict containing SKU list prices
+        """
         return await self.client._make_api_request(
-            f"/stores/{store_key}/sku/{sku_id}/price", method="PUT", data=data
+            f"/stores/{store_key}/inventory/skuprices"
         )
 
-    async def get_store_sku_list_price(
-        self, store_key: str, sku_id: int
-    ) -> Dict[str, Any]:
-        """Get store SKU list price using storeKey."""
+    # GROUP 3: CUSTOMER MANAGEMENT
+
+    async def get_customer_summary(self, store_key: str, token: str) -> Dict[str, Any]:
+        """
+        Returns the total number of orders and total product dollar amount for
+        all orders a customer has place with the seller.
+
+        Args:
+            store_key: Unique store identifier
+            token: Unique seller and customer combination
+
+        Returns:
+            Dict containing customer summary information
+        """
         return await self.client._make_api_request(
-            f"/stores/{store_key}/sku/{sku_id}/price"
+            f"/stores/{store_key}/customers/{token}"
         )
 
-    async def get_store_groups(self, store_key: str) -> Dict[str, Any]:
-        """Get store groups using storeKey."""
-        return await self.client._make_api_request(f"/stores/{store_key}/groups")
+    async def search_store_customers(self, store_key: str) -> Dict[str, Any]:
+        """
+        Search Store Customers.
 
-    async def get_store_categories_by_key(self, store_key: str) -> Dict[str, Any]:
-        """Get store categories using storeKey."""
-        return await self.client._make_api_request(f"/stores/{store_key}/categories")
+        Args:
+            store_key: Unique identifier for the store
 
-    async def search_store_custom_listings(
-        self, store_key: str, search_term: str
+        Returns:
+            Dict containing customer search results
+        """
+        return await self.client._make_api_request(f"/stores/{store_key}/customers")
+
+    async def get_customer_addresses(
+        self, store_key: str, token: str
     ) -> Dict[str, Any]:
-        """Search custom listings in a store using storeKey."""
-        params = {"term": search_term}
+        """
+        Returns the shipping addresses associated with the orders a customer
+        has placed with the seller.
+
+        Args:
+            store_key: Unique store identifier
+            token: Unique seller-customer combination identifier
+
+        Returns:
+            Dict containing customer addresses
+        """
         return await self.client._make_api_request(
-            f"/stores/{store_key}/listings/custom/search", params=params
+            f"/stores/{store_key}/customers/{token}/addresses"
         )
 
-    async def get_store_order_manifest(self, store_key: str) -> Dict[str, Any]:
-        """Get store order manifest using storeKey."""
+    async def get_customer_orders(self, store_key: str, token: str) -> Dict[str, Any]:
+        """
+        Returns a list of orders containing the total product quantity and
+        total product dollar amount for each order a customer has placed with
+        the seller.
+
+        Args:
+            store_key: Unique store identifier
+            token: Unique seller and customer combination
+
+        Returns:
+            Dict containing customer orders
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/customers/{token}/orders"
+        )
+
+    async def get_store_feedback(self, store_key: str) -> Dict[str, Any]:
+        """
+        Get store feedback information.
+
+        Args:
+            store_key: Unique identifier for the store
+
+        Returns:
+            Dict containing store feedback
+        """
+        return await self.client._make_api_request(f"/stores/{store_key}/feedback")
+
+    # GROUP 4: ORDER MANAGEMENT
+
+    async def search_orders(self, store_key: str) -> Dict[str, Any]:
+        """
+        Search orders for a store.
+
+        Args:
+            store_key: Unique identifier for the store
+
+        Returns:
+            Dict containing order search results
+        """
+        return await self.client._make_api_request(f"/stores/{store_key}/orders")
+
+    async def get_order_tracking_numbers(
+        self, store_key: str, order_number: str
+    ) -> Dict[str, Any]:
+        """
+        Get order tracking numbers.
+
+        Args:
+            store_key: Unique identifier for the store
+            order_number: Order number
+
+        Returns:
+            Dict containing tracking numbers
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/orders/{order_number}/tracking"
+        )
+
+    async def add_order_tracking_number(
+        self, store_key: str, order_number: str, tracking_data: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """
+        Add order tracking number.
+
+        Args:
+            store_key: Unique identifier for the store
+            order_number: Order number
+            tracking_data: Tracking information
+
+        Returns:
+            Dict containing operation result
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/orders/{order_number}/tracking",
+            method="POST",
+            data=tracking_data,
+        )
+
+    async def get_order_manifest(self, store_key: str) -> Dict[str, Any]:
+        """
+        Get order manifest for a store.
+
+        Args:
+            store_key: Unique identifier for the store
+
+        Returns:
+            Dict containing order manifest
+        """
         return await self.client._make_api_request(
             f"/stores/{store_key}/orders/manifest"
         )
 
-    async def get_store_order_details(
-        self, store_key: str, order_id: int
+    async def get_order_details(
+        self, store_key: str, order_numbers: str
     ) -> Dict[str, Any]:
-        """Get store order details using storeKey."""
+        """
+        Get order details.
+
+        Args:
+            store_key: Unique identifier for the store
+            order_numbers: Order numbers (comma-separated)
+
+        Returns:
+            Dict containing order details
+        """
         return await self.client._make_api_request(
-            f"/stores/{store_key}/orders/{order_id}"
+            f"/stores/{store_key}/orders/{order_numbers}"
         )
 
-    async def get_store_order_feedback(
-        self, store_key: str, order_id: int
+    async def get_order_items(
+        self, store_key: str, order_number: str
     ) -> Dict[str, Any]:
-        """Get store order feedback using storeKey."""
+        """
+        Get order items.
+
+        Args:
+            store_key: Unique identifier for the store
+            order_number: Order number
+
+        Returns:
+            Dict containing order items
+        """
         return await self.client._make_api_request(
-            f"/stores/{store_key}/orders/{order_id}/feedback"
+            f"/stores/{store_key}/orders/{order_number}/items"
         )
 
-    async def search_store_orders(
-        self, store_key: str, search_term: Optional[str] = None
+    async def get_order_feedback(
+        self, store_key: str, order_number: str
     ) -> Dict[str, Any]:
-        """Search store orders using storeKey."""
-        params = {}
-        if search_term:
-            params["term"] = search_term
+        """
+        Get order feedback.
+
+        Args:
+            store_key: Unique identifier for the store
+            order_number: Order number
+
+        Returns:
+            Dict containing order feedback
+        """
         return await self.client._make_api_request(
-            f"/stores/{store_key}/orders", params=params
+            f"/stores/{store_key}/orders/{order_number}/feedback"
         )
 
-    async def get_store_order_items(
-        self, store_key: str, order_id: int
+    # GROUP 5: BUYLIST OPERATIONS
+
+    async def batch_update_store_buylist_prices(
+        self, store_key: str, buylist_updates: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Get store order items using storeKey."""
+        """
+        Batch update store buylist prices.
+
+        Args:
+            store_key: Unique identifier for the store
+            buylist_updates: List of buylist price updates
+
+        Returns:
+            Dict containing batch operation result
+        """
         return await self.client._make_api_request(
-            f"/stores/{store_key}/orders/{order_id}/items"
+            f"/stores/{store_key}/buylist/skus/batch",
+            method="POST",
+            data=buylist_updates,
         )
 
-    async def get_store_order_tracking(
-        self, store_key: str, order_id: int
+    async def create_sku_buylist(
+        self, store_key: str, sku_id: int, buylist_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get store order tracking using storeKey."""
+        """
+        Create SKU buylist entry.
+
+        Args:
+            store_key: Unique identifier for the store
+            sku_id: SKU identifier
+            buylist_data: Buylist data
+
+        Returns:
+            Dict containing operation result
+        """
         return await self.client._make_api_request(
-            f"/stores/{store_key}/orders/{order_id}/tracking"
+            f"/stores/{store_key}/buylist/skus/{sku_id}",
+            method="PUT",
+            data=buylist_data,
         )
 
-    async def add_store_order_tracking(
-        self, store_key: str, order_id: int, tracking_number: str
+    async def update_sku_buylist_price(
+        self, store_key: str, sku_id: int, price_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Add store order tracking using storeKey."""
-        data = {"trackingNumber": tracking_number}
+        """
+        Update SKU buylist price.
+
+        Args:
+            store_key: Unique identifier for the store
+            sku_id: SKU identifier
+            price_data: Price data
+
+        Returns:
+            Dict containing operation result
+        """
         return await self.client._make_api_request(
-            f"/stores/{store_key}/orders/{order_id}/tracking", method="POST", data=data
+            f"/stores/{store_key}/buylist/skus/{sku_id}/price",
+            method="PUT",
+            data=price_data,
+        )
+
+    async def update_sku_buylist_quantity(
+        self, store_key: str, sku_id: int, quantity_data: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """
+        Update SKU buylist quantity.
+
+        Args:
+            store_key: Unique identifier for the store
+            sku_id: SKU identifier
+            quantity_data: Quantity data
+
+        Returns:
+            Dict containing operation result
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/buylist/skus/{sku_id}/quantity",
+            method="PUT",
+            data=quantity_data,
+        )
+
+    async def get_buylist_categories(self, store_key: str) -> Dict[str, Any]:
+        """
+        Get buylist categories.
+
+        Args:
+            store_key: Unique identifier for the store
+
+        Returns:
+            Dict containing buylist categories
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/buylist/categories"
+        )
+
+    async def get_buylist_groups(self, store_key: str) -> Dict[str, Any]:
+        """
+        Get buylist groups.
+
+        Args:
+            store_key: Unique identifier for the store
+
+        Returns:
+            Dict containing buylist groups
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/buylist/groups"
+        )
+
+    async def get_store_buylist_settings(self, store_key: str) -> Dict[str, Any]:
+        """
+        Get store buylist settings.
+
+        Args:
+            store_key: Unique identifier for the store
+
+        Returns:
+            Dict containing buylist settings
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/buylist/settings"
+        )
+
+    # GROUP 6: CATALOG & SEARCH
+
+    async def list_all_groups(self, store_key: str) -> Dict[str, Any]:
+        """
+        List all groups for a store.
+
+        Args:
+            store_key: Unique identifier for the store
+
+        Returns:
+            Dict containing all groups
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/inventory/groups"
+        )
+
+    async def list_product_skus(
+        self, store_key: str, product_id: int
+    ) -> Dict[str, Any]:
+        """
+        List product SKUs for a store.
+
+        Args:
+            store_key: Unique identifier for the store
+            product_id: Product identifier
+
+        Returns:
+            Dict containing product SKUs
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/inventory/products/{product_id}/skus"
+        )
+
+    async def list_related_products(
+        self, store_key: str, product_id: int
+    ) -> Dict[str, Any]:
+        """
+        List related products for a store.
+
+        Args:
+            store_key: Unique identifier for the store
+            product_id: Product identifier
+
+        Returns:
+            Dict containing related products
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/inventory/products/{product_id}/relatedproducts"
+        )
+
+    async def list_all_categories(self, store_key: str) -> Dict[str, Any]:
+        """
+        List all categories for a store.
+
+        Args:
+            store_key: Unique identifier for the store
+
+        Returns:
+            Dict containing all categories
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/inventory/categories"
+        )
+
+    async def list_store_channels(self, store_key: str) -> Dict[str, Any]:
+        """
+        List store channels.
+
+        Args:
+            store_key: Unique identifier for the store
+
+        Returns:
+            Dict containing store channels
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/inventory/channels"
+        )
+
+    async def get_store_buylist_products_for_kiosk(
+        self, store_key: str
+    ) -> Dict[str, Any]:
+        """
+        Get a Store's Buylist Products for Kiosk use.
+
+        Args:
+            store_key: Unique identifier for the store
+
+        Returns:
+            Dict containing buylist products for kiosk
+        """
+        return await self.client._make_api_request(f"/stores/{store_key}/buylist/kiosk")
+
+    async def get_product_conditions_for_buylist(
+        self, store_key: str, product_id: int
+    ) -> Dict[str, Any]:
+        """
+        Get the Product Conditions for a Product on a Store's Buylist.
+
+        Args:
+            store_key: Unique identifier for the store
+            product_id: Product identifier
+
+        Returns:
+            Dict containing product conditions for buylist
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/buylist/products/{product_id}/conditions"
+        )
+
+    async def list_product_summary_by_category(
+        self, store_key: str, category_id: int, search_data: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """
+        List Product Summary By Category.
+
+        Args:
+            store_key: Unique identifier for the store
+            category_id: Category identifier
+            search_data: Search criteria
+
+        Returns:
+            Dict containing product summary by category
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/inventory/categories/{category_id}/search",
+            method="POST",
+            data=search_data,
+        )
+
+    async def list_catalog_objects(self, store_key: str) -> Dict[str, Any]:
+        """
+        List Catalog Objects.
+
+        Args:
+            store_key: Unique identifier for the store
+
+        Returns:
+            Dict containing catalog objects
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/inventory/search"
+        )
+
+    # GROUP 7: BATCH OPERATIONS & PRICING
+
+    async def get_sku_list_price(
+        self, store_key: str, sku_list_price_id: int
+    ) -> Dict[str, Any]:
+        """
+        Get SKU List Price.
+
+        Args:
+            store_key: Unique identifier for the store
+            sku_list_price_id: SKU list price identifier
+
+        Returns:
+            Dict containing SKU list price
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/inventory/skuprices/{sku_list_price_id}"
+        )
+
+    async def get_store_info_by_keys(self, store_keys: str) -> Dict[str, Any]:
+        """
+        Get Store Info by store keys.
+
+        Args:
+            store_keys: Store keys (comma-separated)
+
+        Returns:
+            Dict containing store information
+        """
+        return await self.client._make_api_request(f"/stores/{store_keys}")
+
+    async def get_free_shipping_option(self, store_key: str) -> Dict[str, Any]:
+        """
+        Get Free Shipping Option.
+
+        Args:
+            store_key: Unique identifier for the store
+
+        Returns:
+            Dict containing free shipping settings
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/freeshipping/settings"
+        )
+
+    async def list_shipping_options(
+        self, store_key: str, product_id: int
+    ) -> Dict[str, Any]:
+        """
+        List Shipping Options.
+
+        Args:
+            store_key: Unique identifier for the store
+            product_id: Product identifier
+
+        Returns:
+            Dict containing shipping options
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/inventory/products/{product_id}/shippingoptions"
+        )
+
+    async def list_top_sold_products(self, store_key: str) -> Dict[str, Any]:
+        """
+        List Top Sold Products.
+
+        Args:
+            store_key: Unique identifier for the store
+
+        Returns:
+            Dict containing top sold products
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/inventory/topsales"
+        )
+
+    async def search_top_sold_products(
+        self, store_key: str, search_data: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """
+        Search Top Sold Products.
+
+        Args:
+            store_key: Unique identifier for the store
+            search_data: Search criteria
+
+        Returns:
+            Dict containing top sold products search results
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/inventory/topsalessearch",
+            method="POST",
+            data=search_data,
+        )
+
+    async def search_custom_listings(self, store_key: str) -> Dict[str, Any]:
+        """
+        Search Custom Listings.
+
+        Args:
+            store_key: Unique identifier for the store
+
+        Returns:
+            Dict containing custom listings
+        """
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/inventory/customListings"
         )

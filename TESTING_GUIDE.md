@@ -412,12 +412,12 @@ The project includes automated security testing in GitHub Actions:
 ```python
 
 import pytest
-from tcgplayer_client import TCGPlayerClient
+from tcgplayer_client import TCGplayerClient
 
 @pytest.mark.asyncio
 async def test_new_feature():
     """Test new feature functionality."""
-    client = TCGPlayerClient()
+    client = TCGplayerClient()
     
     # Test the feature
     result = await client.new_feature()
@@ -438,7 +438,7 @@ from unittest.mock import MagicMock
 @pytest.fixture
 def mock_client():
     """Create a mock client for testing."""
-    client = MagicMock(spec=TCGPlayerClient)
+    client = MagicMock(spec=TCGplayerClient)
     client.base_url = "<https://api.tcgplayer.com>"
     return client
 
@@ -462,7 +462,7 @@ import asyncio
 @pytest.mark.asyncio
 async def test_async_operation():
     """Test async operations."""
-    client = TCGPlayerClient()
+    client = TCGplayerClient()
     
     # Test async operation
     result = await client.async_operation()

@@ -1,12 +1,12 @@
 """
-Custom exceptions for the TCGPlayer client library.
+Custom exceptions for the TCGplayer client library.
 """
 
 from typing import Any, Optional
 
 
-class TCGPlayerError(Exception):
-    """Base exception for all TCGPlayer client errors."""
+class TCGplayerError(Exception):
+    """Base exception for all TCGplayer client errors."""
 
     def __init__(
         self,
@@ -20,13 +20,13 @@ class TCGPlayerError(Exception):
         self.response_data = response_data
 
 
-class AuthenticationError(TCGPlayerError):
+class AuthenticationError(TCGplayerError):
     """Raised when authentication fails."""
 
     pass
 
 
-class RateLimitError(TCGPlayerError):
+class RateLimitError(TCGplayerError):
     """Raised when rate limit is exceeded."""
 
     def __init__(self, message: str, retry_after: Optional[int] = None):
@@ -34,8 +34,8 @@ class RateLimitError(TCGPlayerError):
         self.retry_after = retry_after
 
 
-class APIError(TCGPlayerError):
-    """Raised when the TCGPlayer API returns an error."""
+class APIError(TCGplayerError):
+    """Raised when the TCGplayer API returns an error."""
 
     def __init__(
         self,
@@ -69,25 +69,25 @@ class APIError(TCGPlayerError):
         return self.status_code is not None and 500 <= self.status_code < 600
 
 
-class NetworkError(TCGPlayerError):
+class NetworkError(TCGplayerError):
     """Raised when network-related errors occur."""
 
     pass
 
 
-class ValidationError(TCGPlayerError):
+class ValidationError(TCGplayerError):
     """Raised when input validation fails."""
 
     pass
 
 
-class ConfigurationError(TCGPlayerError):
+class ConfigurationError(TCGplayerError):
     """Raised when there's a configuration issue."""
 
     pass
 
 
-class TimeoutError(TCGPlayerError):
+class TimeoutError(TCGplayerError):
     """Raised when a request times out."""
 
     def __init__(self, message: str, timeout_seconds: Optional[float] = None):
@@ -95,7 +95,7 @@ class TimeoutError(TCGPlayerError):
         self.timeout_seconds = timeout_seconds
 
 
-class RetryExhaustedError(TCGPlayerError):
+class RetryExhaustedError(TCGplayerError):
     """Raised when all retry attempts are exhausted."""
 
     def __init__(
@@ -106,7 +106,7 @@ class RetryExhaustedError(TCGPlayerError):
         self.last_error = last_error
 
 
-class InvalidResponseError(TCGPlayerError):
+class InvalidResponseError(TCGplayerError):
     """Raised when the API response is invalid or malformed."""
 
     def __init__(self, message: str, response_data: Optional[Any] = None):

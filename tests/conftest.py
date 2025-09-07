@@ -1,5 +1,5 @@
 """
-Pytest configuration and common fixtures for TCGPlayer Client tests.
+Pytest configuration and common fixtures for TCGplayer Client tests.
 """
 
 import asyncio
@@ -7,8 +7,8 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from tcgplayer_client import TCGPlayerClient
-from tcgplayer_client.auth import TCGPlayerAuth
+from tcgplayer_client import TCGplayerClient
+from tcgplayer_client.auth import TCGplayerAuth
 from tcgplayer_client.rate_limiter import RateLimiter
 
 
@@ -47,7 +47,7 @@ def mock_rate_limiter():
 @pytest.fixture
 def mock_auth():
     """Mock authentication for testing."""
-    auth = MagicMock(spec=TCGPlayerAuth)
+    auth = MagicMock(spec=TCGplayerAuth)
     auth.authenticate = AsyncMock(return_value={"access_token": "test_token"})
     auth.access_token = "test_token"
     return auth
@@ -55,8 +55,8 @@ def mock_auth():
 
 @pytest.fixture
 def tcgplayer_client(mock_auth, mock_rate_limiter):
-    """TCGPlayer client instance with mocked dependencies."""
-    client = TCGPlayerClient()
+    """TCGplayer client instance with mocked dependencies."""
+    client = TCGplayerClient()
     client.auth = mock_auth
     client.rate_limiter = mock_rate_limiter
     return client

@@ -1,79 +1,145 @@
 """
-Pricing endpoints for TCGPlayer API.
+Pricing endpoints for TCGplayer API.
 
-This module contains all pricing-related operations including:
-- Market prices (buylist functionality discontinued by TCGPlayer)
-- Group-based pricing
-- SKU-specific pricing
+This module contains market and buylist pricing operations:
+- Market prices for products, SKUs, and groups
+- Buylist prices for products, SKUs, and groups
+- Individual product condition pricing
 """
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union
 
-from ..client import TCGPlayerClient
+from ..client import TCGplayerClient
 
 
 class PricingEndpoints:
-    """Pricing-related API endpoints."""
+    """Market and buylist pricing API endpoints."""
 
-    def __init__(self, client: TCGPlayerClient):
+    def __init__(self, client: TCGplayerClient):
         """
         Initialize pricing endpoints.
 
         Args:
-            client: TCGPlayer client instance
+            client: TCGplayer client instance
         """
         self.client = client
-
-    async def get_product_prices(self, product_ids: List[int]) -> Dict[str, Any]:
-        """Get pricing information for products."""
-        params = {"productIds": ",".join(map(str, product_ids))}
-        return await self.client._make_api_request("/pricing/product", params=params)
-
-    async def get_market_prices(self, product_ids: List[int]) -> Dict[str, Any]:
-        """Get market prices for products."""
-        # Use the correct endpoint from API documentation: /pricing/product/{productIds}
-        product_ids_str = ",".join(map(str, product_ids))
-        return await self.client._make_api_request(
-            f"/pricing/product/{product_ids_str}"
-        )
-
-    # Buylist functionality discontinued by TCGPlayer
-    # async def get_buylist_prices(self, product_ids: List[int]) -> Dict[str, Any]:
-    #     """Get buylist prices for products."""
-    #     params = {"productIds": ",".join(map(str, product_ids))}
-    #     return await self.client._make_api_request(
-    #         "/pricing/buy/products", params=params
-    #     )
-
-    async def get_sku_market_prices(self, sku_ids: List[int]) -> Dict[str, Any]:
-        """Get market prices for specific SKUs."""
-        # Use the correct endpoint from API documentation: /pricing/marketprices/skus
-        params = {"skuIds": ",".join(map(str, sku_ids))}
-        return await self.client._make_api_request(
-            "/pricing/marketprices/skus", params=params
-        )
-
-    # Buylist functionality discontinued by TCGPlayer
-    # async def get_sku_buylist_prices(self, sku_ids: List[int]) -> Dict[str, Any]:
-    #     """Get buylist prices for specific SKUs."""
-    #     params = {"skuIds": ",".join(map(str, sku_ids))}
-    #     return await self.client._make_api_request("/pricing/buy/skus", params=params)
 
     async def get_market_price_by_sku(
         self, product_condition_id: int
     ) -> Dict[str, Any]:
-        """Get market price by product condition ID."""
+        """
+        Get the current market price for a specific SKU (product condition).
+
+        Args:
+            product_condition_id: The product condition ID (SKU) to get market price for
+
+        Returns:
+            Dict containing market price information with price ranges
+        """
         return await self.client._make_api_request(
             f"/pricing/marketprices/{product_condition_id}"
         )
 
-    async def get_product_prices_by_group(self, group_id: int) -> Dict[str, Any]:
-        """Get product prices by group ID."""
+    async def get_product_market_prices(
+        self, product_ids: Union[List[int], str]
+    ) -> Dict[str, Any]:
+        """
+        Get market prices for one or more products.
+
+        Args:
+            product_ids: List of product IDs or comma-separated string of product IDs
+
+        Returns:
+            Dict containing market price information for all requested products
+        """
+        if isinstance(product_ids, list):
+            product_ids_str = ",".join(map(str, product_ids))
+        else:
+            product_ids_str = product_ids
+
+        return await self.client._make_api_request(
+            f"/pricing/product/{product_ids_str}"
+        )
+
+    async def get_sku_market_prices(
+        self, sku_ids: Union[List[int], str]
+    ) -> Dict[str, Any]:
+        """
+        Get market prices for one or more SKUs (product conditions).
+
+        Args:
+            sku_ids: List of SKU IDs or comma-separated string of SKU IDs
+
+        Returns:
+            Dict containing market price information for all requested SKUs
+        """
+        if isinstance(sku_ids, list):
+            sku_ids_str = ",".join(map(str, sku_ids))
+        else:
+            sku_ids_str = sku_ids
+
+        return await self.client._make_api_request(f"/pricing/sku/{sku_ids_str}")
+
+    async def get_group_market_prices(self, group_id: int) -> Dict[str, Any]:
+        """
+        Get market prices for all products in a specific group/set.
+
+        Args:
+            group_id: The ID of the product group/set to get pricing for
+
+        Returns:
+            Dict containing market price information for all products in the group
+        """
         return await self.client._make_api_request(f"/pricing/group/{group_id}")
 
-    # Buylist functionality discontinued by TCGPlayer
-    # async def get_product_buylist_prices_by_group(
-    #     self, group_id: int
-    #     ) -> Dict[str, Any]:
-    #     """Get product buylist prices by group ID."""
-    #     return await self.client._make_api_request(f"/pricing/buy/group/{group_id}")
+    async def get_product_buylist_prices(
+        self, product_ids: Union[List[int], str]
+    ) -> Dict[str, Any]:
+        """
+        Get buylist prices for one or more products.
+
+        Args:
+            product_ids: List of product IDs or comma-separated string of product IDs
+
+        Returns:
+            Dict containing buylist price information for all requested products
+        """
+        if isinstance(product_ids, list):
+            product_ids_str = ",".join(map(str, product_ids))
+        else:
+            product_ids_str = product_ids
+
+        return await self.client._make_api_request(
+            f"/pricing/buy/product/{product_ids_str}"
+        )
+
+    async def get_sku_buylist_prices(
+        self, sku_ids: Union[List[int], str]
+    ) -> Dict[str, Any]:
+        """
+        Get buylist prices for one or more SKUs.
+
+        Args:
+            sku_ids: List of SKU IDs or comma-separated string of SKU IDs
+
+        Returns:
+            Dict containing buylist price information for all requested SKUs
+        """
+        if isinstance(sku_ids, list):
+            sku_ids_str = ",".join(map(str, sku_ids))
+        else:
+            sku_ids_str = sku_ids
+
+        return await self.client._make_api_request(f"/pricing/buy/sku/{sku_ids_str}")
+
+    async def get_group_buylist_prices(self, group_id: int) -> Dict[str, Any]:
+        """
+        Get buylist prices for all products in a specific group/set.
+
+        Args:
+            group_id: The ID of the product group/set to get buylist pricing for
+
+        Returns:
+            Dict containing buylist price information for all products in the group
+        """
+        return await self.client._make_api_request(f"/pricing/buy/group/{group_id}")

@@ -1,5 +1,5 @@
 """
-Session management for TCGPlayer API requests.
+Session management for TCGplayer API requests.
 
 This module provides efficient HTTP session management with connection pooling,
 timeout configuration, and automatic cleanup.
@@ -98,7 +98,7 @@ class SessionManager:
                         timeout=self.timeout,
                         connector=self.connector,
                         headers={
-                            "User-Agent": "TCGPlayer-Python-Client/1.0.0",
+                            "User-Agent": "TCGplayer-Python-Client/1.0.0",
                             "Accept": "application/json",
                             "Accept-Encoding": "gzip, deflate",
                         },

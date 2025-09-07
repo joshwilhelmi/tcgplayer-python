@@ -27,27 +27,22 @@ TCGplayer's trading card data.
 
 ## 🚀 Features
 
-- **🔌 Full API Coverage**: All 55+ documented TCGplayer API endpoints with
-comprehensive error handling (buylist endpoints removed - discontinued by
-TCGPlayer)
-- **⚡ Async/Await Support**: Built with modern Python async patterns for
-high-performance applications
-- **🔄 Intelligent Rate Limiting**: Adaptive request throttling that respects API
-limits and prevents rate limit errors
-- **💾 Smart Caching**: Configurable response caching with TTL and LRU eviction
-for improved performance
-- **🔐 Robust Authentication**: OAuth2 token management with automatic refresh
-and session persistence
-- **🛡️ Enterprise-Grade Error Handling**: Custom exception hierarchy with
-detailed error context and retry logic
-- **📊 Comprehensive Logging**: Structured logging with configurable levels and
-multiple output formats
-- **⚙️ Flexible Configuration**: Environment variables, config files, and
-runtime configuration management
-- **🧪 Full Test Coverage**: Comprehensive test suite with pytest and async
-testing support
-- **📝 Type Hints**: Full type annotation support for better development
-experience and IDE integration
+- **🔌 Comprehensive API Coverage**: 30/79 endpoints (38%) implemented with 100% basic functionality coverage
+  - ✅ **Complete Catalog Operations** (21/21 endpoints) - Categories, products, groups, search
+  - ✅ **Complete Pricing Intelligence** (7/7 endpoints) - Market + buylist pricing  
+  - ✅ **Store Discovery** (1/47 endpoints) - Public store search
+  - ✅ **App Authorization** (1/1 endpoint) - OAuth application flow
+  - 🔒 **Store & Inventory Management** (49 endpoints) - Requires OAuth store authorization
+- **⚡ Async/Await Support**: Built with modern Python async patterns for high-performance applications
+- **🔄 Intelligent Rate Limiting**: Enforces TCGplayer's critical 10 req/sec limit to prevent API revocation
+- **💾 Smart Caching**: Configurable response caching with TTL and LRU eviction for improved performance
+- **🔐 Robust Authentication**: OAuth2 token management with automatic refresh and session persistence
+- **🛡️ Enterprise-Grade Error Handling**: Custom exception hierarchy with detailed error context and retry logic
+- **📊 Comprehensive Logging**: Structured logging with configurable levels and multiple output formats
+- **⚙️ Flexible Configuration**: Environment variables, config files, and runtime configuration management
+- **🧪 High Test Coverage**: 194 tests with comprehensive endpoint coverage and systematic API validation
+- **📝 Type Hints**: Full type annotation support for better development experience and IDE integration
+- **🏗️ Modern Development**: UV package manager integration for 10-100x faster dependency management
 
 ## 📦 Installation
 
@@ -71,40 +66,33 @@ pip install tcgplayer-client
 
 ## 🚀 Quick Start
 
-### Migration from v1.x
+### ⚡ Modern Setup with UV (Recommended)
 
-If you're upgrading from version 1.x, be aware of these breaking changes:
+For 10-100x faster dependency management:
 
-```python
+```bash
+# Install UV
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# ❌ OLD (v1.x) - Buylist methods (no longer available)
+# Clone and setup
+git clone https://github.com/joshwilhelmi/tcgplayer-python.git
+cd tcgplayer-python
+make install  # uv sync --all-extras
 
-
-# await client.endpoints.buylist.get_buylist_prices([12345])
-
-
-# await client.endpoints.pricing.get_buylist_prices([12345])
-
-# ✅ NEW (v2.0.1) - Market prices only
-
-await client.endpoints.pricing.get_market_prices([12345])
-await client.endpoints.pricing.get_sku_market_prices([67890])
-
+# Quality checks
+make ci       # Full pipeline: format, lint, type-check, test
 ```
-
-**Note**: Buylist functionality was discontinued by TCGPlayer and has been
-removed from this client.
 
 ### Basic Usage
 
 ```python
 
 import asyncio
-from tcgplayer_client import TCGPlayerClient
+from tcgplayer_client import TCGplayerClient
 
 async def main():
     # Initialize client with your API credentials
-    client = TCGPlayerClient(
+    client = TCGplayerClient(
         client_id="your_client_id",
         client_secret="your_client_secret"
     )
@@ -129,7 +117,7 @@ if __name__ == "__main__":
 
 ```python
 
-from tcgplayer_client import TCGPlayerClient, ClientConfig
+from tcgplayer_client import TCGplayerClient, ClientConfig
 
 # Custom configuration
 
@@ -140,7 +128,7 @@ config = ClientConfig(
     log_level="DEBUG"
 )
 
-client = TCGPlayerClient(
+client = TCGplayerClient(
     client_id="your_client_id",
     client_secret="your_client_secret",
     config=config
@@ -250,7 +238,7 @@ config = ClientConfig(
 
 ```python
 
-client = TCGPlayerClient(
+client = TCGplayerClient(
     max_requests_per_second=20,    # ⚠️ Will be automatically capped to 10
     rate_limit_window=1.0,         # 1 second window
     max_retries=5,                 # 5 retry attempts
@@ -268,7 +256,7 @@ client = TCGPlayerClient(
 
 ```python
 
-client = TCGPlayerClient(
+client = TCGplayerClient(
     config=ClientConfig(
         enable_caching=True,
         cache_ttl=600,              # 10 minutes
@@ -287,7 +275,7 @@ scenarios:
 ```python
 
 from tcgplayer_client import (
-    TCGPlayerError,
+    TCGplayerError,
     AuthenticationError,
     RateLimitError,
     APIError,
@@ -364,11 +352,11 @@ logger.info("Starting TCGplayer client", extra={
 
 ```python
 
-from tcgplayer_client.logging_config import TCGPlayerLogger
+from tcgplayer_client.logging_config import TCGplayerLogger
 
 # Custom logger configuration
 
-logger = TCGPlayerLogger(
+logger = TCGplayerLogger(
     name="my_app",
     level="DEBUG",
     enable_console=True,
@@ -421,7 +409,7 @@ make ci
 
 # Quick quality checks
 
-make quick-check
+make format lint
 
 # Individual tools
 
@@ -641,11 +629,11 @@ handling
 ```python
 
 import pytest
-from tcgplayer_client import TCGPlayerClient
+from tcgplayer_client import TCGplayerClient
 
 @pytest.mark.asyncio
 async def test_catalog_endpoints():
-    client = TCGPlayerClient()
+    client = TCGplayerClient()
     
     # Test categories endpoint
     categories = await client.endpoints.catalog.get_categories()

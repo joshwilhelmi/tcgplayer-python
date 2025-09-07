@@ -1,37 +1,37 @@
 """
-Unit tests for the main TCGPlayerClient class.
+Unit tests for the main TCGplayerClient class.
 """
 
 import pytest
 
-from tcgplayer_client import TCGPlayerClient
+from tcgplayer_client import TCGplayerClient
 from tcgplayer_client.exceptions import (
     AuthenticationError,
     RateLimitError,
 )
 
 
-class TestTCGPlayerClient:
-    """Test cases for TCGPlayerClient class."""
+class TestTCGplayerClient:
+    """Test cases for TCGplayerClient class."""
 
     def test_client_initialization_defaults(self):
         """Test client initialization with default parameters."""
-        client = TCGPlayerClient()
+        client = TCGplayerClient()
 
         assert client.base_url == "https://api.tcgplayer.com"
         assert client.max_retries == 3
         assert client.base_delay == 1.0
         assert client.auth is None
         assert client.rate_limiter is not None
+        assert hasattr(client.endpoints, "app")
         assert hasattr(client.endpoints, "catalog")
         assert hasattr(client.endpoints, "pricing")
         assert hasattr(client.endpoints, "stores")
-        assert hasattr(client.endpoints, "orders")
         assert hasattr(client.endpoints, "inventory")
 
     def test_client_initialization_with_auth(self):
         """Test client initialization with authentication credentials."""
-        client = TCGPlayerClient(
+        client = TCGplayerClient(
             client_id="test_id",
             client_secret="test_secret",
             max_requests_per_second=20,
@@ -45,7 +45,7 @@ class TestTCGPlayerClient:
         assert client.auth.client_secret == "test_secret"
         assert (
             client.rate_limiter.max_requests == 10
-        )  # Rate limit capped to TCGPlayer maximum
+        )  # Rate limit capped to TCGplayer maximum
         assert client.rate_limiter.time_window == 2.0
         assert client.max_retries == 5
         assert client.base_delay == 2.0
@@ -61,7 +61,7 @@ class TestTCGPlayerClient:
     @pytest.mark.asyncio
     async def test_authenticate_no_auth_configured(self):
         """Test authentication failure when no auth is configured."""
-        client = TCGPlayerClient()
+        client = TCGplayerClient()
 
         with pytest.raises(AuthenticationError, match="No authentication configured"):
             await client.authenticate()
@@ -114,7 +114,7 @@ class TestTCGPlayerClient:
         assert tcgplayer_client.base_url == "https://api.tcgplayer.com"
         assert hasattr(tcgplayer_client, "endpoints")
         assert hasattr(tcgplayer_client.endpoints, "catalog")
-        assert hasattr(tcgplayer_client.endpoints, "orders")
+        assert hasattr(tcgplayer_client.endpoints, "stores")
 
     @pytest.mark.asyncio
     async def test_make_api_request_rate_limit_error(self, tcgplayer_client):
@@ -147,7 +147,7 @@ class TestTCGPlayerClient:
 
     def test_client_context_manager(self):
         """Test client as context manager."""
-        client = TCGPlayerClient()
+        client = TCGplayerClient()
 
         # Note: The current implementation doesn't support context manager
         # This test verifies the basic functionality
@@ -155,9 +155,9 @@ class TestTCGPlayerClient:
 
     def test_client_repr(self):
         """Test client string representation."""
-        client = TCGPlayerClient()
+        client = TCGplayerClient()
         repr_str = repr(client)
 
         # Note: The current implementation doesn't customize repr
         # This test verifies the basic object representation
-        assert "TCGPlayerClient" in repr_str
+        assert "TCGplayerClient" in repr_str

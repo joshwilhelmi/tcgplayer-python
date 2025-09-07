@@ -1,5 +1,5 @@
 """
-Main TCGPlayer client class for API interactions.
+Main TCGplayer client class for API interactions.
 """
 
 import asyncio
@@ -9,7 +9,7 @@ from urllib.parse import urlencode
 
 import aiohttp
 
-from .auth import TCGPlayerAuth
+from .auth import TCGplayerAuth
 from .cache import CacheManager, ResponseCache
 from .config import ClientConfig, load_config
 from .exceptions import (
@@ -27,8 +27,8 @@ from .session_manager import SessionManager
 logger = logging.getLogger(__name__)
 
 
-class TCGPlayerClient:
-    """Main client for interacting with the TCGPlayer API."""
+class TCGplayerClient:
+    """Main client for interacting with the TCGplayer API."""
 
     # Type annotations for instance attributes
     cache_manager: Optional[CacheManager]
@@ -45,11 +45,11 @@ class TCGPlayerClient:
         config: Optional[ClientConfig] = None,
     ) -> None:
         """
-        Initialize the TCGPlayer client.
+        Initialize the TCGplayer client.
 
         Args:
-            client_id: TCGPlayer API client ID
-            client_secret: TCGPlayer API client secret
+            client_id: TCGplayer API client ID
+            client_secret: TCGplayer API client secret
             max_requests_per_second: Maximum requests per second (default: 10, max: 10)
             rate_limit_window: Rate limit window in seconds (default: 1.0)
             max_retries: Maximum retry attempts for failed requests (default: 3)
@@ -58,14 +58,14 @@ class TCGPlayerClient:
 
         Note:
             The maximum rate limit is capped at 10 requests per second to comply with
-            TCGPlayer's API restrictions. Exceeding this limit can result in API access
+            TCGplayer's API restrictions. Exceeding this limit can result in API access
             being revoked.
         """
         # Validate rate limiting parameters
         if max_requests_per_second > 10:
             logger.warning(
                 f"Requested rate limit {max_requests_per_second} req/s exceeds "
-                f"TCGPlayer's maximum of 10 req/s. Rate limit has been capped to "
+                f"TCGplayer's maximum of 10 req/s. Rate limit has been capped to "
                 f"10 req/s to prevent API violations."
             )
             max_requests_per_second = 10
@@ -81,8 +81,8 @@ class TCGPlayerClient:
         self.config = config
 
         # Initialize authentication (optional for testing)
-        self.auth: Optional[TCGPlayerAuth] = (
-            TCGPlayerAuth(
+        self.auth: Optional[TCGplayerAuth] = (
+            TCGplayerAuth(
                 client_id or config.client_id,
                 client_secret or config.client_secret,
                 base_url=config.base_url,
@@ -108,7 +108,7 @@ class TCGPlayerClient:
         if config_rate_limit > 10:
             logger.warning(
                 f"Configuration rate limit {config_rate_limit} req/s exceeds "
-                f"TCGPlayer's maximum. "
+                f"TCGplayer's maximum. "
                 f"Capping to 10 req/s to prevent API violations."
             )
             config_rate_limit = 10
@@ -143,7 +143,6 @@ class TCGPlayerClient:
             AppEndpoints,
             CatalogEndpoints,
             InventoryEndpoints,
-            OrderEndpoints,
             PricingEndpoints,
             StoreEndpoints,
         )
@@ -156,14 +155,13 @@ class TCGPlayerClient:
                 "catalog": CatalogEndpoints(self),
                 "pricing": PricingEndpoints(self),
                 "stores": StoreEndpoints(self),
-                "orders": OrderEndpoints(self),
                 "inventory": InventoryEndpoints(self),
             },
         )()
 
         logger.info(
-            f"TCGPlayer client initialized with rate limit: "
-            f"{max_requests_per_second} req/s (TCGPlayer maximum: 10 req/s)"
+            f"TCGplayer client initialized with rate limit: "
+            f"{max_requests_per_second} req/s (TCGplayer maximum: 10 req/s)"
         )
         logger.info(
             f"Retry configuration: max {max_retries} attempts, base delay {base_delay}s"
@@ -172,7 +170,7 @@ class TCGPlayerClient:
 
     async def authenticate(self) -> Dict[str, Any]:
         """
-        Authenticate with the TCGPlayer API.
+        Authenticate with the TCGplayer API.
 
         Returns:
             Authentication result
@@ -196,7 +194,7 @@ class TCGPlayerClient:
         cache_ttl: Optional[int] = None,
     ) -> Dict[str, Any]:
         """
-        Make an authenticated API request to TCGPlayer with rate limiting and retry
+        Make an authenticated API request to TCGplayer with rate limiting and retry
         logic.
 
         Args:
@@ -430,7 +428,7 @@ class TCGPlayerClient:
         await self.session_manager.cleanup()
         if self.cache_manager:
             await self.cache_manager.close_all()
-        logger.info("TCGPlayer client closed and resources cleaned up")
+        logger.info("TCGplayer client closed and resources cleaned up")
 
     async def clear_cache(self) -> None:
         """Clear all cached responses."""
