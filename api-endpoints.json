@@ -1538,10 +1538,35 @@
             "name": "storeKey",
             "type": "string",
             "required": true,
-            "description": "Unique identifier for the store"
+            "description": "A unique key used to identify the caller of the API"
           }
         ],
-        "query_parameters": [],
+        "query_parameters": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": false,
+            "description": "A string of characters representing the first name and/or last name of the customer being searched for. Use format \"firstName,lastName\""
+          },
+          {
+            "name": "email",
+            "type": "string", 
+            "required": false,
+            "description": "The email of the customer"
+          },
+          {
+            "name": "offset",
+            "type": "int32",
+            "required": false,
+            "description": "Used for paging. The number of records to skip. Default is 0"
+          },
+          {
+            "name": "limit",
+            "type": "int32",
+            "required": false,
+            "description": "Used for paging. The maximum number of records to return. Default is 10"
+          }
+        ],
         "authentication": "Bearer Token required",
         "response_template": {
           "structure": {
@@ -2623,18 +2648,49 @@
       {
         "name": "Get a Store's Buylist Products for Kiosk use",
         "type": "GET",
-        "url": "https://docs.tcgplayer.com/reference/stores_buylistkiosk",
-        "api_endpoint": "https://api.tcgplayer.com/stores/{storeKey}/buylist/kiosk",
+        "url": "https://docs.tcgplayer.com/reference/stores_getbuylistproducts",
+        "api_endpoint": "https://api.tcgplayer.com/stores/{storeKey}/buylist/products",
         "description": "Get a Store's Buylist Products for Kiosk use",
         "path_parameters": [
           {
             "name": "storeKey",
             "type": "string",
             "required": true,
-            "description": "Store identifier"
+            "description": "A unique key used to identify the caller of the API"
           }
         ],
-        "query_parameters": [],
+        "query_parameters": [
+          {
+            "name": "searchTerm",
+            "type": "string",
+            "required": false,
+            "description": "The term which must be contained in either the Product Name or Set Name of the Products"
+          },
+          {
+            "name": "offset",
+            "type": "int32",
+            "required": false,
+            "description": "The number of Products to skip in the initial result set"
+          },
+          {
+            "name": "limit",
+            "type": "int32",
+            "required": false,
+            "description": "The maximum number of Products to be returned"
+          },
+          {
+            "name": "sortDirection",
+            "type": "string",
+            "required": false,
+            "description": "The direction of the sort to be applied to the initial result set. Products are sorted by Product Name then Set Name. Options are ASC or DESC. Defaults to ASC"
+          },
+          {
+            "name": "categoryId",
+            "type": "int32",
+            "required": false,
+            "description": "If provided will only return Buylist Products in the Category"
+          }
+        ],
         "response_template": {
           "structure": {
             "success": "boolean",
@@ -2650,7 +2706,7 @@
       {
         "name": "Get the Product Conditions for a Product on a Store's Buylist",
         "type": "GET",
-        "url": "https://docs.tcgplayer.com/reference/stores_buylistconditions",
+        "url": "https://docs.tcgplayer.com/reference/stores_getbuylistproductconditions",
         "api_endpoint": "https://api.tcgplayer.com/stores/{storeKey}/buylist/products/{productId}/conditions",
         "description": "Get the Product Conditions for a Product on a Store's Buylist",
         "path_parameters": [
@@ -2658,13 +2714,13 @@
             "name": "storeKey",
             "type": "string",
             "required": true,
-            "description": "Store identifier"
+            "description": "A unique key used to identify the caller of the API"
           },
           {
             "name": "productId",
-            "type": "integer",
+            "type": "int64",
             "required": true,
-            "description": "Product identifier"
+            "description": "The ProductId to get Product Conditions for"
           }
         ],
         "query_parameters": [],

@@ -53,6 +53,7 @@ class StoreEndpoints:
         Returns:
             Dict containing store information
         """
+        self.client._check_store_enabled("get_store_info")
         return await self.client._make_api_request("/stores/self")
 
     async def get_store_address(self, store_key: str) -> Dict[str, Any]:
@@ -78,6 +79,7 @@ class StoreEndpoints:
         Returns:
             Dict containing operation result
         """
+        self.client._check_store_enabled("set_store_status")
         return await self.client._make_api_request(
             f"/stores/{store_key}/status/{status}", method="PUT"
         )
@@ -244,17 +246,41 @@ class StoreEndpoints:
             f"/stores/{store_key}/customers/{token}"
         )
 
-    async def search_store_customers(self, store_key: str) -> Dict[str, Any]:
+    async def search_store_customers(
+        self,
+        store_key: str,
+        name: str = None,
+        email: str = None,
+        offset: int = 0,
+        limit: int = 10
+    ) -> Dict[str, Any]:
         """
         Search Store Customers.
 
         Args:
-            store_key: Unique identifier for the store
+            store_key: A unique key used to identify the caller of the API
+            name: A string of characters representing the first name and/or last name of the customer being searched for. Use format "firstName,lastName"
+            email: The email of the customer
+            offset: Used for paging. The number of records to skip. Default is 0
+            limit: Used for paging. The maximum number of records to return. Default is 10
 
         Returns:
             Dict containing customer search results
         """
-        return await self.client._make_api_request(f"/stores/{store_key}/customers")
+        params = {}
+        if name is not None:
+            params["name"] = name
+        if email is not None:
+            params["email"] = email
+        if offset != 0:
+            params["offset"] = offset
+        if limit != 10:
+            params["limit"] = limit
+            
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/customers",
+            params=params
+        )
 
     async def get_customer_addresses(
         self, store_key: str, token: str
@@ -621,18 +647,44 @@ class StoreEndpoints:
         )
 
     async def get_store_buylist_products_for_kiosk(
-        self, store_key: str
+        self,
+        store_key: str,
+        search_term: str = None,
+        offset: int = None,
+        limit: int = None,
+        sort_direction: str = None,
+        category_id: int = None
     ) -> Dict[str, Any]:
         """
         Get a Store's Buylist Products for Kiosk use.
 
         Args:
-            store_key: Unique identifier for the store
+            store_key: A unique key used to identify the caller of the API
+            search_term: The term which must be contained in either the Product Name or Set Name of the Products
+            offset: The number of Products to skip in the initial result set
+            limit: The maximum number of Products to be returned
+            sort_direction: The direction of the sort to be applied. Options are ASC or DESC. Defaults to ASC
+            category_id: If provided will only return Buylist Products in the Category
 
         Returns:
             Dict containing buylist products for kiosk
         """
-        return await self.client._make_api_request(f"/stores/{store_key}/buylist/kiosk")
+        params = {}
+        if search_term is not None:
+            params["searchTerm"] = search_term
+        if offset is not None:
+            params["offset"] = offset
+        if limit is not None:
+            params["limit"] = limit
+        if sort_direction is not None:
+            params["sortDirection"] = sort_direction
+        if category_id is not None:
+            params["categoryId"] = category_id
+            
+        return await self.client._make_api_request(
+            f"/stores/{store_key}/buylist/products",
+            params=params
+        )
 
     async def get_product_conditions_for_buylist(
         self, store_key: str, product_id: int
