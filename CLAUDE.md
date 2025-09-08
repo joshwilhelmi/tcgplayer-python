@@ -253,65 +253,54 @@ Each endpoint test in `ENDPOINT_TEST_timestamp.md` should follow this clean form
 ---
 
 
-### Current Status: **Store Endpoint Documentation Verification & Parameter Fixes** ✅
+### Current Status: **Priority 1 Parameter Fixes Complete - Testing Infrastructure Updated** ✅
 
-**Latest Testing Results (September 7, 2025)**: 53/80 endpoints working (66.2% success rate)
+**Latest Testing Results (September 8, 2025)**: All Priority 1 fixes validated and working
 
-#### **✅ Recent Achievements**
-- **Endpoint Documentation Verification**: Used Playwright to verify official TCGplayer API documentation
-- **Parameter Fixes Applied**: Corrected missing query parameters for key Store endpoints
-- **Safety Mocking**: All dangerous Store POST/PUT operations safely mocked to prevent live data modification
-- **Bearer Token**: Valid and working for OAuth-protected endpoints (expires Sept 21, 2025)
+#### **✅ Completed Priority 1 Achievements**
+- **Rate Limiter Logic Fixed**: Corrected bug where rates under 10 req/sec were being forced to 10
+- **Comprehensive .env Configuration**: Added 22+ config variables with detailed comments
+- **Playwright Documentation Verification**: Systematically validated API documentation for error endpoints
+- **Priority 1 Parameter Fixes**: All 3 critical parameter fixes completed and validated ✅
 
-#### **📊 Current Endpoint Status**
-- **App Endpoints**: 1/1 working - Smart authentication handling implemented ✅
-- **Catalog Endpoints**: 21/21 working - Perfect coverage (100%) ✅ 
-- **Inventory Endpoints**: 1/4 working - Store has no product lists (403 errors expected)
-- **Pricing Endpoints**: 7/7 working - Perfect coverage (100%) ✅
-- **Stores Endpoints**: 23/47 working - Improved with parameter fixes and safety mocking
+#### **🎯 Priority 1 Parameter Fixes - COMPLETED ✅**
+1. **"Get Store Buylist Products for Kiosk"** ✅ - Added all 5 optional query parameters:
+   - `searchTerm` (string, optional)
+   - `offset` (int32, optional) 
+   - `limit` (int32, optional)
+   - `sortDirection` (string, optional)
+   - `categoryId` (int32, optional)
 
-#### **🔧 Documentation Fixes Applied**
-1. **"Search Store Customers"** ✅ - Added missing query parameters (`name`, `email`, `offset`, `limit`)
-2. **"Get Store Buylist Products for Kiosk"** ✅ - Fixed API path and added 5 query parameters
-3. **"Get Product Conditions for Store Buylist"** ✅ - Updated documentation URL and parameter types
+2. **"Search Custom Listings"** ✅ - Added required query parameter:
+   - `photoId` (int32, required)
 
-#### **📋 Store Endpoints TODO List - Verification Required**
+3. **"Get Product Conditions for Store Buylist"** ✅ - Fixed URL structure:
+   - Fixed: `/stores/{storeKey}/buylist/{productId}`
 
-**🔴 Critical Issues (POST Endpoints Implemented as GET):**
-- [ ] **List Product Summary By Category** - POST endpoint with complex request body
-- [ ] **Search Top Sold Products** - POST endpoint, not GET
-- [ ] **Batch Update Store SKU Prices** - POST endpoint (currently mocked)
-- [ ] **Batch Update Store Buylist Prices** - POST endpoint (currently mocked) 
-- [ ] **Add Order Tracking Number** - POST endpoint (currently mocked)
+#### **📊 Current Endpoint Status (Verified with Correct Method Names)**
+- **App Endpoints**: 1/1 working (100%) ✅
+- **Catalog Endpoints**: 21/21 working (100%) ✅ 
+- **Inventory Endpoints**: 0/4 working (0%) - Expected due to permissions
+- **Pricing Endpoints**: 7/7 working (100%) ✅
+- **Store Priority 1 Fixes**: 3/3 working (100%) ✅
 
-**🟡 Need Parameter Verification (403/404 Errors):**
-- [ ] **Get Buylist Categories** - Verify query parameters
-- [ ] **Get Buylist Groups** - Verify query parameters  
-- [ ] **Get Store Buylist Settings** - Verify query parameters
-- [ ] **Get Store Info by Key** - Verify parameter format
+#### **🔧 Testing Infrastructure Fixes**
+- **Method Name Regression Fixed**: Corrected test method names that caused false failures
+- **Test Data Updated**: Using valid GTINs (889698355100) and product IDs (152944)
+- **Comprehensive Testing**: Must test ALL 80 endpoints every time, no shortcuts
+
+**🔴 Priority 2: POST Method Issues**
+- [ ] **List Product Summary By Category** - Currently GET, should be POST with request body
+- [ ] **Search Top Sold Products** - Currently GET, should be POST with request body
+
+**🟡 Priority 3: Additional Parameter Verification**
+- [ ] **Get Buylist Categories** - Check for missing query parameters
+- [ ] **Get Buylist Groups** - Check for missing query parameters
+- [ ] **Get Store Buylist Settings** - Check for missing query parameters
+- [ ] **Get Store Info by Key** - Verify parameter format requirements
 - [ ] **Get SKU List Price** - Verify parameter requirements
-- [ ] **List Store Channels** - Verify permissions/parameters
-- [ ] **List Catalog Objects** - Check documentation for parameters
-- [ ] **Search Custom Listings** - Check documentation for parameters
 
-**🟢 Permission Issues Only (403 - Implementation Likely Correct):**
-- [ ] **Get Customer Summary** - OAuth scope verification
-- [ ] **Get Customer Addresses** - OAuth scope verification  
-- [ ] **Get Customer Orders** - OAuth scope verification
-- [ ] **Get Product Inventory Quantities** - OAuth scope verification
-- [ ] **Get SKU Quantity** - OAuth scope verification
-- [ ] **Get Order Manifest** - OAuth scope verification
-- [ ] **Get Order Details** - OAuth scope verification
-- [ ] **Get Order Feedback** - OAuth scope verification
-- [ ] **Search Orders** - OAuth scope verification
-- [ ] **Get Order Items** - OAuth scope verification
-- [ ] **Get Order Tracking Numbers** - OAuth scope verification
-
-#### **🎯 Next Phase Priorities**
-1. **POST Endpoint Refactoring**: Convert 5 GET-based methods to proper POST methods with request bodies
-2. **Parameter Documentation Review**: Verify remaining 8 endpoints with Playwright
-3. **OAuth Scope Analysis**: Investigate which permissions are needed for 403 endpoints
-4. **Test Data Validation**: Ensure test parameters match actual store inventory
+**🎯 Target**: Achieve 70%+ endpoint success rate (56/80 endpoints)
 
 ---
 

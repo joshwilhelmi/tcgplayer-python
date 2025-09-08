@@ -34,6 +34,7 @@ class InventoryEndpoints:
         Returns:
             Dict containing product list details with items, ID, key, and creation date
         """
+        self.client._check_store_enabled("get_productlist_by_id")
         return await self.client._make_api_request(
             f"/inventory/productlists/{product_list_id}"
         )
@@ -48,6 +49,7 @@ class InventoryEndpoints:
         Returns:
             Dict containing product list details with items, ID, key, and creation date
         """
+        self.client._check_store_enabled("get_productlist_by_key")
         return await self.client._make_api_request(
             f"/inventory/productlists/{product_list_key}"
         )
@@ -59,6 +61,7 @@ class InventoryEndpoints:
         Returns:
             Dict containing array of product lists with ID, key, and creation date
         """
+        self.client._check_store_enabled("list_all_productlists")
         return await self.client._make_api_request("/inventory/productLists")
 
     async def create_productlist(
@@ -77,6 +80,7 @@ class InventoryEndpoints:
         Note:
             Requires specific permissions - not accessible by all users
         """
+        self.client._check_store_enabled("create_productlist")
         return await self.client._make_api_request(
             "/inventory/productLists", method="POST", data=product_list_data
         )

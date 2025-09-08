@@ -34,6 +34,8 @@ class ClientConfig:
     # Authentication
     client_id: Optional[str] = None
     client_secret: Optional[str] = None
+    bearer_token: Optional[str] = None
+    store_enabled: bool = False
 
     # Rate Limiting
     max_requests_per_second: int = 10
@@ -147,6 +149,8 @@ class ConfigurationManager:
             "TCGPLAYER_API_VERSION": "api_version",
             "TCGPLAYER_CLIENT_ID": "client_id",
             "TCGPLAYER_CLIENT_SECRET": "client_secret",
+            "TCGPLAYER_BEARER_TOKEN": "bearer_token",
+            "TCGPLAYER_STORE_ENABLED": "store_enabled",
             "TCGPLAYER_MAX_REQUESTS_PER_SECOND": "max_requests_per_second",
             "TCGPLAYER_RATE_LIMIT_WINDOW": "rate_limit_window",
             "TCGPLAYER_MAX_RETRIES": "max_retries",
@@ -194,6 +198,7 @@ class ConfigurationManager:
                     "enable_caching",
                     "debug_mode",
                     "mock_responses",
+                    "store_enabled",
                 ]:
                     env_config[config_key] = value.lower() in ("true", "1", "yes", "on")
                 elif config_key in [
@@ -202,6 +207,7 @@ class ConfigurationManager:
                     "api_version",
                     "client_id",
                     "client_secret",
+                    "bearer_token",
                     "log_file",
                 ]:
                     env_config[config_key] = str(value)

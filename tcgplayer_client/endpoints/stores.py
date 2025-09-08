@@ -632,18 +632,28 @@ class StoreEndpoints:
             f"/stores/{store_key}/inventory/categories"
         )
 
-    async def list_store_channels(self, store_key: str) -> Dict[str, Any]:
+    async def list_store_channels(
+        self, store_key: str, offset: Optional[int] = None, limit: Optional[int] = None
+    ) -> Dict[str, Any]:
         """
         List store channels.
 
         Args:
             store_key: Unique identifier for the store
+            offset: Used for paging. The number of Channels to skip. Default is 0.
+            limit: Used for paging. The maximum number of Channels to return. Default is 10.
 
         Returns:
             Dict containing store channels
         """
+        params = {}
+        if offset is not None:
+            params["offset"] = offset
+        if limit is not None:
+            params["limit"] = limit
+            
         return await self.client._make_api_request(
-            f"/stores/{store_key}/inventory/channels"
+            f"/stores/{store_key}/inventory/channels", params=params
         )
 
     async def get_store_buylist_products_for_kiosk(
@@ -700,7 +710,7 @@ class StoreEndpoints:
             Dict containing product conditions for buylist
         """
         return await self.client._make_api_request(
-            f"/stores/{store_key}/buylist/products/{product_id}/conditions"
+            f"/stores/{store_key}/buylist/{product_id}"
         )
 
     async def list_product_summary_by_category(
@@ -723,18 +733,26 @@ class StoreEndpoints:
             data=search_data,
         )
 
-    async def list_catalog_objects(self, store_key: str) -> Dict[str, Any]:
+    async def list_catalog_objects(
+        self, store_key: str, q: str, limit: Optional[int] = None
+    ) -> Dict[str, Any]:
         """
         List Catalog Objects.
 
         Args:
             store_key: Unique identifier for the store
+            q: The string to search for in Product, Category, and Group names.
+            limit: Used for paging. The maximum number of SearchResults to return. Default is 10.
 
         Returns:
             Dict containing catalog objects
         """
+        params = {"q": q}
+        if limit is not None:
+            params["limit"] = limit
+            
         return await self.client._make_api_request(
-            f"/stores/{store_key}/inventory/search"
+            f"/stores/{store_key}/inventory/search", params=params
         )
 
     # GROUP 7: BATCH OPERATIONS & PRICING
@@ -832,16 +850,19 @@ class StoreEndpoints:
             data=search_data,
         )
 
-    async def search_custom_listings(self, store_key: str) -> Dict[str, Any]:
+    async def search_custom_listings(self, store_key: str, photo_id: int) -> Dict[str, Any]:
         """
         Search Custom Listings.
 
         Args:
             store_key: Unique identifier for the store
+            photo_id: The photo ID for the custom listing search (required)
 
         Returns:
             Dict containing custom listings
         """
+        params = {"photoId": photo_id}
         return await self.client._make_api_request(
-            f"/stores/{store_key}/inventory/customListings"
+            f"/stores/{store_key}/inventory/customListings",
+            params=params
         )

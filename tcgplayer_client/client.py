@@ -61,7 +61,7 @@ class TCGplayerClient:
             TCGplayer's API restrictions. Exceeding this limit can result in API access
             being revoked.
         """
-        # Validate rate limiting parameters
+        # Validate rate limiting parameters (only cap rates ABOVE 10, not below)
         if max_requests_per_second > 10:
             logger.warning(
                 f"Requested rate limit {max_requests_per_second} req/s exceeds "
@@ -81,16 +81,16 @@ class TCGplayerClient:
         self.config = config
 
         # Initialize authentication (optional for testing)
-        self.auth: Optional[TCGplayerAuth] = (
-            TCGplayerAuth(
+        self.auth: Optional[TCGplayerAuth] = None
+        if (client_id or config.client_id) and (client_secret or config.client_secret):
+            self.auth = TCGplayerAuth(
                 client_id or config.client_id,
                 client_secret or config.client_secret,
                 base_url=config.base_url,
             )
-            if (client_id or config.client_id)
-            and (client_secret or config.client_secret)
-            else None
-        )
+            # Set bearer token if provided in config
+            if config.bearer_token:
+                self.auth.access_token = config.bearer_token
 
         # API configuration
         self.base_url: str = config.base_url
@@ -103,19 +103,19 @@ class TCGplayerClient:
         )
 
         # Rate limiting configuration (prioritize passed parameters, but enforce
-        # maximum)
-        config_rate_limit = config.max_requests_per_second or 10
-        if config_rate_limit > 10:
+        # maximum only when rates exceed 10)
+        final_rate_limit = max_requests_per_second if max_requests_per_second != 10 else config.max_requests_per_second
+        if final_rate_limit > 10:
             logger.warning(
-                f"Configuration rate limit {config_rate_limit} req/s exceeds "
+                f"Rate limit {final_rate_limit} req/s exceeds "
                 f"TCGplayer's maximum. "
                 f"Capping to 10 req/s to prevent API violations."
             )
-            config_rate_limit = 10
+            final_rate_limit = 10
 
         self.rate_limiter: RateLimiter = RateLimiter(
-            max_requests_per_second or config_rate_limit,
-            rate_limit_window or config.rate_limit_window,
+            final_rate_limit,
+            rate_limit_window if rate_limit_window != 1.0 else config.rate_limit_window,
         )
 
         # Request retry configuration (prioritize passed parameters)
@@ -180,9 +180,24 @@ class TCGplayerClient:
         """
         if not self.auth:
             raise AuthenticationError(
-                "No authentication configured. Provide client_id and client_secret."
+                "No authentication configured. Set TCGPLAYER_CLIENT_ID and "
+                "TCGPLAYER_CLIENT_SECRET in your environment variables or .env file, "
+                "or provide client_id and client_secret parameters when creating the client."
             )
         return await self.auth.authenticate()
+
+    def is_store_enabled(self) -> bool:
+        """Check if store functionality is enabled."""
+        return self.config.store_enabled
+
+    def _check_store_enabled(self, endpoint_name: str) -> None:
+        """Check if store functionality is enabled for store-specific endpoints."""
+        if not self.is_store_enabled():
+            raise AuthenticationError(
+                f"Store endpoint '{endpoint_name}' requires TCGPLAYER_STORE_ENABLED=true "
+                f"and proper store authorization. Set TCGPLAYER_STORE_ENABLED=true in "
+                f"your environment or configuration to enable store functionality."
+            )
 
     async def _make_api_request(
         self,
@@ -216,10 +231,14 @@ class TCGplayerClient:
         """
         if not self.auth:
             raise AuthenticationError(
-                "No authentication configured. Provide client_id and client_secret."
+                "No authentication configured. Set TCGPLAYER_CLIENT_ID and "
+                "TCGPLAYER_CLIENT_SECRET in your environment variables or .env file, "
+                "or provide client_id and client_secret parameters when creating the client."
             )
         if not self.auth.is_authenticated():
-            raise AuthenticationError("Not authenticated. Call authenticate() first.")
+            raise AuthenticationError(
+                "Not authenticated. Call await client.authenticate() before making API requests."
+            )
 
         # Check cache for GET requests
         if use_cache and method == "GET" and self.response_cache:

@@ -2632,7 +2632,20 @@
             "description": "Store identifier"
           }
         ],
-        "query_parameters": [],
+        "query_parameters": [
+          {
+            "name": "offset",
+            "type": "int32",
+            "required": false,
+            "description": "Used for paging. The number of Channels to skip. Default is 0."
+          },
+          {
+            "name": "limit", 
+            "type": "int32",
+            "required": false,
+            "description": "Used for paging. The maximum number of Channels to return. Default is 10."
+          }
+        ],
         "response_template": {
           "structure": {
             "success": "boolean",
@@ -2707,7 +2720,7 @@
         "name": "Get the Product Conditions for a Product on a Store's Buylist",
         "type": "GET",
         "url": "https://docs.tcgplayer.com/reference/stores_getbuylistproductconditions",
-        "api_endpoint": "https://api.tcgplayer.com/stores/{storeKey}/buylist/products/{productId}/conditions",
+        "api_endpoint": "https://api.tcgplayer.com/stores/{storeKey}/buylist/{productId}",
         "description": "Get the Product Conditions for a Product on a Store's Buylist",
         "path_parameters": [
           {
@@ -2865,7 +2878,20 @@
             "description": "Store identifier"
           }
         ],
-        "query_parameters": [],
+        "query_parameters": [
+          {
+            "name": "q",
+            "type": "string",
+            "required": true,
+            "description": "The string to search for in Product, Category, and Group names."
+          },
+          {
+            "name": "limit",
+            "type": "int32",
+            "required": false,
+            "description": "Used for paging. The maximum number of SearchResults to return. Default is 10."
+          }
+        ],
         "response_template": {
           "structure": {
             "totalItems": "integer",
@@ -2900,7 +2926,14 @@
             "description": "Store identifier"
           }
         ],
-        "query_parameters": [],
+        "query_parameters": [
+          {
+            "name": "photoId",
+            "type": "int32",
+            "required": true,
+            "description": "The photo ID for the custom listing search"
+          }
+        ],
         "response_template": {
           "structure": {
             "success": "boolean",

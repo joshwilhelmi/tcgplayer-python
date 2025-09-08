@@ -156,6 +156,7 @@ Desktop.ini
 logs/
 *.log
 old/
+oldtests/
 
 # API Keys and Secrets (Enhanced Security)
 *.key

@@ -29,7 +29,7 @@ class RateLimiter:
         Raises:
             ValueError: If max_requests exceeds the absolute maximum of 10
         """
-        # Enforce absolute maximum rate limit
+        # Enforce absolute maximum rate limit (only cap rates ABOVE 10, not below)
         if max_requests > MAX_REQUESTS_PER_SECOND:
             logger.warning(
                 f"Requested rate limit {max_requests} req/s exceeds TCGplayer's "
